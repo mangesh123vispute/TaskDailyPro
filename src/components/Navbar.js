@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import PersonalProfile from "./PersonalProfile";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {}, [location]);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark  fixed-top bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          iNoteBook
+          TaskDailyPro
         </Link>
         <button
           className="navbar-toggler"
@@ -49,7 +53,7 @@ const Navbar = () => {
 
           {!localStorage.getItem("token") ? (
             <div>
-              <Link to="/login">
+              <Link to="/login" aria-current="page">
                 <button type="button" className="btn btn-primary mx-2">
                   Login
                 </button>
@@ -61,16 +65,25 @@ const Navbar = () => {
               </Link>
             </div>
           ) : (
-            <button
-              type="button"
-              className="btn btn-primary mx-2"
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.location.reload();
-              }}
-            >
-              Logout
-            </button>
+            <>
+              <button
+                type="button"
+                className="btn btn-primary mx-2"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.reload();
+                  navigate(-2);
+                }}
+              >
+                Logout
+              </button>
+
+              <Link to="/profile">
+                <button type="button" className="btn btn-primary mx-2">
+                  Profile
+                </button>
+              </Link>
+            </>
           )}
         </div>
       </div>
