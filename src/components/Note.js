@@ -3,6 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import Noteitem from "./Noteitem";
 import Addnote from "./Addnote";
 import { useNavigate } from "react-router-dom";
+import TimeInput from "./TimeInput";
 
 function Note(props) {
   const navigate = useNavigate();
@@ -126,6 +127,25 @@ function Note(props) {
                     minLength={5}
                     required
                   />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="tag" className="form-label">
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="edate"
+                    name="edate"
+                    value={note.edate}
+                    onChange={onChange}
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <TimeInput />
                 </div>
               </form>
             </div>

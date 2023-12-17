@@ -11,16 +11,14 @@ const TimeInput = ({ time, meridian, setTime, setMeridian }) => {
 
   return (
     <>
-      <label htmlFor="time" style={{ marginTop: "35px" }}>
-        Select time:
-      </label>
+      <label htmlFor="time">Select time:</label>
       <input
         type="text"
         id="time"
         value={time}
         onChange={handleChangeTime}
-        placeholder="HH:MM"
-        style={{ marginLeft: "10px" }}
+        placeholder="Start time-End time (example: 10:00-11:00)"
+        style={{ marginLeft: "10px", width: "400px" }}
       />
 
       <select

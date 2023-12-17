@@ -91,7 +91,7 @@ function Addnote(props) {
                 required
               />
             </div>
-            <div className="col-md-9">
+            <div className="col-md-9" style={{ marginTop: "35px" }}>
               <TimeInput
                 time={time}
                 meridian={meridian}

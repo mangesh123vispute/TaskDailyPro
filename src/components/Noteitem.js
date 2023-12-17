@@ -51,14 +51,14 @@ function Noteitem(props) {
       >
         <div
           className="card-header bg-transparent border-success"
-          style={{ padding: "5px" }}
+          style={{ padding: "10px" }}
         >
           <div>{note.tag}</div>
         </div>
 
-        <div className="d-flex ">
+        <div className="d-flex " style={{ marginTop: "20px" }}>
           <h5 className="card-title p-2 flex-grow-1 " style={{ margin: "5px" }}>
-            {note.title}
+            Task:
           </h5>
           <i
             className="fa-solid fa-pen-to-square p-2"
@@ -70,12 +70,43 @@ function Noteitem(props) {
           <i
             className="fa-solid fa-trash  p-2"
             onClick={() => {
-              deleteNote(note._id);
+              const confirmation = prompt(
+                `Are you sure you want to delete this task?
+               `,
+                "Yes"
+              );
+              if (confirmation === "Yes") {
+                deleteNote(note._id);
+              }
               props.showAlert("Deleted successfully", "success");
             }}
           ></i>
+          <i
+            class="fa-solid fa-square-check p-2"
+            onClick={() => {
+              const confirmation = prompt(
+                `Are you sure you want to complete this task?
+               `,
+                "Yes"
+              );
+              if (confirmation === "Yes") {
+                deleteNote(note._id);
+              }
+            }}
+          ></i>
         </div>
-        <div className="card-body text-success">
+        <div>
+          <h5
+            className="card-title p-2 flex-grow-1 "
+            style={{ marginLeft: "5px", borderRadius: "5px" }}
+          >
+            {note.title}
+          </h5>
+        </div>
+        <div
+          className="card-body text-success"
+          style={{ marginBottom: "10px" }}
+        >
           <p className="card-text">{note.description}</p>
         </div>
         <div className="card-footer bg-transparent border-success">
@@ -83,7 +114,7 @@ function Noteitem(props) {
             Created at: {formatDateWithTime(note.date)}
           </small>
 
-          <div className="text-muted">
+          <div className="text-muted mt-2">
             <small>
               Deadline: {formatDate(note.deadline)} ({note.deadlinetime})
             </small>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import PersonalProfile from "./PersonalProfile";
 import { useNavigate } from "react-router-dom";
-
+import { redirect } from "react-router-dom";
 const Navbar = () => {
   let location = useLocation();
   const navigate = useNavigate();
@@ -36,7 +36,40 @@ const Navbar = () => {
                 aria-current="page"
                 to="/"
               >
-                Home
+                Daily Tasks
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${
+                  location.pathname == "/" ? "activate" : ""
+                }`}
+                aria-current="page"
+                to="/"
+              >
+                Monthly Tasks
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${
+                  location.pathname == "/" ? "activate" : ""
+                }`}
+                aria-current="page"
+                to="/"
+              >
+                Yearly Tasks
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${
+                  location.pathname == "/" ? "activate" : ""
+                }`}
+                aria-current="page"
+                to="/"
+              >
+                Goals and Roadmap
               </Link>
             </li>
             <li className="nav-item">
@@ -72,13 +105,13 @@ const Navbar = () => {
                 onClick={() => {
                   localStorage.removeItem("token");
                   window.location.reload();
-                  navigate(-2);
+                  redirect("/login");
                 }}
               >
                 Logout
               </button>
 
-              <Link to="/profile">
+              <Link to="/profile" aria-current="page">
                 <button type="button" className="btn btn-primary mx-2">
                   Profile
                 </button>
