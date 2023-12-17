@@ -62,7 +62,6 @@ const NoteState = (props) => {
       title: title,
       description: description,
       tag: tag,
-      dead,
     };
 
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
