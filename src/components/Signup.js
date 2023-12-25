@@ -44,9 +44,8 @@ function Signup(props) {
       style={{ marginTop: "80px" }}
       className="container"
     >
-      <h2>Create an account to use iNotebook</h2>
+      <h2>Create an account to use TaskDailyPro</h2>
       <div className="form-group mt-4 ">
-        <label htmlFor="name ">Name</label>
         <input
           type="text"
           className="form-control"

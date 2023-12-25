@@ -4,9 +4,10 @@ import { useState } from "react";
 const NoteState = (props) => {
   const initialNotes = [];
   const [notes, setNotes] = useState(initialNotes);
+  const [monthly, setMonthly] = useState(initialNotes);
   const host = "http://localhost:5000";
 
-  // getnotes
+  // fetching all daily tasks
   const getNotes = async () => {
     const response = await fetch(`${host}/api/notes/fetchallnotes`, {
       method: "GET",
@@ -19,7 +20,21 @@ const NoteState = (props) => {
     setNotes(json);
   };
 
-  //add note
+  // fetch monthly tasks
+  const getMonthly = async () => {
+    const response = await fetch(`${host}/api/notes/fetchallmonthly`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    setMonthly(json);
+    console.log("monthly", json);
+  };
+
+  //add daily task
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
     const host = "http://localhost:5000";
     const response = await fetch(`${host}/api/notes/addnote/`, {
@@ -33,6 +48,32 @@ const NoteState = (props) => {
     });
 
     const note = await response.json();
+
+    console.log("adding the notes ", note);
+    setNotes(notes.concat(note));
+  };
+
+  // addmonthlytasks
+  const addMonthly = async (
+    title,
+    description,
+    tag,
+    deadline,
+    deadlinetime
+  ) => {
+    const host = "http://localhost:5000";
+    const response = await fetch(`${host}/api/notes/addMonthlytask/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+
+      body: JSON.stringify({ title, description, tag, deadline, deadlinetime }),
+    });
+
+    const note = await response.json();
+
     console.log("adding the notes ", note);
     setNotes(notes.concat(note));
   };
@@ -88,9 +129,24 @@ const NoteState = (props) => {
     }
     setNotes(newNotes);
   };
+
+  const [time, setTime] = useState("");
+  const [meridian, setMeridian] = useState("AM");
+
   return (
     <NoteContext.Provider
-      value={{ notes, addNote, deleteNote, editNote, getNotes }}
+      value={{
+        notes,
+        addNote,
+        deleteNote,
+        editNote,
+        getNotes,
+        time,
+        setTime,
+        meridian,
+        setMeridian,
+        addMonthly,
+      }}
     >
       {props.children}
     </NoteContext.Provider>

@@ -41,7 +41,7 @@ function Login(props) {
       className="container"
       style={{ marginTop: "80px" }}
     >
-      <h2>Login to continue to iNotebook</h2>
+      <h2>Login to continue to TaskDailyPro</h2>
       <div className="my-4">
         <label htmlFor="email" className="form-label">
           Email address

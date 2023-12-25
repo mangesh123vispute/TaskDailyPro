@@ -4,6 +4,8 @@ import Noteitem from "./Noteitem";
 import Addnote from "./Addnote";
 import { useNavigate } from "react-router-dom";
 import TimeInput from "./TimeInput";
+import Monthly from "./Monthly";
+import Yearly from "./Yearly";
 
 function Note(props) {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function Note(props) {
     etitle: "",
     edescription: "",
     etag: "",
+    edate: "",
   });
 
   const updateNote = (currentNote) => {
@@ -25,6 +28,7 @@ function Note(props) {
       etitle: currentNote.title,
       edescription: currentNote.description,
       etag: currentNote.tag,
+      edate: currentNote.date,
     });
   };
 
@@ -49,7 +53,13 @@ function Note(props) {
 
   return (
     <>
-      <Addnote showAlert={props.showAlert} />
+      {props.path === "Monthly" ? (
+        <Monthly showAlert={props.showAlert} />
+      ) : props.path === "Yearly" ? (
+        <Yearly showAlert={props.showAlert} />
+      ) : (
+        <Addnote showAlert={props.showAlert} />
+      )}
       <button
         ref={ref}
         type="button"
@@ -174,7 +184,9 @@ function Note(props) {
         </div>
       </div>
       <div className=" row " style={{ marginTop: "60px" }}>
-        <h1 className="mb-3">Todays tasks:</h1>
+        <h1 className="mb-3">
+          {props.path == "home" ? "Todays" : props.path} tasks:
+        </h1>
         <div className="container mx-2">
           {notes.length === 0 && "no notes to display"}
         </div>

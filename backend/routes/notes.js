@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const fetchuser = require("../middelware/fetchuser");
 const Note = require("../models/Note");
+const Monthly = require("../models/Monthly");
+const Yearly = require("../models/Yearly");
 const { body, validationResult } = require("express-validator");
 
-// ROUTE 1: Get All the Notes using: GET "/api/auth/getuser". Login required
+// ROUTE 1: Get daily the tasks using: GET "/api/auth/getuser". Login required
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   try {
     const notes = await Note.find({ user: req.user.id });
@@ -15,7 +17,18 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 2: Add a new Note using: POST "/api/auth/addnote". Login required
+// ROUTE 2: Get monthly the tasks using: GET "/api/auth/getuser". Login required
+router.get("/fetchallmonthly", fetchuser, async (req, res) => {
+  try {
+    const notes = await Monthly.find({ user: req.user.id });
+    res.json(notes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// ROUTE 3: Add a new Note using: POST "/api/auth/addnote". Login required
 router.post(
   "/addnote",
   fetchuser,
@@ -29,7 +42,7 @@ router.post(
     try {
       console.log(req.body);
       const { title, description, tag, deadline, deadlinetime } = req.body;
-      console.log(deadlinetime);
+
       // If there are errors, return Bad request and the errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -53,7 +66,46 @@ router.post(
   }
 );
 
-// ROUTE 3: Update an existing Note using: POST "/api/notes/updatenote". Login required
+// ROUTE 4: Add monthly task using: POST "/api/auth/addnote". Login required
+router.post(
+  "/addMonthlytask",
+  fetchuser,
+  [
+    body("title", "Enter a valid title").isLength({ min: 3 }),
+    body("description", "Description must be atleast 5 characters").isLength({
+      min: 5,
+    }),
+  ],
+  async (req, res) => {
+    try {
+      console.log(req.body);
+      const { title, description, tag, deadline, deadlinetime } = req.body;
+
+      // If there are errors, return Bad request and the errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const Monthlytask = new Monthly({
+        title,
+        description,
+        tag,
+        user: req.user.id,
+        deadline: deadline,
+        deadlinetime: deadlinetime,
+      });
+      const savedNote = await Monthlytask.save();
+      console.log(savedNote);
+      console.log("Saved monthly note ");
+      res.json(savedNote);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
+// ROUTE 5: Update an existing Note using: POST "/api/notes/updatenote". Login required
 router.put("/updatenote/:id", fetchuser, async (req, res) => {
   const { title, description, tag } = req.body;
   try {
@@ -94,7 +146,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 4: Delete an existing Note using: DELETE "/api/notes/deletenote". Login required
+// ROUTE 6: Delete an existing Note using: DELETE "/api/notes/deletenote". Login required
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
     // Find the note to be delete and delete it

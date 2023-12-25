@@ -13,7 +13,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark  fixed-top bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          TaskDailyPro
+          <strong>TaskDailyPro</strong>
         </Link>
         <button
           className="navbar-toggler"
@@ -45,7 +45,7 @@ const Navbar = () => {
                   location.pathname == "/" ? "activate" : ""
                 }`}
                 aria-current="page"
-                to="/"
+                to="/monthly"
               >
                 Monthly Tasks
               </Link>
@@ -56,7 +56,7 @@ const Navbar = () => {
                   location.pathname == "/" ? "activate" : ""
                 }`}
                 aria-current="page"
-                to="/"
+                to="/yearly"
               >
                 Yearly Tasks
               </Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
                   location.pathname == "/" ? "activate" : ""
                 }`}
                 aria-current="page"
-                to="/"
+                to="/roadmap"
               >
                 Goals and Roadmap
               </Link>

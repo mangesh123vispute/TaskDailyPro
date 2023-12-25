@@ -3,7 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
 import TimeInput from "./TimeInput";
 
-function Addnote(props) {
+function Yearly(props) {
   const [time, setTime] = useState("");
   const [meridian, setMeridian] = useState("AM");
   const deadlinetime = `${time} ${meridian}`;
@@ -25,6 +25,8 @@ function Addnote(props) {
     notes.description = document.getElementById("description").value;
     notes.tag = document.getElementById("tag").value;
     notes.deadline = document.getElementById("deadline").value;
+
+    console.log(deadlinetime);
     e.preventDefault();
     addNote(
       notes.title,
@@ -37,8 +39,8 @@ function Addnote(props) {
     props.showAlert("Added successfully", "success");
   };
   return (
-    <div className="container my-3">
-      <h1>Add todays task:</h1>
+    <div className="container " style={{ marginTop: "10px" }}>
+      <h1>Add Yearly task:</h1>
       <form style={{ marginTop: "20px" }}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
@@ -133,4 +135,4 @@ function Addnote(props) {
   );
 }
 
-export default Addnote;
+export default Yearly;

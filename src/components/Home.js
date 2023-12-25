@@ -5,7 +5,7 @@ export const Home = (props) => {
   return (
     <>
       <div className="container " style={{ marginTop: "30px" }}>
-        <Note showAlert={showAlert} />
+        <Note showAlert={showAlert} path={props.path} />
       </div>
     </>
   );

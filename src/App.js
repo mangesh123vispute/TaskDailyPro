@@ -8,6 +8,9 @@ import Alert from "./components/Alert";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import PersonalProfile from "./components/PersonalProfile";
+import Monthly from "./components/Monthly";
+import Yearly from "./components/Yearly";
+import Roadmap from "./components/Roadmap";
 import { useState } from "react";
 
 function App() {
@@ -28,7 +31,11 @@ function App() {
         <Navbar />
         <Alert alert={alert} />
         <Routes>
-          <Route exact path="/" element={<Home showAlert={showAlert} />} />
+          <Route
+            exact
+            path="/"
+            element={<Home showAlert={showAlert} path="home" />}
+          />
           <Route
             exact
             path="/about"
@@ -43,6 +50,21 @@ function App() {
             exact
             path="/signup"
             element={<Signup showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/monthly"
+            element={<Home showAlert={showAlert} path="Monthly" />}
+          />
+          <Route
+            exact
+            path="/yearly"
+            element={<Home showAlert={showAlert} path="Yearly" />}
+          />
+          <Route
+            exact
+            path="/roadmap"
+            element={<Roadmap showAlert={showAlert} />}
           />
           <Route exact path="/profile" element={<PersonalProfile />} />
         </Routes>

@@ -3,12 +3,12 @@ import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
 import TimeInput from "./TimeInput";
 
-function Addnote(props) {
+function Monthly(props) {
   const [time, setTime] = useState("");
   const [meridian, setMeridian] = useState("AM");
   const deadlinetime = `${time} ${meridian}`;
   const context = useContext(noteContext);
-  const { addNote } = context;
+  const { addNote, addMonthly } = context;
 
   const [notes, setNotes] = useState({
     title: "",
@@ -26,7 +26,7 @@ function Addnote(props) {
     notes.tag = document.getElementById("tag").value;
     notes.deadline = document.getElementById("deadline").value;
     e.preventDefault();
-    addNote(
+    addMonthly(
       notes.title,
       notes.description,
       notes.tag,
@@ -38,7 +38,7 @@ function Addnote(props) {
   };
   return (
     <div className="container my-3">
-      <h1>Add todays task:</h1>
+      <h1>Add Monthly task:</h1>
       <form style={{ marginTop: "20px" }}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
@@ -133,4 +133,4 @@ function Addnote(props) {
   );
 }
 
-export default Addnote;
+export default Monthly;

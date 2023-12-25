@@ -82,7 +82,7 @@ function Noteitem(props) {
             }}
           ></i>
           <i
-            class="fa-solid fa-square-check p-2"
+            className="fa-solid fa-square-check p-2"
             onClick={() => {
               const confirmation = prompt(
                 `Are you sure you want to complete this task?
