@@ -66,7 +66,7 @@ function Note(props) {
   }
   const filterNotesByTag = (tag) => {
     // If tag is "All", return the original array
-    if (tag === "All") {
+    if (tag === "All" || tag === "") {
       return notes;
     }
 
@@ -75,6 +75,8 @@ function Note(props) {
 
     return filteredNotes;
   };
+  const filteredNotes = filterNotesByTag(selectedValue);
+  console.log(selectedValue, filteredNotes);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
