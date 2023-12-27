@@ -236,7 +236,7 @@ function Note(props) {
           {notes.length === 0 && "no notes to display"}
         </div>
 
-        {filterNotesByTag(selectedValue).map((note, index) => {
+        {filteredNotes.map((note, index) => {
           return (
             <Noteitem
               note={note}

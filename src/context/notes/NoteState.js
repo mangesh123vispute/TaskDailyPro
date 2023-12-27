@@ -33,7 +33,8 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    setNotes(json);
+    setNotes(json.notes);
+    setTags(json.tags);
   };
 
   //add daily task
