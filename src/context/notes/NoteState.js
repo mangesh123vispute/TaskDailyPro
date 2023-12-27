@@ -4,6 +4,7 @@ import { useState } from "react";
 const NoteState = (props) => {
   const initialNotes = [];
   const [notes, setNotes] = useState(initialNotes);
+  const [tags, setTags] = useState("");
   const host = "http://localhost:5000";
 
   // fetching all daily tasks
@@ -16,8 +17,8 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    setNotes(json);
-    console.log(json);
+    setNotes(json.notes);
+    setTags(json.tags);
   };
 
   // fetch monthly tasks
@@ -198,6 +199,7 @@ const NoteState = (props) => {
         getMonthly,
         deleteMonthly,
         editMonthly,
+        tags,
       }}
     >
       {props.children}

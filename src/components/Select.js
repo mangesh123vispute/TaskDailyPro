@@ -1,9 +1,25 @@
 import React from "react";
+import { useContext } from "react";
+import noteContext from "../context/notes/noteContext";
 
 const Select = ({ notes, onChange, monthText }) => {
+  const context = useContext(noteContext);
+  const { tags } = context;
+  const uniquetags = new Set(tags);
+  const uniqueTagsArray = Array.from(uniquetags);
+
   const renderOptions = () => {
     if (monthText === "Task") {
-      return <option value="">Select a Task</option>;
+      return (
+        <>
+          <option value="All">Search a Task</option>
+          {uniqueTagsArray.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </>
+      );
     } else if (monthText === "Month") {
       return (
         <>

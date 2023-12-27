@@ -20,6 +20,7 @@ function Note(props) {
   const navigate = useNavigate();
   const context = useContext(noteContext);
   const { notes, getNotes, editNote, getMonthly, editMonthly } = context;
+  console.log(notes);
   const ref = useRef(null);
   const refClose = useRef(null);
   const [note, setNote] = useState({
@@ -44,7 +45,6 @@ function Note(props) {
   const handleClick = (e) => {
     e.preventDefault();
     if (path === "Monthly") {
-      console.log("this is the path");
       editMonthly(note.id, note.etitle, note.edescription, note.etag);
       refClose.current.click();
     } else if (path === "Yearly") {
@@ -73,7 +73,7 @@ function Note(props) {
       props.showAlert("Please Login", "danger");
       navigate("/login");
     }
-  }, [props.path]);
+  }, [props.path, notes]);
 
   return (
     <>
