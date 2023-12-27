@@ -11,15 +11,17 @@ import Select from "./Select";
 function Note(props) {
   const path = props.path;
   let monthText = "Task";
-  if (props.path === "Monthly") {
-    monthText = "Month";
-  } else if (props.path === "Yearly") {
-    monthText = "Year";
-  }
-
   const navigate = useNavigate();
   const context = useContext(noteContext);
-  const { notes, getNotes, editNote, getMonthly, editMonthly } = context;
+  const {
+    notes,
+    getNotes,
+    editNote,
+    getMonthly,
+    editMonthly,
+    tagchange,
+    selectedValue,
+  } = context;
   console.log(notes);
   const ref = useRef(null);
   const refClose = useRef(null);
@@ -30,7 +32,6 @@ function Note(props) {
     etag: "",
     edate: "",
   });
-
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
@@ -41,7 +42,6 @@ function Note(props) {
       edate: currentNote.date,
     });
   };
-
   const handleClick = (e) => {
     e.preventDefault();
     if (path === "Monthly") {
@@ -55,9 +55,25 @@ function Note(props) {
       refClose.current.click();
     }
   };
-
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
+  };
+
+  if (props.path === "Monthly") {
+    monthText = "Month";
+  } else if (props.path === "Yearly") {
+    monthText = "Year";
+  }
+  const filterNotesByTag = (tag) => {
+    // If tag is "All", return the original array
+    if (tag === "All") {
+      return notes;
+    }
+
+    // Filter the array based on the selected tag
+    const filteredNotes = notes.filter((note) => note.tag === tag);
+
+    return filteredNotes;
   };
 
   useEffect(() => {
@@ -73,7 +89,7 @@ function Note(props) {
       props.showAlert("Please Login", "danger");
       navigate("/login");
     }
-  }, [props.path, notes]);
+  }, [props.path, tagchange]);
 
   return (
     <>
@@ -211,12 +227,14 @@ function Note(props) {
         <h1 className="mb-3 col-md-4">
           {props.path == "home" ? "Todays" : props.path} tasks:
         </h1>
+
         <Select notes={notes} onChange={onChange} monthText={monthText} />
+
         <div className="container mx-2">
           {notes.length === 0 && "no notes to display"}
         </div>
 
-        {notes.map((note, index) => {
+        {filterNotesByTag(selectedValue).map((note, index) => {
           return (
             <Noteitem
               note={note}

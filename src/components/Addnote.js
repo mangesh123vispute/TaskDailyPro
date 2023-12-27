@@ -8,7 +8,7 @@ function Addnote(props) {
   const [meridian, setMeridian] = useState("AM");
   const deadlinetime = `${time} ${meridian}`;
   const context = useContext(noteContext);
-  const { addNote } = context;
+  const { addNote, tagchange, setTagchange } = context;
 
   const [notes, setNotes] = useState({
     title: "",
@@ -21,6 +21,11 @@ function Addnote(props) {
     setNotes({ ...notes, [e.target.name]: e.target.value });
   };
   const handleClick = (e) => {
+    if (tagchange) {
+      setTagchange(false);
+    } else {
+      setTagchange(true);
+    }
     notes.title = document.getElementById("title").value;
     notes.description = document.getElementById("description").value;
     notes.tag = document.getElementById("tag").value;

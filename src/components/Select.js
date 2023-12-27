@@ -2,17 +2,22 @@ import React from "react";
 import { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 
-const Select = ({ notes, onChange, monthText }) => {
+const Select = ({ notes, monthText }) => {
   const context = useContext(noteContext);
-  const { tags } = context;
+  const { tags, selectedValue, setSelectedValue } = context;
   const uniquetags = new Set(tags);
   const uniqueTagsArray = Array.from(uniquetags);
+  console.log(selectedValue);
+  const handleSelectChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+  console.log("calligin repediately");
 
   const renderOptions = () => {
     if (monthText === "Task") {
       return (
         <>
-          <option value="All">Search a Task</option>
+          <option value="All">Search by Task</option>
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
@@ -23,7 +28,7 @@ const Select = ({ notes, onChange, monthText }) => {
     } else if (monthText === "Month") {
       return (
         <>
-          <option value="">Select a Month</option>
+          <option value="">Search by Month</option>
           <option value="January">January</option>
           <option value="February">February</option>
           <option value="March">March</option>
@@ -47,7 +52,7 @@ const Select = ({ notes, onChange, monthText }) => {
 
       return (
         <>
-          <option value="">Select a Year</option>
+          <option value="">Search by Year</option>
           {years.map((year) => (
             <option key={year} value={year}>
               {year}
@@ -71,7 +76,7 @@ const Select = ({ notes, onChange, monthText }) => {
         value={notes.tag}
         name="tag"
         required
-        onChange={onChange}
+        onChange={handleSelectChange}
         style={{ width: "205px" }}
       >
         {renderOptions()}

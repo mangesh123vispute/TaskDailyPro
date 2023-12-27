@@ -5,7 +5,7 @@ import noteContext from "../context/notes/noteContext";
 function Noteitem(props) {
   const { note, updateNote, notes } = props;
   const context = useContext(noteContext);
-  const { deleteNote, deleteMonthly } = context;
+  const { deleteNote, deleteMonthly, tagchange, setTagchange } = context;
   const formatDateWithTime = (dateString) => {
     // Check if the provided dateString is invalid
     if (
@@ -78,10 +78,25 @@ function Noteitem(props) {
               if (confirmation === "Yes") {
                 if (props.path === "Monthly") {
                   deleteMonthly(note._id);
+                  if (tagchange) {
+                    setTagchange(false);
+                  } else {
+                    setTagchange(true);
+                  }
                 } else if (props.path === "Yearly") {
                   deleteMonthly(note._id);
+                  if (tagchange) {
+                    setTagchange(false);
+                  } else {
+                    setTagchange(true);
+                  }
                 } else {
                   deleteNote(note._id);
+                  if (tagchange) {
+                    setTagchange(false);
+                  } else {
+                    setTagchange(true);
+                  }
                 }
               }
               props.showAlert("Deleted successfully", "success");
@@ -98,10 +113,25 @@ function Noteitem(props) {
               if (confirmation === "Yes") {
                 if (props.path === "Monthly") {
                   deleteMonthly(note._id);
+                  if (tagchange) {
+                    setTagchange(false);
+                  } else {
+                    setTagchange(true);
+                  }
                 } else if (props.path === "Yearly") {
                   deleteMonthly(note._id);
+                  if (tagchange) {
+                    setTagchange(false);
+                  } else {
+                    setTagchange(true);
+                  }
                 } else {
                   deleteNote(note._id);
+                  if (tagchange) {
+                    setTagchange(false);
+                  } else {
+                    setTagchange(true);
+                  }
                 }
               }
             }}

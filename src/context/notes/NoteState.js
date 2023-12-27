@@ -5,6 +5,8 @@ const NoteState = (props) => {
   const initialNotes = [];
   const [notes, setNotes] = useState(initialNotes);
   const [tags, setTags] = useState("");
+  const [tagchange, setTagchange] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
   const host = "http://localhost:5000";
 
   // fetching all daily tasks
@@ -49,7 +51,6 @@ const NoteState = (props) => {
 
     const note = await response.json();
 
-    console.log("adding the notes ", note);
     setNotes(notes.concat(note));
   };
 
@@ -89,8 +90,7 @@ const NoteState = (props) => {
       },
     });
     const json = await response.json();
-    console.log(json);
-    console.log("deleting the note with id" + id);
+
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
@@ -200,6 +200,10 @@ const NoteState = (props) => {
         deleteMonthly,
         editMonthly,
         tags,
+        tagchange,
+        setTagchange,
+        selectedValue,
+        setSelectedValue,
       }}
     >
       {props.children}
