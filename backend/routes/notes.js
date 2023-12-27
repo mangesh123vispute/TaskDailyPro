@@ -10,6 +10,7 @@ const { body, validationResult } = require("express-validator");
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   try {
     const notes = await Note.find({ user: req.user.id });
+    const tags = notes.map((note) => note.tag);
     res.json(notes);
   } catch (error) {
     console.error(error.message);
@@ -146,7 +147,40 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 6: Delete an existing Note using: DELETE "/api/notes/deletenote". Login required
+// ROUTE 5: Update an existing monthly task using: POST "/api/notes/updatenote". Login required
+router.put("/updateMonthly/:id", fetchuser, async (req, res) => {
+  const { title, description, tag, deadline } = req.body;
+
+  try {
+    const newNote = {};
+    if (title) newNote.title = title;
+    if (description) newNote.description = description;
+    if (tag) newNote.tag = tag;
+    if (deadline) newNote.deadline = deadline;
+
+    const note = await Monthly.findById(req.params.id);
+    if (!note) {
+      return res.status(404).send("Not Found");
+    }
+
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).send("Not Allowed");
+    }
+
+    const updatedNote = await Monthly.findByIdAndUpdate(
+      req.params.id,
+      { $set: newNote },
+      { new: true }
+    );
+
+    res.json({ note: updatedNote });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// ROUTE 6: Delete an existing daily task using: DELETE "/api/notes/deletenote". Login required
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
     // Find the note to be delete and delete it
@@ -161,6 +195,28 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
     }
 
     note = await Note.findByIdAndDelete(req.params.id);
+    res.json({ Success: "Note has been deleted", note: note });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// ROUTE 6: Delete an existing Monthly task using: DELETE "/api/notes/deleteMonthly". Login required
+router.delete("/deleteMonthly/:id", fetchuser, async (req, res) => {
+  try {
+    // Find the note to be delete and delete it
+    let note = await Monthly.findById(req.params.id);
+    if (!note) {
+      return res.status(404).send("Not Found");
+    }
+
+    // Allow deletion only if user owns this Note
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).send("Not Allowed");
+    }
+
+    note = await Monthly.findByIdAndDelete(req.params.id);
     res.json({ Success: "Note has been deleted", note: note });
   } catch (error) {
     console.error(error.message);

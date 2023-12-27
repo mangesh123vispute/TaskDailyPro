@@ -6,11 +6,20 @@ import { useNavigate } from "react-router-dom";
 import TimeInput from "./TimeInput";
 import Monthly from "./Monthly";
 import Yearly from "./Yearly";
+import Select from "./Select";
 
 function Note(props) {
+  const path = props.path;
+  let monthText = "Task";
+  if (props.path === "Monthly") {
+    monthText = "Month";
+  } else if (props.path === "Yearly") {
+    monthText = "Year";
+  }
+
   const navigate = useNavigate();
   const context = useContext(noteContext);
-  const { notes, getNotes, editNote } = context;
+  const { notes, getNotes, editNote, getMonthly, editMonthly } = context;
   const ref = useRef(null);
   const refClose = useRef(null);
   const [note, setNote] = useState({
@@ -34,8 +43,17 @@ function Note(props) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    editNote(note.id, note.etitle, note.edescription, note.etag);
-    refClose.current.click();
+    if (path === "Monthly") {
+      console.log("this is the path");
+      editMonthly(note.id, note.etitle, note.edescription, note.etag);
+      refClose.current.click();
+    } else if (path === "Yearly") {
+      editMonthly(note.id, note.etitle, note.edescription, note.etag);
+      refClose.current.click();
+    } else {
+      editNote(note.id, note.etitle, note.edescription, note.etag);
+      refClose.current.click();
+    }
   };
 
   const onChange = (e) => {
@@ -44,12 +62,18 @@ function Note(props) {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      getNotes();
+      if (props.path === "Monthly") {
+        getMonthly();
+      } else if (props.path === "Yearly") {
+        getMonthly();
+      } else {
+        getNotes();
+      }
     } else {
       props.showAlert("Please Login", "danger");
       navigate("/login");
     }
-  }, []);
+  }, [props.path]);
 
   return (
     <>
@@ -184,9 +208,10 @@ function Note(props) {
         </div>
       </div>
       <div className=" row " style={{ marginTop: "60px" }}>
-        <h1 className="mb-3">
+        <h1 className="mb-3 col-md-4">
           {props.path == "home" ? "Todays" : props.path} tasks:
         </h1>
+        <Select notes={notes} onChange={onChange} monthText={monthText} />
         <div className="container mx-2">
           {notes.length === 0 && "no notes to display"}
         </div>
@@ -199,6 +224,7 @@ function Note(props) {
               notes={notes[index]}
               updateNote={updateNote}
               showAlert={props.showAlert}
+              path={props.path}
             />
           );
         })}

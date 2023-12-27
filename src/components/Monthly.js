@@ -76,7 +76,7 @@ function Monthly(props) {
           <div className="row">
             <div className="col-md-3">
               <label htmlFor="description" className="form-label">
-                Deadline
+                Year and deadline
               </label>
               <input
                 type="date"
@@ -89,42 +89,44 @@ function Monthly(props) {
                 required
               />
             </div>
-            <div className="col-md-9" style={{ marginTop: "35px" }}>
-              <TimeInput
-                time={time}
-                meridian={meridian}
-                setMeridian={setMeridian}
-                setTime={setTime}
-              />
+
+            <div className="col-md-3">
+              <label htmlFor="tag" className="form-label">
+                Month
+              </label>
+              <select
+                className="form-control"
+                id="tag"
+                value={notes.tag}
+                name="tag"
+                required
+                onChange={onChange}
+                style={{ width: "205px" }}
+              >
+                <option value="">Select a Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
             </div>
           </div>
-        </div>
-
-        <div className="mb-3" style={{ marginTop: "10px" }}>
-          <label htmlFor="tag" className="form-label">
-            Tag
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="tag"
-            value={notes.tag}
-            name="tag"
-            minLength={5}
-            required
-            onChange={onChange}
-          />
         </div>
 
         <button
           type="submit"
           onClick={handleClick}
-          disabled={
-            notes.tag.length < 5 ||
-            notes.title.length < 5 ||
-            notes.description.length < 5
-          }
+          disabled={notes.title.length < 5 || notes.description.length < 5}
           className="btn btn-primary"
+          style={{ marginTop: "30px" }}
         >
           Add Task
         </button>

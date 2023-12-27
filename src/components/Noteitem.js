@@ -5,7 +5,7 @@ import noteContext from "../context/notes/noteContext";
 function Noteitem(props) {
   const { note, updateNote, notes } = props;
   const context = useContext(noteContext);
-  const { deleteNote } = context;
+  const { deleteNote, deleteMonthly } = context;
   const formatDateWithTime = (dateString) => {
     // Check if the provided dateString is invalid
     if (
@@ -76,7 +76,13 @@ function Noteitem(props) {
                 "Yes"
               );
               if (confirmation === "Yes") {
-                deleteNote(note._id);
+                if (props.path === "Monthly") {
+                  deleteMonthly(note._id);
+                } else if (props.path === "Yearly") {
+                  deleteMonthly(note._id);
+                } else {
+                  deleteNote(note._id);
+                }
               }
               props.showAlert("Deleted successfully", "success");
             }}
@@ -90,7 +96,13 @@ function Noteitem(props) {
                 "Yes"
               );
               if (confirmation === "Yes") {
-                deleteNote(note._id);
+                if (props.path === "Monthly") {
+                  deleteMonthly(note._id);
+                } else if (props.path === "Yearly") {
+                  deleteMonthly(note._id);
+                } else {
+                  deleteNote(note._id);
+                }
               }
             }}
           ></i>
