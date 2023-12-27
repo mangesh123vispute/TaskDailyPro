@@ -21,6 +21,7 @@ function Note(props) {
     editMonthly,
     tagchange,
     selectedValue,
+    setSelectedValue,
   } = context;
   console.log(notes);
   const ref = useRef(null);
@@ -87,6 +88,7 @@ function Note(props) {
       } else {
         getNotes();
       }
+      setSelectedValue("All");
     } else {
       props.showAlert("Please Login", "danger");
       navigate("/login");
