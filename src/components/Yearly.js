@@ -1,14 +1,12 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
-import TimeInput from "./TimeInput";
 
 function Yearly(props) {
   const [time, setTime] = useState("");
-  const [meridian, setMeridian] = useState("AM");
-  const deadlinetime = `${time} ${meridian}`;
+  const deadlinetime = `${time}`;
   const context = useContext(noteContext);
-  const { addNote } = context;
+  const { addYearly, tagchange, setTagchange } = context;
 
   const [notes, setNotes] = useState({
     title: "",
@@ -21,6 +19,11 @@ function Yearly(props) {
     setNotes({ ...notes, [e.target.name]: e.target.value });
   };
   const handleClick = (e) => {
+    if (tagchange) {
+      setTagchange(false);
+    } else {
+      setTagchange(true);
+    }
     notes.title = document.getElementById("title").value;
     notes.description = document.getElementById("description").value;
     notes.tag = document.getElementById("tag").value;
@@ -28,7 +31,7 @@ function Yearly(props) {
 
     console.log(deadlinetime);
     e.preventDefault();
-    addNote(
+    addYearly(
       notes.title,
       notes.description,
       notes.tag,
@@ -91,40 +94,43 @@ function Yearly(props) {
                 required
               />
             </div>
-            <div className="col-md-9" style={{ marginTop: "35px" }}>
-              <TimeInput
-                time={time}
-                meridian={meridian}
-                setMeridian={setMeridian}
-                setTime={setTime}
-              />
+            <div className="col-md-3">
+              <div className="mb-3">
+                <label htmlFor="tag" className="form-label">
+                  Year
+                </label>
+                <select
+                  className="form-select"
+                  id="tag"
+                  value={notes.tag}
+                  name="tag"
+                  required
+                  onChange={onChange}
+                >
+                  <option value="All">Select a Year</option>
+                  {/* Generating options for the next 10 years from the current year onwards */}
+                  {Array.from({ length: 10 }, (_, index) => (
+                    <option
+                      key={index}
+                      value={new Date().getFullYear() + index}
+                    >
+                      {new Date().getFullYear() + index}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="mb-3" style={{ marginTop: "10px" }}>
-          <label htmlFor="tag" className="form-label">
-            Tag
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="tag"
-            value={notes.tag}
-            name="tag"
-            minLength={5}
-            required
-            onChange={onChange}
-          />
         </div>
 
         <button
           type="submit"
           onClick={handleClick}
+          style={{ marginTop: "20px" }}
           disabled={
-            notes.tag.length < 5 ||
-            notes.title.length < 5 ||
-            notes.description.length < 5
+            notes.tag.length < 1 ||
+            notes.title.length < 1 ||
+            notes.description.length < 1
           }
           className="btn btn-primary"
         >

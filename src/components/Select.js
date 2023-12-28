@@ -6,19 +6,21 @@ const Select = ({ notes, monthText }) => {
   const context = useContext(noteContext);
   const { tags, selectedValue, setSelectedValue } = context;
   console.log("this is the tags", tags);
+
   const uniquetags = new Set(tags);
+  console.log("uniquetags", uniquetags);
   const uniqueTagsArray = Array.from(uniquetags);
-  console.log(selectedValue);
+  console.log("this is the selected value", selectedValue);
   const handleSelectChange = (event) => {
     setSelectedValue(event.target.value);
   };
-  console.log("calligin repediately");
 
   const renderOptions = () => {
     if (monthText === "Task") {
       return (
         <>
-          <option value="All">All</option>
+          <option value="All">Select Task</option>
+          {console.log("this is the unique tags", uniqueTagsArray)}
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
@@ -29,7 +31,7 @@ const Select = ({ notes, monthText }) => {
     } else if (monthText === "Month") {
       return (
         <>
-          <option value="">All</option>
+          <option value="">Select Month</option>
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
@@ -38,18 +40,13 @@ const Select = ({ notes, monthText }) => {
         </>
       );
     } else if (monthText === "Year") {
-      const currentYear = new Date().getFullYear();
-      const years = Array.from(
-        { length: 11 },
-        (_, index) => currentYear + index
-      );
-
+      console.log("this is the unique tags++", uniqueTagsArray);
       return (
         <>
-          <option value="">All</option>
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
+          <option value="">Select Year</option>
+          {uniqueTagsArray.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
             </option>
           ))}
         </>
@@ -67,7 +64,7 @@ const Select = ({ notes, monthText }) => {
       <select
         className="form-control"
         id="tag"
-        value={notes.tag}
+        value={selectedValue}
         name="tag"
         required
         onChange={handleSelectChange}

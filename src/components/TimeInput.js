@@ -1,35 +1,24 @@
 import React, { useState } from "react";
 
-const TimeInput = ({ time, meridian, setTime, setMeridian }) => {
+const TimeInput = ({ time, setTime }) => {
   const handleChangeTime = (event) => {
     setTime(event.target.value);
   };
 
-  const handleChangeMeridian = (event) => {
-    setMeridian(event.target.value);
-  };
-
   return (
     <>
-      <label htmlFor="time">Select time:</label>
+      <label htmlFor="time" className="form-label">
+        Select time:
+      </label>
       <input
         type="text"
         id="time"
         value={time}
         onChange={handleChangeTime}
-        placeholder="Start time-End time (example: 10:00-11:00)"
+        placeholder="Start time-End time (example: 10:00am-11:00am)"
         style={{ marginLeft: "10px", width: "400px" }}
+        className="form-control"
       />
-
-      <select
-        id="meridian"
-        value={meridian}
-        onChange={handleChangeMeridian}
-        style={{ marginLeft: "10px" }}
-      >
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </select>
     </>
   );
 };

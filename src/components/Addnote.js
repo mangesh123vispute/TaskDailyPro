@@ -5,8 +5,8 @@ import TimeInput from "./TimeInput";
 
 function Addnote(props) {
   const [time, setTime] = useState("");
-  const [meridian, setMeridian] = useState("AM");
-  const deadlinetime = `${time} ${meridian}`;
+
+  const deadlinetime = `${time}`;
   const context = useContext(noteContext);
   const { addNote, tagchange, setTagchange } = context;
 
@@ -21,6 +21,7 @@ function Addnote(props) {
     setNotes({ ...notes, [e.target.name]: e.target.value });
   };
   const handleClick = (e) => {
+    console.log("this is the tagchaking ", tagchange);
     if (tagchange) {
       setTagchange(false);
     } else {
@@ -94,13 +95,8 @@ function Addnote(props) {
                 required
               />
             </div>
-            <div className="col-md-9" style={{ marginTop: "35px" }}>
-              <TimeInput
-                time={time}
-                meridian={meridian}
-                setMeridian={setMeridian}
-                setTime={setTime}
-              />
+            <div className=" col-md-3">
+              <TimeInput time={time} setTime={setTime} />
             </div>
           </div>
         </div>
@@ -125,9 +121,9 @@ function Addnote(props) {
           type="submit"
           onClick={handleClick}
           disabled={
-            notes.tag.length < 5 ||
-            notes.title.length < 5 ||
-            notes.description.length < 5
+            notes.tag.length < 1 ||
+            notes.title.length < 1 ||
+            notes.description.length < 1
           }
           className="btn btn-primary"
         >

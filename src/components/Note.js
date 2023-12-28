@@ -22,8 +22,10 @@ function Note(props) {
     tagchange,
     selectedValue,
     setSelectedValue,
+    getYearly,
+    editYearly,
   } = context;
-  console.log(notes);
+  console.log("this is the tagchange", tagchange);
   const ref = useRef(null);
   const refClose = useRef(null);
   const [note, setNote] = useState({
@@ -49,7 +51,7 @@ function Note(props) {
       editMonthly(note.id, note.etitle, note.edescription, note.etag);
       refClose.current.click();
     } else if (path === "Yearly") {
-      editMonthly(note.id, note.etitle, note.edescription, note.etag);
+      editYearly(note.id, note.etitle, note.edescription, note.etag);
       refClose.current.click();
     } else {
       editNote(note.id, note.etitle, note.edescription, note.etag);
@@ -84,7 +86,7 @@ function Note(props) {
       if (props.path === "Monthly") {
         getMonthly();
       } else if (props.path === "Yearly") {
-        getMonthly();
+        getYearly();
       } else {
         getNotes();
       }
@@ -167,40 +169,76 @@ function Note(props) {
                     required
                   />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="tag" className="form-label">
-                    Tag
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="etag"
-                    name="etag"
-                    value={note.etag}
-                    onChange={onChange}
-                    minLength={5}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="tag" className="form-label">
-                    Deadline
-                  </label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="edate"
-                    name="edate"
-                    value={note.edate}
-                    onChange={onChange}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <TimeInput />
-                </div>
+                {props.path === "Monthly" ? (
+                  <div className="col-md-3">
+                    <label htmlFor="tag" className="form-label">
+                      Month
+                    </label>
+                    <select
+                      className="form-control"
+                      id="tag"
+                      value={note.etag}
+                      name="etag"
+                      required
+                      onChange={onChange}
+                      style={{ width: "205px" }}
+                    >
+                      <option value="">Select a Month</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                    </select>
+                  </div>
+                ) : props.path === "Yearly" ? (
+                  <div className="mb-3">
+                    <label htmlFor="tag" className="form-label">
+                      Year
+                    </label>
+                    <select
+                      className="form-select"
+                      id="tag"
+                      value={note.etag}
+                      name="etag"
+                      required
+                      onChange={onChange}
+                    >
+                      {/* Generating options for the next 10 years from the current year onwards */}
+                      {Array.from({ length: 10 }, (_, index) => (
+                        <option
+                          key={index}
+                          value={new Date().getFullYear() + index}
+                        >
+                          {new Date().getFullYear() + index}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <div className="mb-3">
+                    <label htmlFor="tag" className="form-label">
+                      Tag
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="etag"
+                      name="etag"
+                      value={note.etag}
+                      onChange={onChange}
+                      minLength={5}
+                      required
+                    />
+                  </div>
+                )}
               </form>
             </div>
             <div className="modal-footer">
@@ -214,9 +252,9 @@ function Note(props) {
               <button
                 onClick={handleClick}
                 disabled={
-                  note.etag.length < 5 ||
-                  note.etitle.length < 5 ||
-                  note.edescription.length < 5
+                  note.etitle.length < 1 ||
+                  note.etitle.length < 1 ||
+                  note.edescription.length < 1
                 }
                 type="button"
                 className="btn btn-primary"

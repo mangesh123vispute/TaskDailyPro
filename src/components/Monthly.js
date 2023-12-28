@@ -8,7 +8,7 @@ function Monthly(props) {
   const [meridian, setMeridian] = useState("AM");
   const deadlinetime = `${time} ${meridian}`;
   const context = useContext(noteContext);
-  const { addNote, addMonthly } = context;
+  const { addNote, addMonthly, tagchange, setTagchange } = context;
 
   const [notes, setNotes] = useState({
     title: "",
@@ -21,6 +21,11 @@ function Monthly(props) {
     setNotes({ ...notes, [e.target.name]: e.target.value });
   };
   const handleClick = (e) => {
+    if (tagchange) {
+      setTagchange(false);
+    } else {
+      setTagchange(true);
+    }
     notes.title = document.getElementById("title").value;
     notes.description = document.getElementById("description").value;
     notes.tag = document.getElementById("tag").value;
@@ -124,7 +129,11 @@ function Monthly(props) {
         <button
           type="submit"
           onClick={handleClick}
-          disabled={notes.title.length < 5 || notes.description.length < 5}
+          disabled={
+            notes.tag.length < 1 ||
+            notes.title.length < 1 ||
+            notes.description.length < 1
+          }
           className="btn btn-primary"
           style={{ marginTop: "30px" }}
         >

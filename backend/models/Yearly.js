@@ -26,10 +26,6 @@ const Yearly = new Schema({
     type: Date,
     required: true,
   },
-  deadlinetime: {
-    type: String,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("Yearly", Yearly);

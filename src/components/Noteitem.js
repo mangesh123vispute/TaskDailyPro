@@ -5,7 +5,8 @@ import noteContext from "../context/notes/noteContext";
 function Noteitem(props) {
   const { note, updateNote, notes } = props;
   const context = useContext(noteContext);
-  const { deleteNote, deleteMonthly, tagchange, setTagchange } = context;
+  const { deleteNote, deleteMonthly, tagchange, setTagchange, deleteYearly } =
+    context;
   const formatDateWithTime = (dateString) => {
     // Check if the provided dateString is invalid
     if (
@@ -84,7 +85,7 @@ function Noteitem(props) {
                     setTagchange(true);
                   }
                 } else if (props.path === "Yearly") {
-                  deleteMonthly(note._id);
+                  deleteYearly(note._id);
                   if (tagchange) {
                     setTagchange(false);
                   } else {
@@ -119,7 +120,7 @@ function Noteitem(props) {
                     setTagchange(true);
                   }
                 } else if (props.path === "Yearly") {
-                  deleteMonthly(note._id);
+                  deleteYearly(note._id);
                   if (tagchange) {
                     setTagchange(false);
                   } else {
