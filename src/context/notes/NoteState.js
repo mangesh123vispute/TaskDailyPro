@@ -172,7 +172,6 @@ const NoteState = (props) => {
   // edit daily tasks
   const editNote = async (id, title, description, tag) => {
     const host = "http://localhost:5000";
-    console.log(title, description, tag);
     const data = {
       title: title,
       description: description,
