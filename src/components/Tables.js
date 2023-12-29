@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import notificationSound from "../notificationsound.mp3";
 
 function Tables() {
+  const audioRef = useRef(null);
   const [data, setData] = useState([
     {
       id: 1,
@@ -67,9 +69,10 @@ function Tables() {
     );
     if (allTasksCompleted) {
       // Show the notification popup
+      audioRef.current.play();
       toast.success("You have completed all the tasks. Goal is reached! 🎉", {
         position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: true,
       });
     }
@@ -98,8 +101,9 @@ function Tables() {
     <div className="container">
       <div className="heading-container">
         <h3>Process:</h3>
-        <p>Complete all the Tasks given by mentors to achive the Goal.</p>
+        <p>Add Process Given by the mentor.</p>
       </div>
+      <audio ref={audioRef} src={notificationSound} />
       <table
         className="table table-bordered table-striped table-hover table-responsive table-condensed"
         style={{
@@ -230,11 +234,12 @@ function Tables() {
           ))}
         </tbody>
       </table>
+
       <div className="button-container">
-        <button className="btn btn-primary btn-sm" onClick={handleAddNewTask}>
+        <button className="btn btn-primary " onClick={handleAddNewTask}>
           AddNewTask
         </button>
-        <button className="btn btn-success btn-sm mx-2" onClick={handleUpdate}>
+        <button className="btn btn-success  mx-2" onClick={handleUpdate}>
           Update
         </button>
       </div>

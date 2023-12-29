@@ -1,8 +1,8 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
-import TimeInput from "./TimeInput";
 import Tables from "./Tables";
+import { Link } from "react-router-dom";
 function Addnote(props) {
   const [time, setTime] = useState("");
 
@@ -43,12 +43,12 @@ function Addnote(props) {
     props.showAlert("Added successfully", "success");
   };
   return (
-    <div className="container my-3">
-      <h1>Add todays task:</h1>
+    <div className="container my-4">
+      <h1>Add Goals and Roadmap.</h1>
       <form style={{ marginTop: "20px" }}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
-            Task
+            Goal
           </label>
           <input
             type="text"
@@ -95,27 +95,37 @@ function Addnote(props) {
                 required
               />
             </div>
-            <div className=" col-md-3">
-              <TimeInput time={time} setTime={setTime} />
+            <div className="col-md-3">
+              <label htmlFor="tag" className="form-label">
+                Tag
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="tag"
+                value={notes.tag}
+                name="tag"
+                minLength={5}
+                required
+                onChange={onChange}
+                placeholder="Health, Education,  etc."
+              />
             </div>
           </div>
         </div>
-
-        <div className="mb-3" style={{ marginTop: "10px" }}>
-          <label htmlFor="tag" className="form-label">
-            Tag
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="tag"
-            value={notes.tag}
-            name="tag"
-            minLength={5}
-            required
-            onChange={onChange}
-          />
-        </div>
+        <Link to="/Tables">
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={{ marginTop: "20px" }}
+            onClick={() => {
+              // AddProcess functionality
+              // You can define the functionality for AddProcess here
+            }}
+          >
+            AddProcess
+          </button>
+        </Link>
 
         <button
           type="submit"
@@ -125,12 +135,12 @@ function Addnote(props) {
             notes.title.length < 1 ||
             notes.description.length < 1
           }
-          className="btn btn-primary"
+          className="btn btn-success"
+          style={{ marginTop: "20px", marginLeft: "20px" }}
         >
-          Add Task
+          Add Goal
         </button>
       </form>
-      <Tables />
     </div>
   );
 }

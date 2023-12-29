@@ -11,6 +11,7 @@ import PersonalProfile from "./components/PersonalProfile";
 import Monthly from "./components/Monthly";
 import Yearly from "./components/Yearly";
 import Roadmap from "./components/Roadmap";
+import Tables from "./components/Tables";
 import { useState } from "react";
 
 function App() {
@@ -65,6 +66,11 @@ function App() {
             exact
             path="/roadmap"
             element={<Roadmap showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/Tables"
+            element={<Tables showAlert={showAlert} />}
           />
           <Route exact path="/profile" element={<PersonalProfile />} />
         </Routes>

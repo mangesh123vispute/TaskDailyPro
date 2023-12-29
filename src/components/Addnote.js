@@ -1,9 +1,12 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import TimeInput from "./TimeInput";
+import pop from "../pop.mp3";
 
 function Addnote(props) {
+  const audioRef = useRef(null);
+
   const [time, setTime] = useState("");
 
   const deadlinetime = `${time}`;
@@ -21,6 +24,7 @@ function Addnote(props) {
     setNotes({ ...notes, [e.target.name]: e.target.value });
   };
   const handleClick = (e) => {
+    audioRef.current.play();
     console.log("this is the tagchaking ", tagchange);
     if (tagchange) {
       setTagchange(false);
@@ -44,6 +48,7 @@ function Addnote(props) {
   };
   return (
     <div className="container my-3">
+      <audio ref={audioRef} src={pop} />
       <h1>Add todays task:</h1>
       <form style={{ marginTop: "20px" }}>
         <div className="mb-3">
@@ -114,6 +119,7 @@ function Addnote(props) {
             minLength={5}
             required
             onChange={onChange}
+            placeholder="eg. work,study,home"
           />
         </div>
 
