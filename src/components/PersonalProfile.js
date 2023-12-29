@@ -1,4 +1,5 @@
 import React from "react";
+import mangesh from "../profile/mangesh.jpg";
 import {
   MDBCol,
   MDBContainer,
@@ -10,8 +11,10 @@ import {
   MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function PersonalProfile() {
+  const navigate = useNavigate();
   return (
     <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
       <MDBContainer className="py-5 h-100">
@@ -28,12 +31,27 @@ export default function PersonalProfile() {
                   }}
                 >
                   <MDBCardImage
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                    src={mangesh}
                     alt="Avatar"
                     className="my-5"
-                    style={{ width: "80px" }}
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                    }}
                     fluid
                   />
+                  <button
+                    type="button"
+                    className="btn btn-danger mx-2 btn-rounded btn-sm"
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      navigate("/login");
+                    }}
+                  >
+                    Logout
+                  </button>
                   <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
                   <MDBCardText>Web Designer</MDBCardText>
                   <MDBIcon far icon="edit mb-5" />

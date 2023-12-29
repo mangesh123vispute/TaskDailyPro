@@ -3,7 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
 import Tables from "./Tables";
 import { Link } from "react-router-dom";
-function Addnote(props) {
+function Roadmap(props) {
   const [time, setTime] = useState("");
 
   const deadlinetime = `${time}`;
@@ -113,36 +113,37 @@ function Addnote(props) {
             </div>
           </div>
         </div>
-        <Link to="/Tables">
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={{ marginTop: "20px" }}
-            onClick={() => {
-              // AddProcess functionality
-              // You can define the functionality for AddProcess here
-            }}
-          >
-            AddProcess
-          </button>
-        </Link>
+        <div style={{ marginTop: "35px" }}>
+          <Link to="/Tables">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                // AddProcess functionality
+                // You can define the functionality for AddProcess here
+              }}
+            >
+              AddProcess
+            </button>
+          </Link>
 
-        <button
-          type="submit"
-          onClick={handleClick}
-          disabled={
-            notes.tag.length < 1 ||
-            notes.title.length < 1 ||
-            notes.description.length < 1
-          }
-          className="btn btn-success"
-          style={{ marginTop: "20px", marginLeft: "20px" }}
-        >
-          Add Goal
-        </button>
+          <button
+            type="submit"
+            onClick={handleClick}
+            disabled={
+              notes.tag.length < 1 ||
+              notes.title.length < 1 ||
+              notes.description.length < 1
+            }
+            className="btn btn-success"
+            style={{ marginLeft: "20px" }}
+          >
+            Add Goal
+          </button>
+        </div>
       </form>
     </div>
   );
 }
 
-export default Addnote;
+export default Roadmap;

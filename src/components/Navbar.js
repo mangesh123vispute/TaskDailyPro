@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import PersonalProfile from "./PersonalProfile";
-import { useNavigate } from "react-router-dom";
-import { redirect } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Aavtar from "./Aavtar";
+
 const Navbar = () => {
   let location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {}, [location]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark  fixed-top bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <strong>TaskDailyPro</strong>
@@ -31,9 +30,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
-                  location.pathname == "/" ? "activate" : ""
+                  location.pathname === "/" ? "active" : ""
                 }`}
-                aria-current="page"
                 to="/"
               >
                 Daily Tasks
@@ -42,9 +40,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
-                  location.pathname == "/" ? "activate" : ""
+                  location.pathname === "/monthly" ? "active" : ""
                 }`}
-                aria-current="page"
                 to="/monthly"
               >
                 Monthly Tasks
@@ -53,9 +50,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
-                  location.pathname == "/" ? "activate" : ""
+                  location.pathname === "/yearly" ? "active" : ""
                 }`}
-                aria-current="page"
                 to="/yearly"
               >
                 Yearly Tasks
@@ -64,9 +60,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
-                  location.pathname == "/" ? "activate" : ""
+                  location.pathname === "/roadmap" ? "active" : ""
                 }`}
-                aria-current="page"
                 to="/roadmap"
               >
                 Goals and Roadmap
@@ -75,7 +70,7 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
-                  location.pathname == "/about" ? "activate" : ""
+                  location.pathname === "/about" ? "active" : ""
                 }`}
                 to="/about"
               >
@@ -99,22 +94,8 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <button
-                type="button"
-                className="btn btn-primary mx-2"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  window.location.reload();
-                  redirect("/login");
-                }}
-              >
-                Logout
-              </button>
-
               <Link to="/profile" aria-current="page">
-                <button type="button" className="btn btn-primary mx-2">
-                  Profile
-                </button>
+                <Aavtar />
               </Link>
             </>
           )}

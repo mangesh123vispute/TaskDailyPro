@@ -7,6 +7,7 @@ import TimeInput from "./TimeInput";
 import Monthly from "./Monthly";
 import Yearly from "./Yearly";
 import Select from "./Select";
+import Roadmap from "./Roadmap";
 
 function Note(props) {
   const path = props.path;
@@ -103,6 +104,8 @@ function Note(props) {
         <Monthly showAlert={props.showAlert} />
       ) : props.path === "Yearly" ? (
         <Yearly showAlert={props.showAlert} />
+      ) : props.path == "Roadmap" ? (
+        <Roadmap showAlert={props.showAlert} />
       ) : (
         <Addnote showAlert={props.showAlert} />
       )}

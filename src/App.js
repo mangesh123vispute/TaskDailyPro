@@ -65,7 +65,7 @@ function App() {
           <Route
             exact
             path="/roadmap"
-            element={<Roadmap showAlert={showAlert} />}
+            element={<Home showAlert={showAlert} path="Roadmap" />}
           />
           <Route
             exact

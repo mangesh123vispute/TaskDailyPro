@@ -1,10 +1,8 @@
 import React from "react";
 import { useContext, useRef } from "react";
 import noteContext from "../context/notes/noteContext";
-import complete from "../complete.mp3";
 
 function Noteitem(props) {
-  const audioRef = useRef(null);
   const { note, updateNote, notes } = props;
   const context = useContext(noteContext);
   const { deleteNote, deleteMonthly, tagchange, setTagchange, deleteYearly } =
@@ -48,7 +46,6 @@ function Noteitem(props) {
 
   return (
     <>
-      <audio ref={audioRef} src={complete} />
       <div
         className="card border-success mb-3 "
         style={{ maxWidth: "18rem", margin: "10px" }}
@@ -115,7 +112,6 @@ function Noteitem(props) {
                 "Yes"
               );
               if (confirmation === "Yes") {
-                audioRef.current.play();
                 if (props.path === "Monthly") {
                   deleteMonthly(note._id);
                   if (tagchange) {
