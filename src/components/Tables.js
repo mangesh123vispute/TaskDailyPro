@@ -105,7 +105,7 @@ function Tables() {
         <p>Add Process Given by the mentor.</p>
       </div>
       <audio ref={audioRef} src={notificationSound} />
-      <div className="table-responsive">
+      <div className="table-responsive ">
         <table
           className="table table-bordered table-striped table-hover  table-condensed"
           style={{

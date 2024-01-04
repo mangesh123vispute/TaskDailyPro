@@ -47,8 +47,8 @@ function Noteitem(props) {
   return (
     <>
       <div
-        className="card border-success mb-3 "
-        style={{ maxWidth: "18rem", margin: "10px" }}
+        className="card border-success mb-3 hoverable"
+        style={{ maxWidth: "18rem", margin: "20px" }}
       >
         <div
           className="card-header bg-transparent border-success"

@@ -45,6 +45,13 @@ export default function PersonalProfile() {
                   <button
                     type="button"
                     className="btn btn-danger mx-2 btn-rounded btn-sm"
+                    style={{ transition: "all 0.5s ease" }}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.1)")
+                    }
+                    onMouseOut={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
                     onClick={() => {
                       localStorage.removeItem("token");
                       navigate("/login");

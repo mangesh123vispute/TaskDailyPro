@@ -40,3 +40,21 @@
 i{
   cursor: pointer;
 }
+
+.animated-link {
+  transition: transform 0.3s ease-in-out;
+}
+
+.animated-link:hover {
+  transform: scale(1.1);
+}
+
+
+.hoverable {
+  transition: transform .2s; /* Animation */
+}
+
+.hoverable:hover {
+  transform: scale(1.1);
+   /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
