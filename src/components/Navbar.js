@@ -71,6 +71,16 @@ const Navbar = () => {
             <li className="nav-item animated-link">
               <Link
                 className={`nav-link ${
+                  location.pathname === "/learning" ? "active" : ""
+                }`}
+                to="/learnings"
+              >
+                Learning
+              </Link>
+            </li>
+            <li className="nav-item animated-link">
+              <Link
+                className={`nav-link ${
                   location.pathname === "/about" ? "active" : ""
                 }`}
                 to="/about"

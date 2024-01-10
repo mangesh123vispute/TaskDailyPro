@@ -22,6 +22,15 @@ function About() {
           </strong>
           <br />
         </p>
+        <p className="text-lg mb-5 italic">
+          Process: 1) Must be taken from a person who has achieved the goal
+          state,
+          <br />
+          2) Process must be verified by at least 5 successful persons,
+          <br />
+          Then put your soul to follow that process, you will reach the goal
+          state.
+        </p>
         <footer className="text-right text-sm text-gray-500">
           - Mangesh Vispute
         </footer>
