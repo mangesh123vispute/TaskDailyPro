@@ -67,7 +67,7 @@ function Learning() {
   };
 
   return (
-    <div className="learning-container" style={{ paddingBottom: "40px" }}>
+    <div className="container" style={{ paddingBottom: "40px" }}>
       <h1 className="title">Add your learnings!</h1>
       <input
         value={input}

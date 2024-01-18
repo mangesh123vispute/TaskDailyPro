@@ -47,8 +47,11 @@ function Noteitem(props) {
   return (
     <>
       <div
-        className="card border-success mb-3 hoverable"
-        style={{ maxWidth: "18rem", margin: "20px" }}
+        className="card border-success mb-3 hoverable col-lg-3 col-md-6 col-sm-12"
+        style={{
+          width: "18rem",
+          margin: "20px",
+        }}
       >
         <div
           className="card-header bg-transparent border-success"
@@ -79,25 +82,10 @@ function Noteitem(props) {
               if (confirmation === "Yes") {
                 if (props.path === "Monthly") {
                   deleteMonthly(note._id);
-                  if (tagchange) {
-                    setTagchange(false);
-                  } else {
-                    setTagchange(true);
-                  }
                 } else if (props.path === "Yearly") {
                   deleteYearly(note._id);
-                  if (tagchange) {
-                    setTagchange(false);
-                  } else {
-                    setTagchange(true);
-                  }
                 } else {
                   deleteNote(note._id);
-                  if (tagchange) {
-                    setTagchange(false);
-                  } else {
-                    setTagchange(true);
-                  }
                 }
               }
               props.showAlert("Deleted successfully", "success");
@@ -114,25 +102,10 @@ function Noteitem(props) {
               if (confirmation === "Yes") {
                 if (props.path === "Monthly") {
                   deleteMonthly(note._id);
-                  if (tagchange) {
-                    setTagchange(false);
-                  } else {
-                    setTagchange(true);
-                  }
                 } else if (props.path === "Yearly") {
                   deleteYearly(note._id);
-                  if (tagchange) {
-                    setTagchange(false);
-                  } else {
-                    setTagchange(true);
-                  }
                 } else {
                   deleteNote(note._id);
-                  if (tagchange) {
-                    setTagchange(false);
-                  } else {
-                    setTagchange(true);
-                  }
                 }
               }
             }}
