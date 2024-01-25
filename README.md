@@ -21,7 +21,7 @@ TaskDailyPro is more than just an application; it's a holistic solution crafted 
 
 ## Acknowledgements
 
-
+ -Schema diagram
  - ![diagram-export-25-1-2024-12_30_34-pm](https://github.com/mangesh123vispute/TaskDailyPro/assets/112755002/587ab08e-da4a-476b-a212-1f9758a4c66b)
 
 
