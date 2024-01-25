@@ -1,19 +1,20 @@
 import React from "react";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 
 function Noteitem(props) {
-  const { note, updateNote, notes } = props;
+  const { note, updateNote } = props;
   const context = useContext(noteContext);
-  const { deleteNote, deleteMonthly, tagchange, setTagchange, deleteYearly } =
-    context;
+  const { deleteNote, deleteMonthly, deleteYearly } = context;
+  console.log("this is the notes in noteitem", note);
   const formatDateWithTime = (dateString) => {
     // Check if the provided dateString is invalid
+    console.log(note);
     if (
       !dateString ||
       !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(dateString)
     ) {
-      throw new Error("Invalid date string provided");
+      throw new Error(`Invalid date string provided as : ${dateString}`);
     }
 
     // Create a new Date object from the string
@@ -31,7 +32,7 @@ function Noteitem(props) {
     return `${day}-${month}-${year} (${hour}:${minute} ${period})`;
   };
 
-  function formatDate(dateStr) {
+  const formatDate = (dateStr) => {
     // Parse the date string using the ISO 8601 format
     const dateObj = new Date(dateStr);
 
@@ -42,7 +43,7 @@ function Noteitem(props) {
 
     // Return the date in the desired format
     return `${day}-${month}-${year}`;
-  }
+  };
 
   return (
     <>

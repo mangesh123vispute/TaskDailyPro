@@ -61,58 +61,115 @@ i{
 
 
 
+/* css for the table  */
 
-
-.title {
-  text-align: center;
-  color: #333;
-  font-size: 24px;
+.container {
+  margin: 20px;
+}
+.process-heading {
+ 
+  color: #007bff;
+  margin-bottom: 10px;
+ text-align: left;
+  
 }
 
-.input-field {
-  width: 100%;
+
+.heading-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mentor-label {
+  font-weight: bold;
+  color: #007bff;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.mentor-input {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
+  width: 300px;
   margin-bottom: 10px;
 }
 
-.add-button {
-  width: 100%;
+.mentor-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bff;
+}
+
+.table {
+  border: 2px solid green;
+  margin-top: 30px;
+}
+
+.table th {
+  background-color: #343a40;
+  color: white;
+}
+
+.table td {
   padding: 10px;
-  background-color: #4CAF50;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.button-container {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.button-container a button {
+  color: white;
+}
+
+
+.mentor-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mentor-input-container .mentor-label {
+  margin-right: 10px;
+}
+
+
+/* css for mentor 
+ */
+ .update-button {
+  background-color: green;
   color: white;
   border: none;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.add-button:hover {
-  background-color: #45a049;
-}
-
-.note {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
 }
 
 .delete-button {
-  background-color: #f44336;
+  background-color: red;
   color: white;
   border: none;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  float: right;
 }
 
-.delete-button:hover {
-  background-color: #da190b;
-}
-
-.date-style {
-  color: blue;
-  font-size: 14px;
+.add-mentor-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }

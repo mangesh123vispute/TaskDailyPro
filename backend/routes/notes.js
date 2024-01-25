@@ -15,6 +15,7 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
       notes: notes,
       tags: tags,
     };
+
     res.json(responseObj);
   } catch (error) {
     console.error(error.message);

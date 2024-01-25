@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
 import Navbar from "./components/Navbar";
 import { Home } from "./components/Home";
 import About from "./components/About";
@@ -8,14 +9,13 @@ import Alert from "./components/Alert";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import PersonalProfile from "./components/PersonalProfile";
-import Monthly from "./components/Monthly";
-import Yearly from "./components/Yearly";
-import Roadmap from "./components/Roadmap";
 import Tables from "./components/Tables";
-import Learning from "./components/Learning";
 import { useState } from "react";
+import MentorTable from "./components/Mentor";
 
 function App() {
+  // const context = useContext(noteContext);
+  // const { mentors, handleMentorEdit } = context;
   const [alert, setAlert] = useState(null);
   const showAlert = (message, type) => {
     setAlert({
@@ -66,18 +66,16 @@ function App() {
           <Route
             exact
             path="/roadmap"
-            element={<Home showAlert={showAlert} path="Roadmap" />}
+            element={<Home showAlert={showAlert} path="Goal" />}
           />
           <Route
             exact
             path="/Tables"
             element={<Tables showAlert={showAlert} />}
           />
-          <Route
-            exact
-            path="/learnings"
-            element={<Learning showAlert={showAlert} path="learnings" />}
-          />
+
+          <Route exact path="/mentor" element={<MentorTable />} />
+
           <Route exact path="/profile" element={<PersonalProfile />} />
         </Routes>
       </BrowserRouter>

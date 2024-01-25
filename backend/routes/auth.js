@@ -94,7 +94,8 @@ router.post(
       };
       success = true;
       const authToken = jwt.sign(data, JWT_SECRET);
-      res.json({ success, authToken });
+
+      res.status(200).json({ success, authToken });
     } catch (err) {
       success = false;
       console.error(err.message);
@@ -102,7 +103,6 @@ router.post(
     }
   }
 );
-module.exports = router;
 
 // ROUTE 3: Get loggedin User Details using: POST "/api/auth/getuser". Login required
 router.post("/getuser", fetchuser, async (req, res) => {
@@ -115,4 +115,5 @@ router.post("/getuser", fetchuser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 module.exports = router;

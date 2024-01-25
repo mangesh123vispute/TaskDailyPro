@@ -10,7 +10,7 @@ const NoteState = (props) => {
   const host = "http://localhost:5000";
   const [time, setTime] = useState("");
 
-  // fetching all daily tasks
+  // *fetching all daily tasks
   const getNotes = async () => {
     const response = await fetch(`${host}/api/notes/fetchallnotes`, {
       method: "GET",
@@ -24,7 +24,7 @@ const NoteState = (props) => {
     setTags(json.tags);
   };
 
-  // fetch monthly tasks
+  // *fetch monthly tasks
   const getMonthly = async () => {
     const response = await fetch(`${host}/api/notes/fetchallmonthly`, {
       method: "GET",
@@ -38,7 +38,7 @@ const NoteState = (props) => {
     setTags(json.tags);
   };
 
-  // fetch yearly tasks
+  // *fetch yearly tasks
   const getYearly = async () => {
     const response = await fetch(`${host}/api/notes/fetchallyearly`, {
       method: "GET",
@@ -52,7 +52,29 @@ const NoteState = (props) => {
     setTags(json.tags);
   };
 
-  //add daily task
+  //* fetch all the goals
+  const fetchAllGoals = async () => {
+    const authToken = localStorage.getItem("token");
+    const response = await fetch(
+      "http://localhost:5000/api/goals/fetchallgoals",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken,
+        }),
+      }
+    );
+    const json = await response.json();
+
+    setNotes(json.goals);
+
+    setTags(json.tags);
+  };
+
+  //*add daily task
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
     const host = "http://localhost:5000";
     const response = await fetch(`${host}/api/notes/addnote/`, {
@@ -70,7 +92,7 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
   };
 
-  // addmonthlytasks
+  // *addmonthlytasks
   const addMonthly = async (
     title,
     description,
@@ -95,7 +117,7 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
   };
 
-  // add yearly
+  // *add yearly
   const addYearly = async (title, description, tag, deadline, deadlinetime) => {
     const host = "http://localhost:5000";
     const response = await fetch(`${host}/api/notes/addyearlytask/`, {
@@ -113,7 +135,7 @@ const NoteState = (props) => {
     console.log("adding the notes ", note);
     setNotes(notes.concat(note));
   };
-  // Delete daily tasks
+  // *Delete daily tasks
   const deleteNote = async (id) => {
     const host = "http://localhost:5000";
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
@@ -131,7 +153,7 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
-  // delete monthly tasks
+  // *delete monthly tasks
   const deleteMonthly = async (id) => {
     const host = "http://localhost:5000";
     const response = await fetch(`${host}/api/notes/deleteMonthly/${id}`, {
@@ -150,7 +172,7 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
-  // delete yearly tasks
+  // *delete yearly tasks
   const deleteYearly = async (id) => {
     const host = "http://localhost:5000";
     const response = await fetch(`${host}/api/notes/deleteYearly/${id}`, {
@@ -169,7 +191,7 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
-  // edit daily tasks
+  // *edit daily tasks
   const editNote = async (id, title, description, tag) => {
     const host = "http://localhost:5000";
     const data = {
@@ -202,7 +224,7 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
-  // edit monthly tasks
+  // *edit monthly tasks
   const editMonthly = async (id, title, description, tag) => {
     const host = "http://localhost:5000";
     const data = {
@@ -235,7 +257,7 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
-  // edit Yearly tasks
+  // *edit Yearly tasks
   const editYearly = async (id, title, description, tag) => {
     const host = "http://localhost:5000";
     const data = {
@@ -268,6 +290,34 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
+  //*addGoals
+  const addGoals = async (goal, description, deadline, tag) => {
+    try {
+      const authToken = localStorage.getItem("token");
+      const response = await fetch(
+        "http://localhost:5000/api/goals/create_goal",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            goal,
+            description,
+            tag,
+            deadline,
+            authToken,
+          }),
+        }
+      );
+      const addedGoal = await response.json();
+      console.log("adding the goal ", addedGoal);
+      setNotes(notes.concat(addedGoal));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -291,6 +341,8 @@ const NoteState = (props) => {
         getYearly,
         deleteYearly,
         editYearly,
+        addGoals,
+        fetchAllGoals,
       }}
     >
       {props.children}

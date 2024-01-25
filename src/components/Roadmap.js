@@ -2,15 +2,16 @@ import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
 import Tables from "./Tables";
-import { Link } from "react-router-dom";
+import { redirect, Link } from "react-router-dom";
+
 function Roadmap(props) {
   const [time, setTime] = useState("");
 
   const deadlinetime = `${time}`;
   const context = useContext(noteContext);
-  const { addNote, tagchange, setTagchange } = context;
+  const { tagchange, setTagchange, addGoals } = context;
 
-  const [notes, setNotes] = useState({
+  const [goal, setGoal] = useState({
     title: "",
     description: "",
     tag: "",
@@ -18,33 +19,39 @@ function Roadmap(props) {
   });
 
   const onChange = (e) => {
-    setNotes({ ...notes, [e.target.name]: e.target.value });
+    setGoal({ ...goal, [e.target.name]: e.target.value });
   };
   const handleClick = (e) => {
-    console.log("this is the tagchaking ", tagchange);
+    //* algo:
+    //get all required data from the front end
+    //call the addGoal function from context
+    //verify if correct then only call the method
+    //set the goal to empty
+    //show alert
+
     if (tagchange) {
       setTagchange(false);
     } else {
       setTagchange(true);
     }
-    notes.title = document.getElementById("title").value;
-    notes.description = document.getElementById("description").value;
-    notes.tag = document.getElementById("tag").value;
-    notes.deadline = document.getElementById("deadline").value;
-    e.preventDefault();
-    addNote(
-      notes.title,
-      notes.description,
-      notes.tag,
-      notes.deadline,
-      deadlinetime
-    );
-    setNotes({ title: "", description: "", tag: "", deadline: "" });
+    try {
+      goal.title = document.getElementById("title").value;
+      goal.description = document.getElementById("description").value;
+      goal.tag = document.getElementById("tag").value;
+      goal.deadline = document.getElementById("deadline").value;
+      e.preventDefault();
+      addGoals(goal.title, goal.description, goal.deadline, goal.tag);
+      console.log("adding the goal see the goal ", goal);
+      setGoal({ title: "", description: "", tag: "", deadline: "" });
+    } catch (error) {
+      props.showAlert("Failure while adding goal", "Failed");
+      console.log(error.message);
+    }
     props.showAlert("Added successfully", "success");
   };
   return (
     <div className="container my-4">
-      <h1>Add Goals and Roadmap.</h1>
+      <h1>Add Goals:</h1>
       <form style={{ marginTop: "20px" }}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
@@ -56,7 +63,7 @@ function Roadmap(props) {
             id="title"
             name="title"
             onChange={onChange}
-            value={notes.title}
+            value={goal.title}
             minLength={5}
             required
             aria-describedby="emailHelp"
@@ -71,7 +78,7 @@ function Roadmap(props) {
             className="form-control"
             id="description"
             name="description"
-            value={notes.description}
+            value={goal.description}
             onChange={onChange}
             minLength={5}
             required
@@ -89,7 +96,7 @@ function Roadmap(props) {
                 className="form-control"
                 id="deadline"
                 name="deadline"
-                value={notes.deadline}
+                value={goal.deadline}
                 onChange={onChange}
                 style={{ width: "205px" }}
                 required
@@ -103,7 +110,7 @@ function Roadmap(props) {
                 type="text"
                 className="form-control"
                 id="tag"
-                value={notes.tag}
+                value={goal.tag}
                 name="tag"
                 minLength={5}
                 required
@@ -114,29 +121,15 @@ function Roadmap(props) {
           </div>
         </div>
         <div style={{ marginTop: "35px" }}>
-          <Link to="/Tables">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                // AddProcess functionality
-                // You can define the functionality for AddProcess here
-              }}
-            >
-              AddProcess
-            </button>
-          </Link>
-
           <button
             type="submit"
             onClick={handleClick}
             disabled={
-              notes.tag.length < 1 ||
-              notes.title.length < 1 ||
-              notes.description.length < 1
+              goal.tag.length < 1 ||
+              goal.title.length < 1 ||
+              goal.description.length < 1
             }
             className="btn btn-success"
-            style={{ marginLeft: "20px" }}
           >
             Add Goal
           </button>

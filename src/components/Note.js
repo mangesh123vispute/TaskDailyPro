@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import noteContext from "../context/notes/noteContext";
+import noteContext from "../context/notes/noteContext.js";
 import Noteitem from "./Noteitem";
 import Addnote from "./Addnote";
 import { useNavigate } from "react-router-dom";
@@ -25,10 +25,12 @@ function Note(props) {
     setSelectedValue,
     getYearly,
     editYearly,
+    fetchAllGoals,
   } = context;
-  console.log("this is the tagchange", tagchange);
+
   const ref = useRef(null);
   const refClose = useRef(null);
+
   const [note, setNote] = useState({
     id: "",
     etitle: "",
@@ -36,6 +38,7 @@ function Note(props) {
     etag: "",
     edate: "",
   });
+
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
@@ -46,6 +49,7 @@ function Note(props) {
       edate: currentNote.date,
     });
   };
+
   const handleClick = (e) => {
     e.preventDefault();
     if (path === "Monthly") {
@@ -59,6 +63,7 @@ function Note(props) {
       refClose.current.click();
     }
   };
+
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
@@ -68,19 +73,18 @@ function Note(props) {
   } else if (props.path === "Yearly") {
     monthText = "Year";
   }
+
   const filterNotesByTag = (tag) => {
     // If tag is "All", return the original array
     if (tag === "All" || tag === "") {
       return notes;
     }
-
     // Filter the array based on the selected tag
     const filteredNotes = notes.filter((note) => note.tag === tag);
-
     return filteredNotes;
   };
+
   const filteredNotes = filterNotesByTag(selectedValue);
-  console.log(selectedValue, filteredNotes);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -88,6 +92,8 @@ function Note(props) {
         getMonthly();
       } else if (props.path === "Yearly") {
         getYearly();
+      } else if (props.path === "Goal") {
+        fetchAllGoals();
       } else {
         getNotes();
       }
@@ -104,11 +110,12 @@ function Note(props) {
         <Monthly showAlert={props.showAlert} />
       ) : props.path === "Yearly" ? (
         <Yearly showAlert={props.showAlert} />
-      ) : props.path == "Roadmap" ? (
+      ) : props.path == "Goal" ? (
         <Roadmap showAlert={props.showAlert} />
       ) : (
         <Addnote showAlert={props.showAlert} />
       )}
+
       <button
         ref={ref}
         type="button"
@@ -118,6 +125,7 @@ function Note(props) {
       >
         Launch demo modal
       </button>
+
       <div
         className="modal fade"
         id="exampleModal"
@@ -268,29 +276,34 @@ function Note(props) {
           </div>
         </div>
       </div>
-      <div className=" row " style={{ marginTop: "60px" }}>
-        <h1 className="mb-3 col-md-4">
-          {props.path == "home" ? "Todays" : props.path} tasks:
-        </h1>
 
-        <Select notes={notes} onChange={onChange} monthText={monthText} />
-
-        <div className="container mx-2">
-          {notes.length === 0 && "no notes to display"}
+      <div className="row" style={{ marginTop: "60px" }}>
+        <div className="row my-3 container">
+          <h1 className="mb-3 col-md-4">
+            {props.path == "home"
+              ? "Todays"
+              : props.path == "Goal"
+              ? "Goals"
+              : props.path}{" "}
+            {props.path == "Goal" ? "List" : "Tasks"}
+          </h1>
+          <Select notes={notes} onChange={onChange} monthText={monthText} />
+          <div className="container mx-2">
+            {notes.length === 0 && "no notes to display"}
+          </div>
+          {filteredNotes.map((note, index) => {
+            return (
+              <Noteitem
+                note={note}
+                key={note._id}
+                notes={notes[index]}
+                updateNote={updateNote}
+                showAlert={props.showAlert}
+                path={props.path}
+              />
+            );
+          })}
         </div>
-
-        {filteredNotes.map((note, index) => {
-          return (
-            <Noteitem
-              note={note}
-              key={note._id}
-              notes={notes[index]}
-              updateNote={updateNote}
-              showAlert={props.showAlert}
-              path={props.path}
-            />
-          );
-        })}
       </div>
     </>
   );
