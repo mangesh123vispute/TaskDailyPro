@@ -1,70 +1,31 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TaskDailyPro
 
-## Available Scripts
+Introducing TaskDailyPro, your ultimate companion in the journey towards achieving goals efficiently! This MERN stack project is meticulously designed to streamline your path to success by aligning with a core philosophy: the transformative power of strong mentorship and guidance.
 
-In the project directory, you can run:
+At the heart of TaskDailyPro lies a perfect simulation of the thought process required for optimal goal achievement. Recognizing that a well-defined process, obtained from the right mentors, is the key to success, our platform ensures you embark on a journey backed by the wisdom of achievers who have reached remarkable milestones in your desired field.
 
-### `npm start`
+Here's how TaskDailyPro empowers you:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**1. Mentor-Backed Success:**
+Connect with mentors who have conquered the very goals you aspire to achieve. TaskDailyPro encourages you to explore and verify success processes from at least 10 mentors, ensuring a diverse range of insights tailored to your unique needs.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**2. Precision in Process:**
+TaskDailyPro places utmost importance on acquiring accurate processes. By providing a curated selection of mentor-endorsed steps, our app ensures that you navigate your path with clarity and purpose, minimizing hurdles on your way to success.
 
-### `npm test`
+**3. Time Management Excellence:**
+Efficiency is the cornerstone of achievement. TaskDailyPro assists you in breaking down your goals into manageable tasks, strategically organized on a yearly, monthly, and daily basis. This systematic approach enables you to optimize your time and resources, paving the way for consistent progress.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+TaskDailyPro is more than just an application; it's a holistic solution crafted to elevate your goal-setting experience. Embrace the power of precision, guidance, and effective time management as you embark on your journey towards success with TaskDailyPro!r
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Acknowledgements
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ - [Schema model](https://app.eraser.io/workspace/HHsRHCU2zyj8vuyPMGgz?origin=share)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Authors
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Mangesh vispute](https://github.com/mangesh123vispute)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
