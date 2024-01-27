@@ -3,7 +3,6 @@ import noteContext from "../context/notes/noteContext.js";
 import Noteitem from "./Noteitem";
 import Addnote from "./Addnote";
 import { useNavigate } from "react-router-dom";
-import TimeInput from "./TimeInput";
 import Monthly from "./Monthly";
 import Yearly from "./Yearly";
 import Select from "./Select";
@@ -21,11 +20,13 @@ function Note(props) {
     getMonthly,
     editMonthly,
     tagchange,
+    setTagchange,
     selectedValue,
     setSelectedValue,
     getYearly,
     editYearly,
     fetchAllGoals,
+    editGoal,
   } = context;
 
   const ref = useRef(null);
@@ -37,6 +38,8 @@ function Note(props) {
     edescription: "",
     etag: "",
     edate: "",
+    edeadline: "",
+    etime: "",
   });
 
   const updateNote = (currentNote) => {
@@ -47,19 +50,66 @@ function Note(props) {
       edescription: currentNote.description,
       etag: currentNote.tag,
       edate: currentNote.date,
+      edeadline: currentNote.deadline,
+      etime: currentNote.deadlinetime,
     });
+    console.log("this is the note after setting it ", note);
+  };
+
+  //* function to convert deadline into dd-mm-yy format
+  const formatDate = (dateString) => {
+    // Create a new Date object from the string
+    const dateObject = new Date(dateString);
+    // Extract the year, month, and day
+    const year = dateObject.getFullYear();
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+    const day = dateObject.getDate().toString().padStart(2, "0");
+    // Format the date string
+    return `${year}-${month}-${day}`;
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     if (path === "Monthly") {
-      editMonthly(note.id, note.etitle, note.edescription, note.etag);
+      editMonthly(
+        note.id,
+        note.etitle,
+        note.edescription,
+        note.etag,
+        note.edeadline
+      );
+      setTagchange(!tagchange);
       refClose.current.click();
     } else if (path === "Yearly") {
-      editYearly(note.id, note.etitle, note.edescription, note.etag);
+      editYearly(
+        note.id,
+        note.etitle,
+        note.edescription,
+        note.etag,
+        note.edeadline
+      );
+      setTagchange(!tagchange);
+      refClose.current.click();
+    } else if (path === "Goal") {
+      editGoal(
+        note.id,
+        note.etitle,
+        note.edescription,
+        note.edeadline,
+        note.etag
+      );
+      setTagchange(!tagchange);
       refClose.current.click();
     } else {
-      editNote(note.id, note.etitle, note.edescription, note.etag);
+      editNote(
+        note.id,
+        note.etitle,
+        note.edescription,
+        note.etag,
+        note.edeadline,
+        note.etime
+      );
+      setTagchange(!tagchange);
       refClose.current.click();
     }
   };
@@ -103,6 +153,7 @@ function Note(props) {
       navigate("/login");
     }
   }, [props.path, tagchange]);
+  console.log("this is the note ", note);
 
   return (
     <>
@@ -137,7 +188,14 @@ function Note(props) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Edit Note
+                Edit{" "}
+                {props.path === "Monthly"
+                  ? "Task"
+                  : props.path === "Yearly"
+                  ? "Task"
+                  : props.path === "Goal"
+                  ? "Goal"
+                  : "Task"}
               </h5>
               <button
                 type="button"
@@ -151,7 +209,13 @@ function Note(props) {
               <form className="my-3">
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">
-                    Title
+                    {props.path === "Monthly"
+                      ? "Task"
+                      : props.path === "Yearly"
+                      ? "Task"
+                      : props.path === "Goal"
+                      ? "Goal"
+                      : "Task"}
                   </label>
                   <input
                     type="text"
@@ -250,6 +314,60 @@ function Note(props) {
                     />
                   </div>
                 )}
+                {props.path === "home" ? (
+                  <div className="mb-3">
+                    <label htmlFor="edeadline" className="form-label">
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="edeadline"
+                      name="edeadline"
+                      value={formatDate(note.edeadline)}
+                      onChange={onChange}
+                      style={{ width: "205px" }}
+                      required
+                    />
+                    <label
+                      htmlFor="etime"
+                      className="form-label "
+                      style={{ marginTop: "15px" }}
+                    >
+                      Select time:
+                    </label>
+                    <input
+                      type="text"
+                      id="etime"
+                      name="etime"
+                      value={note.etime}
+                      onChange={onChange}
+                      placeholder="Start time-End time (example: 10:00am-11:00am)"
+                      style={{ width: "205px" }}
+                      className="form-control"
+                    />
+                  </div>
+                ) : (
+                  <div className="mb-3">
+                    <label
+                      htmlFor="edeadline"
+                      className="form-label"
+                      style={{ marginTop: "10px" }}
+                    >
+                      Deadline
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="edeadline"
+                      name="edeadline"
+                      value={formatDate(note.edeadline)}
+                      onChange={onChange}
+                      style={{ width: "205px" }}
+                      required
+                    />
+                  </div>
+                )}
               </form>
             </div>
             <div className="modal-footer">
@@ -278,20 +396,54 @@ function Note(props) {
       </div>
 
       <div className="row" style={{ marginTop: "60px" }}>
-        <div className="row my-3 container">
-          <h1 className="mb-3 col-md-4">
-            {props.path == "home"
-              ? "Todays"
-              : props.path == "Goal"
-              ? "Goals"
-              : props.path}{" "}
-            {props.path == "Goal" ? "List" : "Tasks"}
-          </h1>
-          <Select notes={notes} onChange={onChange} monthText={monthText} />
-          <div className="container mx-2">
-            {notes.length === 0 && "no notes to display"}
+        <div
+          className="row my-3 container"
+          style={{
+            backgroundColor: "#f5f5f5",
+            borderRadius: "10px",
+          }}
+        >
+          <div
+            style={{
+              marginTop: "30px",
+              display: "flex",
+            }}
+          >
+            <h1 className="mb-3 col-md-4">
+              <strong>
+                {" "}
+                {notes?.length === 0 || notes === undefined
+                  ? "No"
+                  : props.path === "home"
+                  ? "Todays"
+                  : props.path === "Goal"
+                  ? "Goals"
+                  : props.path}{" "}
+                {props.path === "Goal:" ? "List:" : "Tasks:"}
+              </strong>
+            </h1>
+
+            <Select notes={notes} onChange={onChange} monthText={monthText} />
           </div>
-          {filteredNotes.map((note, index) => {
+
+          <div className="container mx-2">
+            {(notes?.length === 0 || notes === undefined) && (
+              <img
+                src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif"
+                alt="No Task"
+                style={{
+                  borderRadius: "10px",
+                  display: "inline-block",
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+                className="img-fluid"
+              ></img>
+            )}
+          </div>
+
+          {filteredNotes?.map((note, index) => {
             return (
               <Noteitem
                 note={note}

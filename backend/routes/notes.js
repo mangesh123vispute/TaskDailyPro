@@ -169,7 +169,7 @@ router.post(
 // ROUTE 5: Update an existing daily Note using: POST "/api/notes/updatenote". Login required
 router.put("/updatenote/:id", fetchuser, async (req, res) => {
   console.log("this is the request ", req.body);
-  const { title, description, tag } = req.body;
+  const { title, description, tag, deadline, deadlinetime } = req.body;
   try {
     // Create a newNote object
     const newNote = {};
@@ -181,6 +181,12 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
     }
     if (tag) {
       newNote.tag = tag;
+    }
+    if (deadline) {
+      newNote.deadline = deadline;
+    }
+    if (deadlinetime) {
+      newNote.deadlinetime = deadlinetime;
     }
 
     // Find the note to be updated and update it
@@ -246,7 +252,7 @@ router.put("/updateMonthly/:id", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 5: Update an existing yearly task using: POST "/api/notes/updateYearly". Login required
+// ROUTE 5: Update an existing yearly task using: Put "/api/notes/updateYearly". Login required
 router.put("/updateYearly/:id", fetchuser, async (req, res) => {
   const { title, description, tag, deadline } = req.body;
 

@@ -19,7 +19,7 @@ const Select = ({ notes, monthText }) => {
     if (monthText === "Task") {
       return (
         <>
-          <option value="All">Select Task</option>
+          <option value="All">All Tasks</option>
           {console.log("this is the unique tags", uniqueTagsArray)}
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
@@ -31,7 +31,7 @@ const Select = ({ notes, monthText }) => {
     } else if (monthText === "Month") {
       return (
         <>
-          <option value="">Select Month</option>
+          <option value="">All Months</option>
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
@@ -43,7 +43,7 @@ const Select = ({ notes, monthText }) => {
       console.log("this is the unique tags++", uniqueTagsArray);
       return (
         <>
-          <option value="">Select Year</option>
+          <option value=""> ALL Years</option>
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
@@ -59,7 +59,11 @@ const Select = ({ notes, monthText }) => {
   return (
     <div
       className="mb-3 col-md-4"
-      style={{ marginTop: "10px", marginLeft: "0px" }}
+      style={{
+        marginTop: "10px",
+        marginLeft: "0px",
+        display: notes === undefined || notes.length === 0 ? "none" : "block",
+      }}
     >
       <select
         className="form-control"

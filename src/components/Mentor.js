@@ -175,10 +175,18 @@ function MentorTable() {
       </button>
       <Link to="/Tables">
         <button
-          className="add-mentor-button bg-dark mx-1"
+          className="add-mentor-button bg-success mx-1"
           style={{ color: "white" }}
         >
-          Back
+          Back to process
+        </button>
+      </Link>
+      <Link to="/Tables">
+        <button
+          className="add-mentor-button bg-success mx-1"
+          style={{ color: "white" }}
+        >
+          Back to goals
         </button>
       </Link>
     </div>

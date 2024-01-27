@@ -7,7 +7,7 @@ const TimeInput = ({ time, setTime }) => {
 
   return (
     <>
-      <label htmlFor="time" className="form-label">
+      <label htmlFor="time" className="form-label mx-2">
         Select time:
       </label>
       <input

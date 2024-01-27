@@ -191,13 +191,40 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
+  const deleteGoal = async (id) => {
+    const host = "http://localhost:5000";
+    const response = await fetch(`${host}/api/goals/deletegoal/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    console.log("deleting the note with id" + id);
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+  };
+
   // *edit daily tasks
-  const editNote = async (id, title, description, tag) => {
+  const editNote = async (
+    id,
+    title,
+    description,
+    tag,
+    deadline,
+    deadlinetime
+  ) => {
     const host = "http://localhost:5000";
     const data = {
       title: title,
       description: description,
       tag: tag,
+      deadline: deadline,
+      deadlinetime: deadlinetime,
     };
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT",
@@ -225,12 +252,13 @@ const NoteState = (props) => {
   };
 
   // *edit monthly tasks
-  const editMonthly = async (id, title, description, tag) => {
+  const editMonthly = async (id, title, description, tag, deadline) => {
     const host = "http://localhost:5000";
     const data = {
       title: title,
       description: description,
       tag: tag,
+      deadline: deadline,
     };
     const response = await fetch(`${host}/api/notes/updateMonthly/${id}`, {
       method: "PUT",
@@ -258,12 +286,13 @@ const NoteState = (props) => {
   };
 
   // *edit Yearly tasks
-  const editYearly = async (id, title, description, tag) => {
+  const editYearly = async (id, title, description, tag, deadline) => {
     const host = "http://localhost:5000";
     const data = {
       title: title,
       description: description,
       tag: tag,
+      deadline: deadline,
     };
     const response = await fetch(`${host}/api/notes/updateYearly/${id}`, {
       method: "PUT",
@@ -318,6 +347,40 @@ const NoteState = (props) => {
     }
   };
 
+  //* update goals
+  const editGoals = async (id, goal, description, deadline, tag) => {
+    const host = "http://localhost:5000";
+    const data = {
+      goal: goal,
+      description: description,
+      tag: tag,
+      deadline: deadline,
+    };
+    const response = await fetch(`${host}/api/notes/updategoal/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+
+      body: JSON.stringify(data),
+    });
+    const json = await response.json();
+    console.log(json);
+
+    let newNotes = JSON.parse(JSON.stringify(notes));
+    for (let index = 0; index < newNotes.length; index++) {
+      const element = newNotes[index];
+      if (element._id === id) {
+        newNotes[index].title = goal;
+        newNotes[index].description = description;
+        newNotes[index].tag = tag;
+        break;
+      }
+    }
+    setNotes(newNotes);
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -343,6 +406,8 @@ const NoteState = (props) => {
         editYearly,
         addGoals,
         fetchAllGoals,
+        deleteGoal,
+        editGoals,
       }}
     >
       {props.children}
