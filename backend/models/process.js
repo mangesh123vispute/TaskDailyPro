@@ -11,11 +11,15 @@ const process = new Schema(
       {
         id: { type: Number, required: [true, "task id is required"] },
         name: { type: String, required: [true, "task name  is required"] },
+        description: {
+          type: String,
+          required: [true, "task description is required"],
+        },
         startdate: {
           type: Date,
-          required: [true, "task start date is required"],
+          default: Date.now(),
         },
-        enddate: { type: Date, required: [true, "task end date is required"] },
+        enddate: { type: Date, default: Date.now() },
         iscompleted: { type: Boolean, default: false },
       },
     ],
