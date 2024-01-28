@@ -1,4 +1,4 @@
-//* least of mentors
+// * least of mentors
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
@@ -7,10 +7,6 @@ const mentors = new Schema(
     GoalId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Goal",
-    },
-    processId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Process",
     },
     mentors: [
       {

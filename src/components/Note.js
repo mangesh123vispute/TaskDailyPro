@@ -101,12 +101,14 @@ function Note(props) {
       setTagchange(!tagchange);
       refClose.current.click();
     } else {
+      console.log("this is the daily note ", note);
       editNote(
         note.id,
         note.etitle,
         note.edescription,
+        note.etag,
         note.edeadline,
-        note.etag
+        note.etime
       );
       setTagchange(!tagchange);
       refClose.current.click();
@@ -152,7 +154,6 @@ function Note(props) {
       navigate("/login");
     }
   }, [props.path, tagchange]);
-  console.log("this is the note ", note);
 
   return (
     <>

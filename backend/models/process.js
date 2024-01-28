@@ -19,6 +19,20 @@ const process = new Schema(
         iscompleted: { type: Boolean, default: false },
       },
     ],
+    details: {
+      reviewedBy: {
+        type: Number,
+        default: 0,
+      },
+      verifiedBy: {
+        type: Number,
+        default: 0,
+      },
+      accuracy: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
 
   {

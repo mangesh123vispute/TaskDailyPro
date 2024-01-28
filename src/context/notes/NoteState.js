@@ -218,6 +218,21 @@ const NoteState = (props) => {
     deadline,
     deadlinetime
   ) => {
+    console.log(
+      "all the data is here ",
+      "id:",
+      id,
+      "title:",
+      title,
+      "description:",
+      description,
+      "tag:",
+      tag,
+      "deadline:",
+      deadline,
+      "deadlinetime:",
+      deadlinetime
+    );
     const host = "http://localhost:5000";
     const data = {
       title: title,
