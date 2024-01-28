@@ -124,7 +124,8 @@ router.put("/updategoal/:id", fetchuser, async (req, res) => {
     if (!oldgoal) {
       return res.status(404).send("Goal Not Found");
     }
-    if (oldgoal.user !== req.user.id) {
+
+    if (oldgoal.user.toString() !== req.user.id) {
       return res.status(401).send("You are Not Allowed change others goal");
     }
     const updatedGoal = await Goal.findByIdAndUpdate(
@@ -135,7 +136,7 @@ router.put("/updategoal/:id", fetchuser, async (req, res) => {
     res.status(200).json({ goal: updatedGoal });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Error while updating the goal");
+    res.status(500).send(err.message);
   }
 });
 

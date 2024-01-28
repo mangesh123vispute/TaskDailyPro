@@ -26,7 +26,7 @@ function Note(props) {
     getYearly,
     editYearly,
     fetchAllGoals,
-    editGoal,
+    editGoals,
   } = context;
 
   const ref = useRef(null);
@@ -46,7 +46,7 @@ function Note(props) {
     ref.current.click();
     setNote({
       id: currentNote._id,
-      etitle: currentNote.title,
+      etitle: currentNote.title || currentNote.Goal,
       edescription: currentNote.description,
       etag: currentNote.tag,
       edate: currentNote.date,
@@ -91,7 +91,7 @@ function Note(props) {
       setTagchange(!tagchange);
       refClose.current.click();
     } else if (path === "Goal") {
-      editGoal(
+      editGoals(
         note.id,
         note.etitle,
         note.edescription,
@@ -105,9 +105,8 @@ function Note(props) {
         note.id,
         note.etitle,
         note.edescription,
-        note.etag,
         note.edeadline,
-        note.etime
+        note.etag
       );
       setTagchange(!tagchange);
       refClose.current.click();
@@ -217,6 +216,7 @@ function Note(props) {
                       ? "Goal"
                       : "Task"}
                   </label>
+                  {console.log("this are the notes in the update html", note)}
                   <input
                     type="text"
                     className="form-control"
@@ -381,14 +381,13 @@ function Note(props) {
               <button
                 onClick={handleClick}
                 disabled={
-                  note.etitle.length < 1 ||
-                  note.etitle.length < 1 ||
-                  note.edescription.length < 1
+                  note.etitle?.length < 1 || note.edescription?.length < 1
                 }
                 type="button"
                 className="btn btn-primary"
               >
-                Update Note
+                {console.log("this is the notes in the update", note)}
+                Update {props.path === "Goal" ? "Goal" : "Task"}
               </button>
             </div>
           </div>
@@ -401,6 +400,10 @@ function Note(props) {
           style={{
             backgroundColor: "#f5f5f5",
             borderRadius: "10px",
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+            paddingBottom: "30px",
+            paddingTop: "30px",
           }}
         >
           <div

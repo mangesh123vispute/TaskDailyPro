@@ -50,6 +50,9 @@ function Noteitem(props) {
           margin: "20px",
           boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
           borderRadius: "5px",
+          backgroundColor: "#f8f9fa",
+
+          transition: "transform 0.3s",
         }}
       >
         <div
@@ -69,6 +72,7 @@ function Noteitem(props) {
             className="fa-solid fa-pen-to-square p-2"
             onClick={() => {
               updateNote(note);
+
               props.showAlert("Updated successfully", "success");
             }}
             style={{ cursor: "pointer" }}

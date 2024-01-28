@@ -1,13 +1,8 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
-import Tables from "./Tables";
-import { redirect, Link } from "react-router-dom";
 
 function Roadmap(props) {
-  const [time, setTime] = useState("");
-
-  const deadlinetime = `${time}`;
   const context = useContext(noteContext);
   const { tagchange, setTagchange, addGoals } = context;
 

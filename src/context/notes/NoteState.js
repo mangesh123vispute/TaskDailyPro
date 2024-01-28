@@ -349,6 +349,7 @@ const NoteState = (props) => {
 
   //* update goals
   const editGoals = async (id, goal, description, deadline, tag) => {
+    console.table(id, goal, description, deadline, tag);
     const host = "http://localhost:5000";
     const data = {
       goal: goal,
@@ -356,7 +357,7 @@ const NoteState = (props) => {
       tag: tag,
       deadline: deadline,
     };
-    const response = await fetch(`${host}/api/notes/updategoal/${id}`, {
+    const response = await fetch(`${host}/api/goals/updategoal/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -366,7 +367,7 @@ const NoteState = (props) => {
       body: JSON.stringify(data),
     });
     const json = await response.json();
-    console.log(json);
+    console.log("this is the response", json);
 
     let newNotes = JSON.parse(JSON.stringify(notes));
     for (let index = 0; index < newNotes.length; index++) {
@@ -375,6 +376,7 @@ const NoteState = (props) => {
         newNotes[index].title = goal;
         newNotes[index].description = description;
         newNotes[index].tag = tag;
+        newNotes[index].deadline = deadline;
         break;
       }
     }

@@ -72,7 +72,7 @@ const Select = ({ notes, monthText }) => {
         name="tag"
         required
         onChange={handleSelectChange}
-        style={{ width: "205px" }}
+        style={{ width: "205px", backgroundColor: "#f8f9fa" }}
       >
         {renderOptions()}
       </select>
