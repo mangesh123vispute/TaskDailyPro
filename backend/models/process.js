@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const process = new Schema(
+const processSchema = new Schema(
   {
     GoalId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -16,10 +16,13 @@ const process = new Schema(
           required: [true, "task description is required"],
         },
         startdate: {
-          type: Date,
-          default: Date.now(),
+          type: String,
+          default: formatDateNow(),
         },
-        enddate: { type: Date, default: Date.now() },
+        enddate: {
+          type: String,
+          default: formatDateNow(),
+        },
         iscompleted: { type: Boolean, default: false },
       },
     ],
@@ -44,5 +47,27 @@ const process = new Schema(
   }
 );
 
-const Process = mongoose.model("Process", process);
+//* Helper function to format current date in "dd-mm-yy" format
+function formatDateNow() {
+  const currentDate = new Date();
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const year = currentDate.getFullYear().toString().slice(-2);
+  return `${day}-${month}-${year}`;
+}
+
+// *Pre-save middleware to update startdate and enddate before saving
+processSchema.pre("save", function (next) {
+  this.tasks.forEach((task) => {
+    if (!task.startdate) {
+      task.startdate = formatDateNow();
+    }
+    if (!task.enddate) {
+      task.enddate = formatDateNow();
+    }
+  });
+  next();
+});
+
+const Process = mongoose.model("Process", processSchema);
 module.exports = Process;
