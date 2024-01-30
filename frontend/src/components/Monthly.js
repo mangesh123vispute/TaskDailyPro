@@ -1,14 +1,14 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
-import TimeInput from "./TimeInput";
+import { useNavigate } from "react-router-dom";
 
 function Monthly(props) {
   const [time, setTime] = useState("");
   const [meridian, setMeridian] = useState("AM");
   const deadlinetime = `${time} ${meridian}`;
   const context = useContext(noteContext);
-  const { addNote, addMonthly, tagchange, setTagchange } = context;
+  const { addMonthly, tagchange, setTagchange } = context;
 
   const [notes, setNotes] = useState({
     title: "",
@@ -41,6 +41,7 @@ function Monthly(props) {
     setNotes({ title: "", description: "", tag: "", deadline: "" });
     props.showAlert("Added successfully", "success");
   };
+  const navigate = useNavigate();
   return (
     <div className="container my-3">
       <h1>Add Monthly task:</h1>
@@ -138,6 +139,16 @@ function Monthly(props) {
           style={{ marginTop: "30px" }}
         >
           Add Task
+        </button>
+        <button
+          type="button"
+          class="btn btn-dark"
+          onClick={() => {
+            navigate("/monthly");
+          }}
+          style={{ marginLeft: "10px", marginTop: "30px" }}
+        >
+          Back
         </button>
       </form>
     </div>

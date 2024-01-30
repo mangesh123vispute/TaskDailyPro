@@ -12,6 +12,10 @@ import PersonalProfile from "./components/PersonalProfile";
 import Tables from "./components/Tables";
 import { useState } from "react";
 import MentorTable from "./components/Mentor";
+import AddDailyTask from "./components/AddDailyTask";
+import Monthly from "./components/Monthly";
+import Yearly from "./components/Yearly";
+import AddGoal from "./components/AddGoal";
 
 function App() {
   // const context = useContext(noteContext);
@@ -77,6 +81,26 @@ function App() {
           <Route exact path="/mentor" element={<MentorTable />} />
 
           <Route exact path="/profile" element={<PersonalProfile />} />
+          <Route
+            exact
+            path="/AddDailyTask"
+            element={<AddDailyTask showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/AddMonthlyTask"
+            element={<Monthly showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/AddYearlyTask"
+            element={<Yearly showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/AddGoal"
+            element={<AddGoal showAlert={showAlert} />}
+          />
         </Routes>
       </BrowserRouter>
     </NoteState>

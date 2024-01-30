@@ -3,8 +3,9 @@ import noteContext from "../context/notes/noteContext";
 import { useContext, useState, useRef } from "react";
 import TimeInput from "./TimeInput";
 import pop from "../pop.mp3";
+import { useNavigate } from "react-router-dom";
 
-function Addnote(props) {
+function AddDailyTask(props) {
   const audioRef = useRef(null);
 
   const [time, setTime] = useState("");
@@ -46,6 +47,7 @@ function Addnote(props) {
     setNotes({ title: "", description: "", tag: "", deadline: "" });
     props.showAlert("Added successfully", "success");
   };
+  const navigate = useNavigate();
   return (
     <div className="container my-3">
       <audio ref={audioRef} src={pop} />
@@ -137,9 +139,19 @@ function Addnote(props) {
         >
           Add Task
         </button>
+        <button
+          type="button"
+          class="btn btn-dark"
+          onClick={() => {
+            navigate("/");
+          }}
+          style={{ marginLeft: "10px" }}
+        >
+          Back
+        </button>
       </form>
     </div>
   );
 }
 
-export default Addnote;
+export default AddDailyTask;

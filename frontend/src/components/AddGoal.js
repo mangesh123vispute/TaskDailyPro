@@ -1,8 +1,9 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Roadmap(props) {
+function AddGoal(props) {
   const context = useContext(noteContext);
   const { tagchange, setTagchange, addGoals } = context;
 
@@ -44,6 +45,7 @@ function Roadmap(props) {
     }
     props.showAlert("Added successfully", "success");
   };
+  const navigate = useNavigate();
   return (
     <div className="container my-4">
       <h1>Add Goals:</h1>
@@ -128,10 +130,20 @@ function Roadmap(props) {
           >
             Add Goal
           </button>
+          <button
+            type="button"
+            class="btn btn-dark"
+            onClick={() => {
+              navigate("/roadmap");
+            }}
+            style={{ marginLeft: "10px" }}
+          >
+            Back
+          </button>
         </div>
       </form>
     </div>
   );
 }
 
-export default Roadmap;
+export default AddGoal;

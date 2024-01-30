@@ -1,7 +1,7 @@
 import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 function Yearly(props) {
   const [time, setTime] = useState("");
   const deadlinetime = `${time}`;
@@ -41,6 +41,7 @@ function Yearly(props) {
     setNotes({ title: "", description: "", tag: "", deadline: "" });
     props.showAlert("Added successfully", "success");
   };
+  const navigate = useNavigate();
   return (
     <div className="container " style={{ marginTop: "10px" }}>
       <h1>Add Yearly task:</h1>
@@ -135,6 +136,16 @@ function Yearly(props) {
           className="btn btn-primary"
         >
           Add Task
+        </button>
+        <button
+          type="button"
+          class="btn btn-dark"
+          onClick={() => {
+            navigate("/monthly");
+          }}
+          style={{ marginLeft: "10px", marginTop: "20px" }}
+        >
+          Back
         </button>
       </form>
     </div>

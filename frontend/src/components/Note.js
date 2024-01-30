@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import noteContext from "../context/notes/noteContext.js";
 import Noteitem from "./Noteitem";
-import Addnote from "./Addnote";
 import { useNavigate } from "react-router-dom";
-import Monthly from "./Monthly";
-import Yearly from "./Yearly";
 import Select from "./Select";
-import Roadmap from "./Roadmap";
 
 function Note(props) {
   const path = props.path;
@@ -28,10 +24,8 @@ function Note(props) {
     fetchAllGoals,
     editGoals,
   } = context;
-
   const ref = useRef(null);
   const refClose = useRef(null);
-
   const [note, setNote] = useState({
     id: "",
     etitle: "",
@@ -137,6 +131,17 @@ function Note(props) {
 
   const filteredNotes = filterNotesByTag(selectedValue);
 
+  const handleClickOpen = () => {
+    console.log("this is the path", props.path);
+    props.path === "Monthly"
+      ? navigate("/AddMonthlyTask")
+      : props.path === "Yearly"
+      ? navigate("/AddYearlyTask")
+      : props.path === "Goal"
+      ? navigate("/AddGoal")
+      : navigate("/AdddailyTask");
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       if (props.path === "Monthly") {
@@ -157,16 +162,6 @@ function Note(props) {
 
   return (
     <>
-      {props.path === "Monthly" ? (
-        <Monthly showAlert={props.showAlert} />
-      ) : props.path === "Yearly" ? (
-        <Yearly showAlert={props.showAlert} />
-      ) : props.path == "Goal" ? (
-        <Roadmap showAlert={props.showAlert} />
-      ) : (
-        <Addnote showAlert={props.showAlert} />
-      )}
-
       <button
         ref={ref}
         type="button"
@@ -407,6 +402,14 @@ function Note(props) {
             paddingTop: "30px",
           }}
         >
+          <button
+            type="button"
+            className="btn btn-primary btn-sm"
+            style={{ height: "40px", marginLeft: "10px", width: "100px" }}
+            onClick={handleClickOpen}
+          >
+            Add {props.path === "Goal" ? "Goal" : "Task"}
+          </button>
           <div
             style={{
               marginTop: "30px",
@@ -423,13 +426,11 @@ function Note(props) {
                   : props.path === "Goal"
                   ? "Goals"
                   : props.path}{" "}
-                {props.path === "Goal:" ? "List:" : "Tasks:"}
+                {props.path === "Goal:" ? "List:" : "Tasks:"}{" "}
               </strong>
             </h1>
-
             <Select notes={notes} onChange={onChange} monthText={monthText} />
           </div>
-
           <div className="container mx-2">
             {(notes?.length === 0 || notes === undefined) && (
               <img
@@ -446,7 +447,6 @@ function Note(props) {
               ></img>
             )}
           </div>
-
           {filteredNotes?.map((note, index) => {
             return (
               <Noteitem

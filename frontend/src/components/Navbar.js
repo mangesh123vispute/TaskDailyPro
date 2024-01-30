@@ -6,6 +6,7 @@ import Aavtar from "./Aavtar";
 const Navbar = () => {
   let location = useLocation();
   const navigate = useNavigate();
+
   useEffect(() => {}, [location]);
 
   return (
@@ -14,7 +15,6 @@ const Navbar = () => {
         <Link className="navbar-brand animated-link" to="/">
           <strong>TaskDailyPro</strong>
         </Link>
-
         <button
           className="navbar-toggler"
           type="button"
@@ -68,7 +68,6 @@ const Navbar = () => {
                 Goals
               </Link>
             </li>
-
             <li className="nav-item animated-link">
               <Link
                 className={`nav-link ${
@@ -80,7 +79,6 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-
           {!localStorage.getItem("token") ? (
             <div>
               <Link to="/login" aria-current="page">
