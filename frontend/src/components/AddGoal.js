@@ -81,8 +81,24 @@ function AddGoal(props) {
             required
           />
         </div>
+        <div className="col-md-3">
+          <label htmlFor="tag" className="form-label">
+            Tag
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="tag"
+            value={goal.tag}
+            name="tag"
+            minLength={5}
+            required
+            onChange={onChange}
+            placeholder="Health, Education,  etc."
+          />
+        </div>
 
-        <div className="md-3">
+        <div className="md-3" style={{ marginTop: "20px" }}>
           <div className="row">
             <div className="col-md-3">
               <label htmlFor="description" className="form-label">
@@ -97,22 +113,6 @@ function AddGoal(props) {
                 onChange={onChange}
                 style={{ width: "205px" }}
                 required
-              />
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="tag" className="form-label">
-                Tag
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="tag"
-                value={goal.tag}
-                name="tag"
-                minLength={5}
-                required
-                onChange={onChange}
-                placeholder="Health, Education,  etc."
               />
             </div>
           </div>
@@ -132,7 +132,7 @@ function AddGoal(props) {
           </button>
           <button
             type="button"
-            class="btn btn-dark"
+            className="btn btn-dark"
             onClick={() => {
               navigate("/roadmap");
             }}

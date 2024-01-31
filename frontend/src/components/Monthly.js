@@ -95,38 +95,36 @@ function Monthly(props) {
                 required
               />
             </div>
-
-            <div className="col-md-3">
-              <label htmlFor="tag" className="form-label">
-                Month
-              </label>
-              <select
-                className="form-control"
-                id="tag"
-                value={notes.tag}
-                name="tag"
-                required
-                onChange={onChange}
-                style={{ width: "205px" }}
-              >
-                <option value="">Select a Month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </select>
-            </div>
+          </div>
+          <div className="col-md-3" style={{ marginTop: "15px" }}>
+            <label htmlFor="tag" className="form-label">
+              Month
+            </label>
+            <select
+              className="form-control"
+              id="tag"
+              value={notes.tag}
+              name="tag"
+              required
+              onChange={onChange}
+              style={{ width: "205px" }}
+            >
+              <option value="">Select a Month</option>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
           </div>
         </div>
-
         <button
           type="submit"
           onClick={handleClick}
@@ -142,7 +140,7 @@ function Monthly(props) {
         </button>
         <button
           type="button"
-          class="btn btn-dark"
+          className="btn btn-dark"
           onClick={() => {
             navigate("/monthly");
           }}

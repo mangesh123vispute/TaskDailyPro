@@ -389,8 +389,35 @@ function Note(props) {
           </div>
         </div>
       </div>
-
-      <div className="row" style={{ marginTop: "60px" }}>
+      <div style={{ display: "flex", marginLeft: "10px" }}>
+        <i
+          className="fa-regular fa-square-plus fa-fw"
+          style={{
+            cursor: "pointer",
+            color: "green",
+            marginTop: "4px",
+          }}
+          onClick={handleClickOpen}
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title={`Add ${props.path === "Goal" ? "Goal" : "Task"}`}
+        ></i>
+        <h5
+          className="text-muted"
+          style={{ marginLeft: "5px", cursor: "pointer" }}
+          onClick={handleClickOpen}
+        >
+          Add{" "}
+          {props.path === "Goal"
+            ? "Goals"
+            : props.path === "Yearly"
+            ? "YearlyTasks"
+            : props.path === "Monthly"
+            ? "MonthlyTasks"
+            : "DailyTasks"}
+        </h5>
+      </div>
+      <div className="row">
         <div
           className="row my-3 container"
           style={{
@@ -400,30 +427,12 @@ function Note(props) {
               "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             paddingBottom: "30px",
             paddingTop: "30px",
+            cursor: "move",
           }}
         >
           <div
-            onClick={handleClickOpen}
-            style={{ cursor: "pointer", display: "flex" }}
-          >
-            <h5 className="text-muted">Add</h5>
-            <i
-              className="fa-regular fa-square-plus fa-fw"
-              style={{
-                cursor: "pointer",
-                color: "red",
-                marginLeft: "3px",
-                marginTop: "4px",
-              }}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title={`Add ${props.path === "Goal" ? "Goal" : "Task"}`}
-            ></i>
-          </div>
-
-          <div
             style={{
-              marginTop: "5px",
+              marginTop: "10px",
               display: "flex",
             }}
           >

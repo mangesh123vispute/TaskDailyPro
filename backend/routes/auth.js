@@ -12,8 +12,10 @@ let success = false;
 router.post(
   "/createuser",
   [
-    body("email", "Email must be valid email").isEmail(),
-    body("name", "Name should be at least 1").isLength({ min: 1 }),
+    body("email", "Email must be valid email, varify your email").isEmail(),
+    body("name", "Name field is required with at least 1 charater").isLength({
+      min: 1,
+    }),
     body("password", "passwords should be longer than 5 char.").isLength({
       min: 5,
     }),
@@ -109,6 +111,9 @@ router.post("/getuser", fetchuser, async (req, res) => {
   try {
     const userId = req.user.id;
     const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res.status(404).send("User not exist");
+    }
     res.send(user);
   } catch (error) {
     console.error(error.message);

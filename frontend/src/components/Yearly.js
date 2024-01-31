@@ -95,35 +95,31 @@ function Yearly(props) {
                 required
               />
             </div>
-            <div className="col-md-3">
-              <div className="mb-3">
-                <label htmlFor="tag" className="form-label">
-                  Year
-                </label>
-                <select
-                  className="form-select"
-                  id="tag"
-                  value={notes.tag}
-                  name="tag"
-                  required
-                  onChange={onChange}
-                >
-                  <option value="All">Select a Year</option>
-                  {/* Generating options for the next 10 years from the current year onwards */}
-                  {Array.from({ length: 10 }, (_, index) => (
-                    <option
-                      key={index}
-                      value={new Date().getFullYear() + index}
-                    >
-                      {new Date().getFullYear() + index}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
           </div>
         </div>
-
+        <div className="col-md-3" style={{ width: "200px", marginTop: "15px" }}>
+          <div className="mb-3">
+            <label htmlFor="tag" className="form-label">
+              Year
+            </label>
+            <select
+              className="form-select"
+              id="tag"
+              value={notes.tag}
+              name="tag"
+              required
+              onChange={onChange}
+            >
+              <option value="All">Select a Year</option>
+              {/* Generating options for the next 10 years from the current year onwards */}
+              {Array.from({ length: 10 }, (_, index) => (
+                <option key={index} value={new Date().getFullYear() + index}>
+                  {new Date().getFullYear() + index}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <button
           type="submit"
           onClick={handleClick}
@@ -140,7 +136,7 @@ function Yearly(props) {
 
         <button
           type="button"
-          class="btn btn-dark"
+          className="btn btn-dark"
           onClick={() => {
             navigate("/monthly");
           }}

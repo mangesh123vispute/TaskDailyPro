@@ -17,16 +17,14 @@ const fetchuser = require("../middelware/fetchuser");
 
 router.post("/create_goal", fetchuser, async (req, res) => {
   try {
-    const user_id = req.user.id;
-    if (!user_id) {
-      return res.status(401).json("Login is required");
-    }
+    const user_id = req.user?.id;
     const user = await User.findById(user_id).select("-password");
-
     if (!user) {
       return res
         .status(401)
         .json(401, "user does not exist !! create user first");
+    } else if (!user_id) {
+      return res.status(401).json("Login is required");
     }
 
     const { goal, description, deadline, tag } = req.body;

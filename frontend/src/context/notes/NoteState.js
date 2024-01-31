@@ -7,32 +7,41 @@ const NoteState = (props) => {
   const [tags, setTags] = useState("");
   const [tagchange, setTagchange] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
-  const host = "http://localhost:5000";
   const [time, setTime] = useState("");
 
   // *fetching all daily tasks
   const getNotes = async () => {
-    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
-    const json = await response.json();
-    setNotes(json.notes);
-    setTags(json.tags);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/tasks/fetchallnotes`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      const json = await response.json();
+      setNotes(json.notes);
+      setTags(json.tags);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // *fetch monthly tasks
   const getMonthly = async () => {
-    const response = await fetch(`${host}/api/notes/fetchallmonthly`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/tasks/fetchallmonthly`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     const json = await response.json();
     setNotes(json.notes);
     setTags(json.tags);
@@ -40,13 +49,16 @@ const NoteState = (props) => {
 
   // *fetch yearly tasks
   const getYearly = async () => {
-    const response = await fetch(`${host}/api/notes/fetchallyearly`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/tasks/fetchallyearly`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     const json = await response.json();
     setNotes(json.notes);
     setTags(json.tags);
@@ -77,7 +89,7 @@ const NoteState = (props) => {
   //*add daily task
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/notes/addnote/`, {
+    const response = await fetch(`http://localhost:5000/api/notes/addnote/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,15 +113,24 @@ const NoteState = (props) => {
     deadlinetime
   ) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/notes/addMonthlytask/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    const response = await fetch(
+      `http://localhost:5000/api/notes/addMonthlytask/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify({ title, description, tag, deadline, deadlinetime }),
-    });
+        body: JSON.stringify({
+          title,
+          description,
+          tag,
+          deadline,
+          deadlinetime,
+        }),
+      }
+    );
 
     const note = await response.json();
 
@@ -120,15 +141,24 @@ const NoteState = (props) => {
   // *add yearly
   const addYearly = async (title, description, tag, deadline, deadlinetime) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/notes/addyearlytask/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    const response = await fetch(
+      `http://localhost:5000/api/notes/addyearlytask/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify({ title, description, tag, deadline, deadlinetime }),
-    });
+        body: JSON.stringify({
+          title,
+          description,
+          tag,
+          deadline,
+          deadlinetime,
+        }),
+      }
+    );
 
     const note = await response.json();
 
@@ -138,13 +168,16 @@ const NoteState = (props) => {
   // *Delete daily tasks
   const deleteNote = async (id) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/notes/deletenote/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     const json = await response.json();
 
     const newNotes = notes.filter((note) => {
@@ -156,13 +189,16 @@ const NoteState = (props) => {
   // *delete monthly tasks
   const deleteMonthly = async (id) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/notes/deleteMonthly/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/notes/deleteMonthly/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     const json = await response.json();
     console.log(json);
     console.log("deleting the note with id" + id);
@@ -175,13 +211,16 @@ const NoteState = (props) => {
   // *delete yearly tasks
   const deleteYearly = async (id) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/notes/deleteYearly/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/notes/deleteYearly/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     const json = await response.json();
     console.log(json);
     console.log("deleting the note with id" + id);
@@ -193,13 +232,16 @@ const NoteState = (props) => {
 
   const deleteGoal = async (id) => {
     const host = "http://localhost:5000";
-    const response = await fetch(`${host}/api/goals/deletegoal/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/goals/deletegoal/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     const json = await response.json();
     console.log(json);
     console.log("deleting the note with id" + id);
@@ -241,15 +283,18 @@ const NoteState = (props) => {
       deadline: deadline,
       deadlinetime: deadlinetime,
     };
-    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    const response = await fetch(
+      `http://localhost:5000/api/notes/updatenote/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify(data),
-    });
+        body: JSON.stringify(data),
+      }
+    );
     const json = await response.json();
     console.log(json);
 
@@ -275,15 +320,18 @@ const NoteState = (props) => {
       tag: tag,
       deadline: deadline,
     };
-    const response = await fetch(`${host}/api/notes/updateMonthly/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    const response = await fetch(
+      `http://localhost:5000/api/notes/updateMonthly/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify(data),
-    });
+        body: JSON.stringify(data),
+      }
+    );
     const json = await response.json();
     console.log(json);
 
@@ -309,15 +357,18 @@ const NoteState = (props) => {
       tag: tag,
       deadline: deadline,
     };
-    const response = await fetch(`${host}/api/notes/updateYearly/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    const response = await fetch(
+      `http://localhost:5000/api/notes/updateYearly/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify(data),
-    });
+        body: JSON.stringify(data),
+      }
+    );
     const json = await response.json();
     console.log(json);
 
@@ -372,15 +423,18 @@ const NoteState = (props) => {
       tag: tag,
       deadline: deadline,
     };
-    const response = await fetch(`${host}/api/goals/updategoal/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    const response = await fetch(
+      `http://localhost:5000/api/goals/updategoal/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify(data),
-    });
+        body: JSON.stringify(data),
+      }
+    );
     const json = await response.json();
     console.log("this is the response", json);
 

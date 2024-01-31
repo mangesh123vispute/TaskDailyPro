@@ -7,7 +7,11 @@ const TimeInput = ({ time, setTime }) => {
 
   return (
     <>
-      <label htmlFor="time" className="form-label mx-2">
+      <label
+        htmlFor="time"
+        className="form-label "
+        style={{ marginTop: "10px" }}
+      >
         Select time:
       </label>
       <input
@@ -16,7 +20,7 @@ const TimeInput = ({ time, setTime }) => {
         value={time}
         onChange={handleChangeTime}
         placeholder="Start time-End time (example: 10:00am-11:00am)"
-        style={{ marginLeft: "10px", width: "400px" }}
+        style={{ width: "400px" }}
         className="form-control"
       />
     </>

@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand animated-link" to="/">
+        <Link className="navbar-brand " to="/">
           <strong>TaskDailyPro</strong>
         </Link>
         <button
@@ -30,7 +30,7 @@ const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                className={`nav-link animated-link ${
+                className={`nav-link  ${
                   location.pathname === "/" ? "active" : ""
                 }`}
                 to="/"
@@ -38,7 +38,7 @@ const Navbar = () => {
                 Daily Tasks
               </Link>
             </li>
-            <li className="nav-item animated-link">
+            <li className="nav-item ">
               <Link
                 className={`nav-link ${
                   location.pathname === "/monthly" ? "active" : ""
@@ -48,7 +48,7 @@ const Navbar = () => {
                 Monthly Tasks
               </Link>
             </li>
-            <li className="nav-item animated-link">
+            <li className="nav-item ">
               <Link
                 className={`nav-link ${
                   location.pathname === "/yearly" ? "active" : ""
@@ -58,7 +58,7 @@ const Navbar = () => {
                 Yearly Tasks
               </Link>
             </li>
-            <li className="nav-item animated-link">
+            <li className="nav-item ">
               <Link
                 className={`nav-link ${
                   location.pathname === "/roadmap" ? "active" : ""
@@ -68,7 +68,7 @@ const Navbar = () => {
                 Goals
               </Link>
             </li>
-            <li className="nav-item animated-link">
+            <li className="nav-item ">
               <Link
                 className={`nav-link ${
                   location.pathname === "/about" ? "active" : ""

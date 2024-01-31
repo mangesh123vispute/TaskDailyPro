@@ -86,30 +86,6 @@ function AddDailyTask(props) {
             required
           />
         </div>
-
-        <div className="md-3">
-          <div className="row">
-            <div className="col-md-3">
-              <label htmlFor="description" className="form-label">
-                Deadline
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="deadline"
-                name="deadline"
-                value={notes.deadline}
-                onChange={onChange}
-                style={{ width: "205px" }}
-                required
-              />
-            </div>
-            <div className=" col-md-3">
-              <TimeInput time={time} setTime={setTime} />
-            </div>
-          </div>
-        </div>
-
         <div className="mb-3" style={{ marginTop: "10px" }}>
           <label htmlFor="tag" className="form-label">
             Tag
@@ -126,29 +102,52 @@ function AddDailyTask(props) {
             placeholder="eg. work,study,home"
           />
         </div>
-
-        <button
-          type="submit"
-          onClick={handleClick}
-          disabled={
-            notes.tag.length < 1 ||
-            notes.title.length < 1 ||
-            notes.description.length < 1
-          }
-          className="btn btn-primary"
-        >
-          Add Task
-        </button>
-        <button
-          type="button"
-          class="btn btn-dark"
-          onClick={() => {
-            navigate("/");
-          }}
-          style={{ marginLeft: "10px" }}
-        >
-          Back
-        </button>
+        <div className=" col-md-3">
+          <TimeInput time={time} setTime={setTime} />
+        </div>
+        <div className="md-3" style={{ marginTop: "10px" }}>
+          <div className="row">
+            <div className="col-md-3">
+              <label htmlFor="description" className="form-label">
+                Deadline
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                id="deadline"
+                name="deadline"
+                value={notes.deadline}
+                onChange={onChange}
+                style={{ width: "205px" }}
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: "30px" }}>
+          <button
+            type="submit"
+            onClick={handleClick}
+            disabled={
+              notes.tag.length < 1 ||
+              notes.title.length < 1 ||
+              notes.description.length < 1
+            }
+            className="btn btn-primary"
+          >
+            Add Task
+          </button>
+          <button
+            type="button"
+            className="btn btn-dark"
+            onClick={() => {
+              navigate("/");
+            }}
+            style={{ marginLeft: "10px" }}
+          >
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );
