@@ -402,14 +402,24 @@ function Note(props) {
             paddingTop: "30px",
           }}
         >
-          <i
-            className="fa-regular fa-square-plus fa-fw"
+          <div
             onClick={handleClickOpen}
-            style={{ cursor: "pointer", color: "red", marginLeft: "3px" }}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title={`Add ${props.path === "Goal" ? "Goal" : "Task"}`}
-          ></i>
+            style={{ cursor: "pointer", display: "flex" }}
+          >
+            <h5 className="text-muted">Add</h5>
+            <i
+              className="fa-regular fa-square-plus fa-fw"
+              style={{
+                cursor: "pointer",
+                color: "red",
+                marginLeft: "3px",
+                marginTop: "4px",
+              }}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title={`Add ${props.path === "Goal" ? "Goal" : "Task"}`}
+            ></i>
+          </div>
 
           <div
             style={{

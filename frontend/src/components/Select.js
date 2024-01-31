@@ -60,8 +60,8 @@ const Select = ({ notes, monthText }) => {
     <div
       className="mb-3 col-md-4"
       style={{
-        marginTop: "10px",
-        marginLeft: "0px",
+        marginTop: "4px",
+        marginLeft: "20px",
         display: notes === undefined || notes.length === 0 ? "none" : "block",
       }}
     >

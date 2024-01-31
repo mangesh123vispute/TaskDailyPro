@@ -19,7 +19,7 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
     res.json(responseObj);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -35,7 +35,7 @@ router.get("/fetchallmonthly", fetchuser, async (req, res) => {
     res.json(responseObj);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -51,7 +51,7 @@ router.get("/fetchallyearly", fetchuser, async (req, res) => {
     res.json(responseObj);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -88,7 +88,7 @@ router.post(
       res.json(savedNote);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(`Internal Server Error: ${error.message}`);
     }
   }
 );
@@ -127,7 +127,7 @@ router.post(
       res.json(savedNote);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(`Internal Server Error : ${error.message}`);
     }
   }
 );
@@ -161,7 +161,7 @@ router.post(
       res.json(savedNote);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send(`Internal Server Error : ${error.message}`);
     }
   }
 );
@@ -207,7 +207,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
     res.json({ note });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -248,7 +248,7 @@ router.put("/updateMonthly/:id", fetchuser, async (req, res) => {
     res.json({ note: updatedNote });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -289,7 +289,7 @@ router.put("/updateYearly/:id", fetchuser, async (req, res) => {
     res.json({ note: updatedNote });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -311,7 +311,7 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
     res.json({ Success: "Note has been deleted", note: note });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -333,7 +333,7 @@ router.delete("/deleteMonthly/:id", fetchuser, async (req, res) => {
     res.json({ Success: "Note has been deleted", note: note });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
@@ -355,7 +355,7 @@ router.delete("/deleteYearly/:id", fetchuser, async (req, res) => {
     res.json({ Success: "Note has been deleted", note: note });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send(`Internal Server Error ${error.message}`);
   }
 });
 
