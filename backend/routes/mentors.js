@@ -115,10 +115,10 @@ router.post("/create_mentor", fetchuser, async (req, res) => {
 
 router.post("/getallmentors", fetchuser, async (req, res) => {
   try {
-    if (!req.user.id) {
+    if (!req.user?.id) {
       return res.status(401).json("Login is required");
     }
-    const doesUserExist = await User.findById(req.user.id);
+    const doesUserExist = await User.findById(req.user?.id);
     if (!doesUserExist) {
       return res
         .status(404)
@@ -126,7 +126,10 @@ router.post("/getallmentors", fetchuser, async (req, res) => {
     }
     const { GoalId } = req.body;
     const goal = await Goal.findById(GoalId);
-    if (String(goal.user) !== String(req.user.id)) {
+    if (!goal) {
+      return res.status(404).json("Goal not found");
+    }
+    if (String(goal?.user) !== String(req.user?.id)) {
       return res.status(401).json("You can add only your goals");
     }
     const mentors = await Mentors.find({ GoalId: GoalId });
@@ -137,5 +140,88 @@ router.post("/getallmentors", fetchuser, async (req, res) => {
 });
 
 //update mentor
+// algo:
+//check if user is logged in and user document is presnet in the database, as well as userId which is in the database and in the goal.userId must be same
+// do the validation
+//get the goalId and the data to be updated from the frontend , validate it ,
+//find the mentor in the database and update the data
+//return the response
+
+router.put("/updatementor/:id", fetchuser, async (req, res) => {
+  try {
+    if (!req.user.id) {
+      return res.status(401).json("Login is required");
+    }
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res
+        .status(404)
+        .json("User not found for which you want to update mentor");
+    }
+    const { GoalId, name, achivements, suggestions, contacts } = req.body;
+    if (!GoalId) {
+      return res.status(401).json("GoalId is required");
+    }
+    const goal = await Goal.findById(GoalId);
+    if (!goal) {
+      return res.status(404).json("Goal not found");
+    }
+    if (String(goal.user) !== String(req.user.id)) {
+      return res.status(401).json("You can update only your goals");
+    }
+    const oldMentor = await Mentors.find({ GoalId: GoalId });
+    if (!oldMentor.length) {
+      return res
+        .status(401)
+        .json("Mentor Not Found for which you want to update the mentor");
+    }
+    console.log("this is oldMentor[0]", oldMentor[0]);
+    for (let mentor of oldMentor[0].mentors) {
+      if (String(mentor._id) === String(req.params.id)) {
+        if (name) {
+          mentor.name = name;
+        }
+        if (achivements) {
+          mentor.achivements = achivements;
+        }
+        if (suggestions) {
+          mentor.suggestions = suggestions;
+        }
+        if (contacts.whatsapp) {
+          mentor.contacts.whatsapp = contacts.whatsapp;
+        }
+        if (contacts.mobNumber) {
+          mentor.contacts.mobNumber = contacts.mobNumber;
+        }
+        if (contacts.insta) {
+          mentor.contacts.insta = contacts.insta;
+        }
+        if (contacts.linkedin) {
+          mentor.contacts.linkedin = contacts.linkedin;
+        }
+        if (contacts.telegram) {
+          mentor.contacts.telegram = contacts.telegram;
+        }
+        if (contacts.others) {
+          mentor.contacts.others = contacts.others;
+        }
+      }
+      break;
+    }
+
+    const updatedMentors = await Mentors.findOneAndUpdate(
+      { GoalId: GoalId },
+      { mentors: oldMentor[0].mentors },
+      { new: true }
+    );
+
+    if (!updatedMentors) {
+      return res.status(500).json("Error while updating the mentor");
+    }
+    res.status(200).json({ status: "success", updatedMentors });
+  } catch (error) {
+    res.status(500).json("Error while updating the mentor " + error);
+  }
+});
 
 module.exports = router;

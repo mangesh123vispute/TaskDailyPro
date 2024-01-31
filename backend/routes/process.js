@@ -3,6 +3,7 @@ const router = express.Router();
 const fetchuser = require("../middelware/fetchuser");
 const Process = require("../models/process");
 const Goals = require("../models/Goals");
+const User = require("../models/User");
 
 //^ crud for the process elements
 
@@ -131,6 +132,12 @@ router.put("/updatetask/:id", fetchuser, async (req, res) => {
   try {
     if (!req.user.id) {
       return res.status(401).json("Login is required");
+    }
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res
+        .status(401)
+        .json("User Not Found for which you want to update the process");
     }
 
     const { goalId, task, details } = req.body;
