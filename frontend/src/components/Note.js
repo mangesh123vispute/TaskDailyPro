@@ -402,17 +402,18 @@ function Note(props) {
             paddingTop: "30px",
           }}
         >
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            style={{ height: "40px", marginLeft: "10px", width: "100px" }}
+          <i
+            className="fa-regular fa-square-plus fa-fw"
             onClick={handleClickOpen}
-          >
-            Add {props.path === "Goal" ? "Goal" : "Task"}
-          </button>
+            style={{ cursor: "pointer", color: "red", marginLeft: "3px" }}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title={`Add ${props.path === "Goal" ? "Goal" : "Task"}`}
+          ></i>
+
           <div
             style={{
-              marginTop: "30px",
+              marginTop: "5px",
               display: "flex",
             }}
           >
@@ -426,7 +427,7 @@ function Note(props) {
                   : props.path === "Goal"
                   ? "Goals"
                   : props.path}{" "}
-                {props.path === "Goal:" ? "List:" : "Tasks:"}{" "}
+                {props.path === "Goal:" ? "Goals added" : "Tasks:"}{" "}
               </strong>
             </h1>
             <Select notes={notes} onChange={onChange} monthText={monthText} />
@@ -434,14 +435,14 @@ function Note(props) {
           <div className="container mx-2">
             {(notes?.length === 0 || notes === undefined) && (
               <img
-                src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif"
+                src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif
+                "
                 alt="No Task"
                 style={{
                   borderRadius: "10px",
                   display: "inline-block",
                   width: "100%",
                   height: "auto",
-                  objectFit: "contain",
                 }}
                 className="img-fluid"
               ></img>

@@ -69,9 +69,7 @@ router.post("/fetchallgoals", fetchuser, async (req, res) => {
     return res.status(401).json("Login is required");
   }
   const goals = await Goal.find({ user: user_id });
-  if (!goals.length) {
-    return res.status(401).json("no goals are Set ! ");
-  }
+
   res.status(200).json({ status: "success", goals });
 });
 

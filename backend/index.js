@@ -15,6 +15,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 app.use("/api/goals", require("./routes/goals"));
 app.use("/api/process", require("./routes/process"));
+// app.use("/api/mentors", require("./routes/mentors"));
 
 app.listen(port, () => {
   console.log(`iNoteBook backend listening on port ${port}`);

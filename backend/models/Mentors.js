@@ -7,6 +7,7 @@ const mentors = new Schema(
     GoalId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Goal",
+      required: true,
     },
     mentors: [
       {
@@ -21,6 +22,26 @@ const mentors = new Schema(
         suggestions: {
           type: String,
           default: "",
+        },
+        contacts: {
+          whatsapp: {
+            type: Number,
+          },
+          mobNumber: {
+            type: Number,
+          },
+          insta: {
+            type: String,
+          },
+          linkedin: {
+            type: String,
+          },
+          telegram: {
+            type: String,
+          },
+          others: {
+            type: String,
+          },
         },
       },
     ],
