@@ -208,7 +208,6 @@ router.put("/updatementor/:id", fetchuser, async (req, res) => {
       }
       break;
     }
-
     const updatedMentors = await Mentors.findOneAndUpdate(
       { GoalId: GoalId },
       { mentors: oldMentor[0].mentors },
@@ -221,6 +220,51 @@ router.put("/updatementor/:id", fetchuser, async (req, res) => {
     res.status(200).json({ status: "success", updatedMentors });
   } catch (error) {
     res.status(500).json("Error while updating the mentor " + error);
+  }
+});
+
+// * delete mentors based on the id provided in the params
+// algo :
+//check if user is logged in and user document is presnet in the database, as well as userId which is in the database and in the goal.userId must be same
+//get the goalId and id of the mentor from the param
+//find the mentor in the database
+//if not present then send the error
+//delete the mentor
+//return the response
+
+router.delete("/deletementor/:id", fetchuser, async (req, res) => {
+  try {
+    if (!req.user.id) {
+      return res.status(401).json("Login is required");
+    }
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res
+        .status(404)
+        .json("User not found for which you want to delete mentor");
+    }
+    const { GoalId } = req.body;
+    if (!GoalId) {
+      return res.status(401).json("GoalId is required");
+    }
+    const goal = await Goal.findById(GoalId);
+    if (!goal) {
+      return res.status(404).json("Goal not found");
+    }
+    if (String(goal.user) !== String(req.user.id)) {
+      return res.status(401).json("You can delete only your goals");
+    }
+    const result = await Mentors.updateOne(
+      { GoalId: GoalId },
+      { $pull: { mentors: { _id: req.params.id } } }
+    );
+
+    if (!result) {
+      return res.status(500).json("Error while deleting the mentor");
+    }
+    res.status(200).json({ status: "success", result });
+  } catch (error) {
+    res.status(500).json("Error while deleting the mentor " + error);
   }
 });
 
