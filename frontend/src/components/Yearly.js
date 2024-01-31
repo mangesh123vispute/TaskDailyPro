@@ -138,7 +138,7 @@ function Yearly(props) {
           type="button"
           className="btn btn-dark"
           onClick={() => {
-            navigate("/monthly");
+            navigate("/Yearly");
           }}
           style={{ marginLeft: "10px", marginTop: "20px" }}
         >

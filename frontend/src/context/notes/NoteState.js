@@ -88,8 +88,7 @@ const NoteState = (props) => {
 
   //*add daily task
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
-    const host = "http://localhost:5000";
-    const response = await fetch(`http://localhost:5000/api/notes/addnote/`, {
+    const response = await fetch(`http://localhost:5000/api/tasks/addnote/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,9 +111,8 @@ const NoteState = (props) => {
     deadline,
     deadlinetime
   ) => {
-    const host = "http://localhost:5000";
     const response = await fetch(
-      `http://localhost:5000/api/notes/addMonthlytask/`,
+      `http://localhost:5000/api/tasks/addMonthlytask/`,
       {
         method: "POST",
         headers: {
@@ -140,9 +138,8 @@ const NoteState = (props) => {
 
   // *add yearly
   const addYearly = async (title, description, tag, deadline, deadlinetime) => {
-    const host = "http://localhost:5000";
     const response = await fetch(
-      `http://localhost:5000/api/notes/addyearlytask/`,
+      `http://localhost:5000/api/tasks/addyearlytask/`,
       {
         method: "POST",
         headers: {
@@ -167,9 +164,8 @@ const NoteState = (props) => {
   };
   // *Delete daily tasks
   const deleteNote = async (id) => {
-    const host = "http://localhost:5000";
     const response = await fetch(
-      `http://localhost:5000/api/notes/deletenote/${id}`,
+      `http://localhost:5000/api/tasks/deletenote/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -188,9 +184,8 @@ const NoteState = (props) => {
 
   // *delete monthly tasks
   const deleteMonthly = async (id) => {
-    const host = "http://localhost:5000";
     const response = await fetch(
-      `http://localhost:5000/api/notes/deleteMonthly/${id}`,
+      `http://localhost:5000/api/tasks/deleteMonthly/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -210,9 +205,8 @@ const NoteState = (props) => {
 
   // *delete yearly tasks
   const deleteYearly = async (id) => {
-    const host = "http://localhost:5000";
     const response = await fetch(
-      `http://localhost:5000/api/notes/deleteYearly/${id}`,
+      `http://localhost:5000/api/tasks/deleteYearly/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -231,7 +225,6 @@ const NoteState = (props) => {
   };
 
   const deleteGoal = async (id) => {
-    const host = "http://localhost:5000";
     const response = await fetch(
       `http://localhost:5000/api/goals/deletegoal/${id}`,
       {
@@ -275,7 +268,7 @@ const NoteState = (props) => {
       "deadlinetime:",
       deadlinetime
     );
-    const host = "http://localhost:5000";
+
     const data = {
       title: title,
       description: description,
@@ -284,7 +277,7 @@ const NoteState = (props) => {
       deadlinetime: deadlinetime,
     };
     const response = await fetch(
-      `http://localhost:5000/api/notes/updatenote/${id}`,
+      `http://localhost:5000/api/tasks/updatenote/${id}`,
       {
         method: "PUT",
         headers: {
@@ -313,7 +306,6 @@ const NoteState = (props) => {
 
   // *edit monthly tasks
   const editMonthly = async (id, title, description, tag, deadline) => {
-    const host = "http://localhost:5000";
     const data = {
       title: title,
       description: description,
@@ -321,7 +313,7 @@ const NoteState = (props) => {
       deadline: deadline,
     };
     const response = await fetch(
-      `http://localhost:5000/api/notes/updateMonthly/${id}`,
+      `http://localhost:5000/api/tasks/updateMonthly/${id}`,
       {
         method: "PUT",
         headers: {
@@ -350,7 +342,6 @@ const NoteState = (props) => {
 
   // *edit Yearly tasks
   const editYearly = async (id, title, description, tag, deadline) => {
-    const host = "http://localhost:5000";
     const data = {
       title: title,
       description: description,
@@ -358,7 +349,7 @@ const NoteState = (props) => {
       deadline: deadline,
     };
     const response = await fetch(
-      `http://localhost:5000/api/notes/updateYearly/${id}`,
+      `http://localhost:5000/api/tasks/updateYearly/${id}`,
       {
         method: "PUT",
         headers: {
@@ -416,7 +407,7 @@ const NoteState = (props) => {
   //* update goals
   const editGoals = async (id, goal, description, deadline, tag) => {
     console.table(id, goal, description, deadline, tag);
-    const host = "http://localhost:5000";
+
     const data = {
       goal: goal,
       description: description,
