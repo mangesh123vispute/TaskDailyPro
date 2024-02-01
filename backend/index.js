@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 connectToMongo();
 app.use(cookieParser());
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", require("./routes/auth&Profile"));
 app.use("/api/tasks", require("./routes/tasks"));
 app.use("/api/goals", require("./routes/goals"));
 app.use("/api/process", require("./routes/process"));

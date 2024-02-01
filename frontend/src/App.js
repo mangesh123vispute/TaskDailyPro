@@ -6,8 +6,8 @@ import { Home } from "./components/Home";
 import About from "./components/About";
 import NoteState from "./context/notes/NoteState";
 import Alert from "./components/Alert";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login2 from "./components/Login2";
+import Signup2 from "./components/Signup2";
 import PersonalProfile from "./components/PersonalProfile";
 import Tables from "./components/Tables";
 import { useState } from "react";
@@ -47,15 +47,17 @@ function App() {
             path="/about"
             element={<About showAlert={showAlert} />}
           />
+
           <Route
             exact
-            path="/login"
-            element={<Login showAlert={showAlert} />}
+            path="/login2"
+            element={<Login2 showAlert={showAlert} />}
           />
+
           <Route
             exact
-            path="/signup"
-            element={<Signup showAlert={showAlert} />}
+            path="/signup2"
+            element={<Signup2 showAlert={showAlert} />}
           />
           <Route
             exact

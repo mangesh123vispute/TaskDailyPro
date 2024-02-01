@@ -1,20 +1,25 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Aavtar from "./Aavtar";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {}, [location]);
+  useEffect(() => {
+    if (!localStorage.getItem("token") && location.pathname !== "/signup2") {
+      navigate("/login2");
+    }
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand " to="/">
-          <strong>TaskDailyPro</strong>
+          <strong>TaskDailyPro </strong>
         </Link>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -79,25 +84,10 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-          {!localStorage.getItem("token") ? (
-            <div>
-              <Link to="/login" aria-current="page">
-                <button type="button" className="btn btn-primary mx-2">
-                  Login
-                </button>
-              </Link>
-              <Link to="/signup">
-                <button type="button" className="btn btn-primary">
-                  Sign up
-                </button>
-              </Link>
-            </div>
-          ) : (
-            <>
-              <Link to="/profile" aria-current="page">
-                <Aavtar />
-              </Link>
-            </>
+          {localStorage.getItem("token") && (
+            <Link to="/profile" aria-current="page">
+              <Aavtar />
+            </Link>
           )}
         </div>
       </div>

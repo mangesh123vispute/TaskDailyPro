@@ -1,5 +1,5 @@
 import React from "react";
-import mangesh from "../profile/mangesh.jpg";
+
 import {
   MDBCol,
   MDBContainer,
@@ -37,10 +37,18 @@ export default function ProfilePage() {
                 <p className="text-muted mb-1 my-2">Mangesh vispute</p>
 
                 <div className="d-flex justify-content-center mb-2 my-2">
-                  <button type="button" class="btn btn-danger">
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      window.location.reload();
+                      window.location.href = "/login";
+                    }}
+                  >
                     Logout
                   </button>
-                  <button type="button" class="btn btn-primary ms-3">
+                  <button type="button" className="btn btn-primary ms-3">
                     Edit Profile
                   </button>
                 </div>
@@ -51,33 +59,35 @@ export default function ProfilePage() {
               <MDBCardBody className="p-0">
                 <MDBListGroup className="rounded-3">
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <i class="fas fa-calendar-day"></i>
-                    <MDBCardText className=" mb-0">DailyTasks-logs</MDBCardText>
-                    <MDBCardText className="text-muted mb-0">
-                      Efficiency: 80% (2/12)
-                    </MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <i class="far fa-calendar "> </i>
+                    <i className="fas fa-calendar-day"></i>
                     <MDBCardText className=" mb-0">
-                      MonthlyTask-logs
+                      DailyTasks-logs:
                     </MDBCardText>
                     <MDBCardText className="text-muted mb-0">
                       Efficiency: 80% (2/12)
                     </MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <i class="fas fa-calendar"></i>
+                    <i className="far fa-calendar "> </i>
                     <MDBCardText className=" mb-0">
-                      YearlyTasks-logs
+                      MonthlyTask-logs:
                     </MDBCardText>
                     <MDBCardText className="text-muted mb-0">
                       Efficiency: 80% (2/12)
                     </MDBCardText>
                   </MDBListGroupItem>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <i class="fas fa-bullseye"></i>
-                    <MDBCardText className="mb-0">Goals-logs</MDBCardText>
+                    <i className="fas fa-calendar"></i>
+                    <MDBCardText className=" mb-0">
+                      YearlyTasks-logs:
+                    </MDBCardText>
+                    <MDBCardText className="text-muted mb-0">
+                      Efficiency: 80% (2/12)
+                    </MDBCardText>
+                  </MDBListGroupItem>
+                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                    <i className="fas fa-bullseye"></i>
+                    <MDBCardText className="mb-0">Goals-logs:</MDBCardText>
                     <MDBCardText className="text-muted mb-0">
                       Efficiency: 80% (2/12)
                     </MDBCardText>

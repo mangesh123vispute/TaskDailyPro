@@ -156,7 +156,7 @@ function Note(props) {
       setSelectedValue("All");
     } else {
       props.showAlert("Please Login", "danger");
-      navigate("/login");
+      navigate("/login2");
     }
   }, [props.path, tagchange]);
 
