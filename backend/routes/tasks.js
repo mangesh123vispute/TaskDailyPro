@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fetchuser = require("../middelware/fetchuser");
-const Note = require("../models/Note");
+const Daily = require("../models/DailyTasks");
 const Monthly = require("../models/Monthly");
 const Yearly = require("../models/Yearly");
 const { body, validationResult } = require("express-validator");
@@ -9,7 +9,7 @@ const { body, validationResult } = require("express-validator");
 // ROUTE 1: Get daily the tasks using: GET "/api/auth/fetchallnotes". Login required
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.user.id });
+    const notes = await Daily.find({ user: req.user.id });
     const tags = notes.map((note) => note.tag);
     const responseObj = {
       notes: notes,
@@ -55,7 +55,7 @@ router.get("/fetchallyearly", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 3: Add a new daily Note using: POST "/api/auth/addnote". Login required
+// ROUTE 3: Add a new daily Daily using: POST "/api/auth/addnote". Login required
 router.post(
   "/addnote",
   fetchuser,
@@ -75,7 +75,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      const note = new Note({
+      const note = new Daily({
         title,
         description,
         tag,
@@ -190,7 +190,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
     }
 
     // Find the note to be updated and update it
-    let note = await Note.findById(req.params.id);
+    let note = await Daily.findById(req.params.id);
     if (!note) {
       return res.status(404).send("Not Found");
     }
@@ -199,7 +199,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
       return res.status(401).send("Not Allowed");
     }
 
-    note = await Note.findByIdAndUpdate(
+    note = await Daily.findByIdAndUpdate(
       req.params.id,
       { $set: newNote },
       { new: true }
@@ -297,7 +297,7 @@ router.put("/updateYearly/:id", fetchuser, async (req, res) => {
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
     // Find the note to be delete and delete it
-    let note = await Note.findById(req.params.id);
+    let note = await Daily.findById(req.params.id);
     if (!note) {
       return res.status(404).send("Not Found");
     }
@@ -307,8 +307,8 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
       return res.status(401).send("Not Allowed");
     }
 
-    note = await Note.findByIdAndDelete(req.params.id);
-    res.json({ Success: "Note has been deleted", note: note });
+    note = await Daily.findByIdAndDelete(req.params.id);
+    res.json({ Success: "Daily has been deleted", note: note });
   } catch (error) {
     console.error(error.message);
     res.status(500).send(`Internal Server Error ${error.message}`);
@@ -324,13 +324,13 @@ router.delete("/deleteMonthly/:id", fetchuser, async (req, res) => {
       return res.status(404).send("Not Found");
     }
 
-    // Allow deletion only if user owns this Note
+    // Allow deletion only if user owns this Daily
     if (note.user.toString() !== req.user.id) {
       return res.status(401).send("Not Allowed");
     }
 
     note = await Monthly.findByIdAndDelete(req.params.id);
-    res.json({ Success: "Note has been deleted", note: note });
+    res.json({ Success: "Daily has been deleted", note: note });
   } catch (error) {
     console.error(error.message);
     res.status(500).send(`Internal Server Error ${error.message}`);
@@ -346,13 +346,13 @@ router.delete("/deleteYearly/:id", fetchuser, async (req, res) => {
       return res.status(404).send("Not Found");
     }
 
-    // Allow deletion only if user owns this Note
+    // Allow deletion only if user owns this Daily
     if (note.user.toString() !== req.user.id) {
       return res.status(401).send("Not Allowed");
     }
 
     note = await Yearly.findByIdAndDelete(req.params.id);
-    res.json({ Success: "Note has been deleted", note: note });
+    res.json({ Success: "Daily has been deleted", note: note });
   } catch (error) {
     console.error(error.message);
     res.status(500).send(`Internal Server Error ${error.message}`);

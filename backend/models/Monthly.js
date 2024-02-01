@@ -37,4 +37,4 @@ const Monthly = new Schema(
   }
 );
 
-module.exports = mongoose.model("Monthly", Monthly);
+module.exports = mongoose.model("MonthlyTasks", Monthly);

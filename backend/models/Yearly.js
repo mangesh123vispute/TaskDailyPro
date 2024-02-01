@@ -33,4 +33,4 @@ const Yearly = new Schema(
   }
 );
 
-module.exports = mongoose.model("Yearly", Yearly);
+module.exports = mongoose.model("YearlyTasks", Yearly);
