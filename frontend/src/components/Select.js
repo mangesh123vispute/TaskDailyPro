@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 
 const Select = ({ notes, monthText }) => {
@@ -19,7 +19,7 @@ const Select = ({ notes, monthText }) => {
     if (monthText === "Task") {
       return (
         <>
-          <option value="All">All Tasks</option>
+          <option value="All"> All task</option>
           {console.log("this is the unique tags", uniqueTagsArray)}
           {uniqueTagsArray.map((tag) => (
             <option key={tag} value={tag}>
@@ -60,8 +60,7 @@ const Select = ({ notes, monthText }) => {
     <div
       className="mb-3 col-md-4"
       style={{
-        marginTop: "4px",
-        marginLeft: "20px",
+        marginLeft: "50px",
         display: notes === undefined || notes.length === 0 ? "none" : "block",
       }}
     >

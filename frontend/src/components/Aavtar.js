@@ -1,7 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import mangesh from "../profile/mangesh.jpg";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/system";
 
@@ -16,8 +15,11 @@ const StyledAvatar = styled(Avatar)({
 export default function SizeAvatars() {
   return (
     <Stack direction="row" spacing={1} alignItems="center">
-      <Tooltip title="Hi Mangesh" arrow>
-        <StyledAvatar alt="Natacha" src={mangesh} />
+      <Tooltip title="Hi Bro" arrow>
+        <StyledAvatar
+          alt="Natacha"
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+        />
       </Tooltip>
     </Stack>
   );

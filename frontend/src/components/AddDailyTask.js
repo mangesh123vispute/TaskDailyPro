@@ -2,7 +2,7 @@ import React from "react";
 import noteContext from "../context/notes/noteContext";
 import { useContext, useState, useRef } from "react";
 import TimeInput from "./TimeInput";
-import pop from "../pop.mp3";
+import pop from "../Audio/pop.mp3";
 import { useNavigate } from "react-router-dom";
 
 function AddDailyTask(props) {

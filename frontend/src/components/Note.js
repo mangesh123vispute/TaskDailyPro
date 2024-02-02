@@ -416,7 +416,9 @@ function Note(props) {
             ? "MonthlyTasks"
             : "DailyTasks"}
         </h5>
+        <Select notes={notes} onChange={onChange} monthText={monthText} />
       </div>
+
       <div className="row">
         <div
           className="row my-3 container"
@@ -448,7 +450,6 @@ function Note(props) {
                 {props.path === "Goal:" ? "Goals added" : "Tasks:"}{" "}
               </strong>
             </h1>
-            <Select notes={notes} onChange={onChange} monthText={monthText} />
           </div>
           <div className="container mx-2">
             {(notes?.length === 0 || notes === undefined) && (

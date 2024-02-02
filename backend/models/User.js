@@ -32,90 +32,62 @@ const UserSchema = new Schema(
       type: Number,
       default: 0,
     },
-    dailyTasks: [
-      {
-        Day: {
-          type: String,
-        },
-        tasks: [
-          {
-            task: {
-              type: Schema.Types.ObjectId,
-              ref: "DailyTask",
-            },
-            completed: {
-              type: Boolean,
-              default: false,
-            },
-          },
-        ],
-        efficiency: {
-          type: Number,
-          default: 0,
-        },
+    dailyTasks: {
+      totalTask: {
+        type: Number,
+        default: 0,
       },
-    ],
-    monthlyTasks: [
-      {
-        Month: {
-          type: String,
-        },
-        tasks: [
-          {
-            task: {
-              type: Schema.Types.ObjectId,
-              ref: "DailyTask",
-            },
-            completed: {
-              type: Boolean,
-              default: false,
-            },
-          },
-        ],
-        efficiency: {
-          type: Number,
-          default: 0,
-        },
+      completedTask: {
+        type: Number,
+        default: 0,
       },
-    ],
-    yearlyTasks: [
-      {
-        Year: {
-          type: String,
-        },
-        tasks: [
-          {
-            task: {
-              type: Schema.Types.ObjectId,
-              ref: "DailyTask",
-            },
-            completed: {
-              type: Boolean,
-              default: false,
-            },
-          },
-        ],
-        efficiency: {
-          type: Number,
-          default: 0,
-        },
+      inpercentage: {
+        type: Number,
+        default: 0,
       },
-    ],
-    goals: [
-      {
-        Name: {
-          type: String,
-        },
-        Goal: {
-          type: Schema.Types.ObjectId,
-          ref: "Goal",
-        },
-        completed: {
-          type: Boolean,
-          default: false,
-        },
+    },
+    monthlyTasks: {
+      totalTask: {
+        type: Number,
+        default: 0,
       },
-    ],
+      completedTask: {
+        type: Number,
+        default: 0,
+      },
+      inpercentage: {
+        type: Number,
+        default: 0,
+      },
+    },
+    yearlyTasks: {
+      totalTask: {
+        type: Number,
+        default: 0,
+      },
+      completedTask: {
+        type: Number,
+        default: 0,
+      },
+      inpercentage: {
+        type: Number,
+        default: 0,
+      },
+    },
+    goals: {
+      totalTask: {
+        type: Number,
+        default: 0,
+      },
+      completedTask: {
+        type: Number,
+        default: 0,
+      },
+      inpercentage: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   {
     timestamps: true,

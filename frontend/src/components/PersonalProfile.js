@@ -1,4 +1,5 @@
 import React from "react";
+import Accordion from "./Accordion";
 
 import {
   MDBCol,
@@ -8,12 +9,8 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
   MDBProgress,
   MDBProgressBar,
-  MDBIcon,
   MDBListGroup,
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
@@ -146,10 +143,10 @@ export default function ProfilePage() {
             </MDBCard>
 
             <MDBRow>
-              <MDBCol md="12">
+              <MDBCol md="6">
                 <MDBCard className="mb-4 mb-md-0">
                   <MDBCardBody>
-                    <MDBCardText className="mb-4">Work Status</MDBCardText>
+                    <MDBCardText className="mb-4">Task Status</MDBCardText>
                     <MDBCardText
                       className="mb-1"
                       style={{ fontSize: ".77rem" }}
@@ -192,6 +189,9 @@ export default function ProfilePage() {
                     </MDBProgress>
                   </MDBCardBody>
                 </MDBCard>
+              </MDBCol>
+              <MDBCol md="6">
+                <Accordion />
               </MDBCol>
             </MDBRow>
           </MDBCol>

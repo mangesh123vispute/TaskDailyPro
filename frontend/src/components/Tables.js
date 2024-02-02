@@ -1,14 +1,11 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import notificationSound from "../notificationsound.mp3";
+import notificationSound from "../Audio/notificationsound.mp3";
 import { Link } from "react-router-dom";
-import noteContext from "../context/notes/noteContext";
 
 function Tables() {
   const audioRef = useRef(null);
-  const context = useContext(noteContext);
-  const { goal, setGoal } = context;
 
   const [data, setData] = useState([
     {

@@ -7,7 +7,7 @@ import {
   FaBullseye,
   FaStar,
 } from "react-icons/fa";
-import "../About.css"; // You can create a CSS file for styling
+import "../CustomCss/About.css"; // You can create a CSS file for styling
 
 const About = () => {
   return (
@@ -15,14 +15,14 @@ const About = () => {
       <header>
         <h1>
           <span style={{ color: "#DC143C" }}>
-            TaskDailyPro: Your Path to Efficient Success
+            <strong> TaskDailyPro: Your Path to Efficient Success !!</strong>
           </span>
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-            alt=""
-            width={"400"}
-          />
         </h1>
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+          alt=""
+          width={"400"}
+        />
       </header>
 
       <section className="core-thought-process" style={{ marginTop: "30px" }}>
@@ -113,10 +113,11 @@ const About = () => {
       </section>
 
       <footer style={{ marginTop: "30px" }}>
-        <strong>
-          TaskDailyPro is not just an app; it's a holistic approach to success,
-          guiding users through the journey with a clear roadmap, the right
-          mentors, and effective goal management.
+        <strong style={{ color: "blue " }}>
+          <strong>TaskDailyPro</strong> is not just an app it's a holistic
+          approach to success, guiding users through the journey with a{" "}
+          <u>clear roadmap</u>, the <u>right mentors</u> , and effective{" "}
+          <u>goal management.</u>
         </strong>
       </footer>
     </div>

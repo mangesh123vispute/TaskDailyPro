@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../Login2.css";
+import "../CustomCss/Login2.css";
 
 const Login2 = (props) => {
   const navigate = useNavigate();
