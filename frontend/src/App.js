@@ -16,6 +16,7 @@ import AddDailyTask from "./components/AddDailyTask";
 import Monthly from "./components/Monthly";
 import Yearly from "./components/Yearly";
 import AddGoal from "./components/AddGoal";
+import Modal from "./components/Modal";
 
 function App() {
   // const context = useContext(noteContext);
@@ -97,6 +98,11 @@ function App() {
             exact
             path="/AddYearlyTask"
             element={<Yearly showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/Modal"
+            element={<Modal showAlert={showAlert} />}
           />
           <Route
             exact

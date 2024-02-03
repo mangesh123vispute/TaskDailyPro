@@ -1,10 +1,10 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const fetchuser = require("../middelware/fetchuser");
-const Daily = require("../models/DailyTasks");
-const Monthly = require("../models/Monthly");
-const Yearly = require("../models/Yearly");
-const { body, validationResult } = require("express-validator");
+import fetchuser from "../middelware/fetchuser.js";
+import Daily from "../models/DailyTasks.js";
+import Monthly from "../models/Monthly.js";
+import Yearly from "../models/Yearly.js";
+import { body, validationResult } from "express-validator";
 
 // ROUTE 1: Get daily the tasks using: GET "/api/auth/fetchallnotes". Login required
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
@@ -359,4 +359,4 @@ router.delete("/deleteYearly/:id", fetchuser, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

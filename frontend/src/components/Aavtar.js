@@ -1,8 +1,9 @@
-import * as React from "react";
+import { React, useContext, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/system";
+import noteContext from "../context/notes/noteContext.js";
 
 const StyledAvatar = styled(Avatar)({
   transition: "transform 0.15s ease-in-out",
@@ -13,13 +14,17 @@ const StyledAvatar = styled(Avatar)({
 });
 
 export default function SizeAvatars() {
+  const context = useContext(noteContext);
+  const { userdetails, getUser } = context;
+  useEffect(() => {
+    getUser();
+  }, []);
+  const { image, name } = userdetails;
+
   return (
     <Stack direction="row" spacing={1} alignItems="center">
-      <Tooltip title="Hi Bro" arrow>
-        <StyledAvatar
-          alt="Natacha"
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-        />
+      <Tooltip title={"Hi " + name} arrow>
+        <StyledAvatar alt="Natacha" src={image} />
       </Tooltip>
     </Stack>
   );

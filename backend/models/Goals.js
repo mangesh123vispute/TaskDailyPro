@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const Goals = new Schema(
@@ -35,4 +35,4 @@ const Goals = new Schema(
 );
 
 const Goal = mongoose.model("Goal", Goals);
-module.exports = Goal;
+export default Goal;

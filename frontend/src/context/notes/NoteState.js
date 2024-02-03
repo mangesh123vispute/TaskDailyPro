@@ -8,6 +8,26 @@ const NoteState = (props) => {
   const [tagchange, setTagchange] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   const [time, setTime] = useState("");
+  const [userdetails, setUserdetails] = useState("");
+
+  //*fetch user details.
+  const getUser = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/getUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+      const json = await response.json();
+
+      setUserdetails(json);
+      console.log("user details", userdetails);
+    } catch (error) {
+      console.log("Error while fetching user " + error);
+    }
+  };
 
   // *fetching all daily tasks
   const getNotes = async () => {
@@ -470,6 +490,8 @@ const NoteState = (props) => {
         fetchAllGoals,
         deleteGoal,
         editGoals,
+        userdetails,
+        getUser,
       }}
     >
       {props.children}

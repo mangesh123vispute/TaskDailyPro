@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const LogSchema = new Schema(
@@ -94,7 +94,5 @@ const LogSchema = new Schema(
   },
   { timestamps: true }
 );
-
 const Log = mongoose.model("Log", LogSchema);
-
-module.exports = Log;
+export default Log;

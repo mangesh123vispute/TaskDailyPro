@@ -23,6 +23,7 @@ function Note(props) {
     editYearly,
     fetchAllGoals,
     editGoals,
+    getUser,
   } = context;
   const ref = useRef(null);
   const refClose = useRef(null);

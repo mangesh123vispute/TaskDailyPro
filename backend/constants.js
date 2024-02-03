@@ -1,2 +1,1 @@
-const DB_NAME = "TaskDailyPro";
-module.exports = { DB_NAME };
+export const DB_NAME = "TaskDailyPro";

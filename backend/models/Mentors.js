@@ -1,5 +1,5 @@
 // * least of mentors
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const mentors = new Schema(
@@ -50,7 +50,5 @@ const mentors = new Schema(
     timestamps: true,
   }
 );
-
 const Mentors = mongoose.model("Mentor", mentors);
-
-module.exports = Mentors;
+export default Mentors;

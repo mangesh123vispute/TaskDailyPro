@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const processSchema = new Schema(
@@ -70,4 +70,4 @@ processSchema.pre("save", function (next) {
 });
 
 const Process = mongoose.model("Process", processSchema);
-module.exports = Process;
+export default Process;

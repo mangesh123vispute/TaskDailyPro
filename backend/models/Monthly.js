@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const Monthly = new Schema(
+const monthly = new Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -37,4 +37,5 @@ const Monthly = new Schema(
   }
 );
 
-module.exports = mongoose.model("MonthlyTasks", Monthly);
+const Monthly = mongoose.model("monthly", monthly);
+export default Monthly;

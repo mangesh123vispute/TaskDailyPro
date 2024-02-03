@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const User = require("../models/User");
-const Goal = require("../models/Goals");
-const fetchuser = require("../middelware/fetchuser");
+import User from "../models/User.js";
+import Goal from "../models/Goals.js";
+import fetchuser from "../middelware/fetchuser.js";
 
 //* algo for create goal:
 //* algo for storing the goal data in the database , it is secured method (login is  requied)
@@ -136,4 +136,4 @@ router.put("/updategoal/:id", fetchuser, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
-const { DB_NAME } = require("./constants.js");
-
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
+import { DB_NAME } from "./constants.js";
 const connectToMongo = async () => {
   try {
     const connectionInstance = await mongoose.connect(
@@ -23,4 +23,4 @@ const connectToMongo = async () => {
   }
 };
 
-module.exports = connectToMongo;
+export default connectToMongo;

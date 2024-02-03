@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 const JWT_SECRET = "Mangeshisgood$boy";
 
 const fetchuser = (req, res, next) => {
   const reqs = req?.body;
-  console.log("this is reqs,auth-token", reqs["authToken"]);
+  console.log("this is reqs,auth-token :", reqs["authToken"]);
 
   const token = req.header("auth-token") || reqs["authToken"];
   console.log("this is the token", token);
@@ -17,11 +17,14 @@ const fetchuser = (req, res, next) => {
 
   try {
     const data = jwt.verify(token, JWT_SECRET);
+    console.log("this is the data", data);
     req.user = data.user;
     next();
   } catch (error) {
-    return res.status(401).send({ error: `${error.message}` });
+    return res
+      .status(401)
+      .send({ error: `Error while fetching the user :${error.message}` });
   }
 };
 
-module.exports = fetchuser;
+export default fetchuser;

@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const fetchuser = require("../middelware/fetchuser");
-const Goal = require("../models/Goals");
-const User = require("../models/User");
-const Mentors = require("../models/Mentors");
+import fetchuser from "../middelware/fetchuser.js";
+import Goal from "../models/Goals.js";
+import User from "../models/User.js";
+import Mentors from "../models/Mentors.js";
 
 //^crud ,
 
@@ -268,4 +268,4 @@ router.delete("/deletementor/:id", fetchuser, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

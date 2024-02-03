@@ -1,21 +1,28 @@
-const express = require("express");
-const connectToMongo = require("./db");
-const cors = require("cors");
+import express from "express";
+import connectToMongo from "./db.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import authProfileRouter from "./routes/auth&Profile.js";
+import tasksRouter from "./routes/tasks.js";
+import goalsRouter from "./routes/goals.js";
+import processRouter from "./routes/process.js";
+import mentorsRouter from "./routes/mentors.js";
+
 const app = express();
-const cookieParser = require("cookie-parser");
 const port = 5000;
 
-// middlewares
-
+// Middlewares
 app.use(express.json());
 app.use(cors());
-connectToMongo();
+await connectToMongo(); // Use await here if connectToMongo is an async function
 app.use(cookieParser());
-app.use("/api/auth", require("./routes/auth&Profile"));
-app.use("/api/tasks", require("./routes/tasks"));
-app.use("/api/goals", require("./routes/goals"));
-app.use("/api/process", require("./routes/process"));
-app.use("/api/mentors", require("./routes/mentors"));
+
+// Routers
+app.use("/api/auth", authProfileRouter);
+app.use("/api/tasks", tasksRouter);
+app.use("/api/goals", goalsRouter);
+app.use("/api/process", processRouter);
+app.use("/api/mentors", mentorsRouter);
 
 app.listen(port, () => {
   console.log(`iNoteBook backend listening on port ${port}`);

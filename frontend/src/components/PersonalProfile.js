@@ -1,5 +1,6 @@
-import React from "react";
+import { React, useContext, useEffect } from "react";
 import Accordion from "./Accordion";
+import noteContext from "../context/notes/noteContext.js";
 
 import {
   MDBCol,
@@ -16,6 +17,12 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function ProfilePage() {
+  const context = useContext(noteContext);
+  const { userdetails, getUser } = context;
+  console.log("this is the user details", userdetails);
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <section>
       <MDBContainer className="py-5">
@@ -24,14 +31,14 @@ export default function ProfilePage() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src={userdetails.image}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}
                   fluid
                 />
 
-                <p className="text-muted mb-1 my-2">Mangesh vispute</p>
+                <p className="text-muted mb-1 my-2">{userdetails.name}</p>
 
                 <div className="d-flex justify-content-center mb-2 my-2">
                   <button
@@ -45,6 +52,7 @@ export default function ProfilePage() {
                   >
                     Logout
                   </button>
+
                   <button type="button" className="btn btn-primary ms-3">
                     Edit Profile
                   </button>
@@ -102,7 +110,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      Johnatan Smith
+                      {userdetails.name}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -113,7 +121,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      example@example.com
+                      {userdetails.email}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -124,7 +132,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      (097) 234-5678
+                      {userdetails.phone || "Not Available"}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -135,7 +143,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      (098) 765-4321
+                      {userdetails.whatsappNumber || "Not Available"}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
