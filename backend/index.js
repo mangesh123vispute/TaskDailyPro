@@ -7,6 +7,7 @@ import tasksRouter from "./routes/tasks.js";
 import goalsRouter from "./routes/goals.js";
 import processRouter from "./routes/process.js";
 import mentorsRouter from "./routes/mentors.js";
+import progressRouter from "./routes/progress.js";
 
 const app = express();
 const port = 5000;
@@ -23,6 +24,7 @@ app.use("/api/tasks", tasksRouter);
 app.use("/api/goals", goalsRouter);
 app.use("/api/process", processRouter);
 app.use("/api/mentors", mentorsRouter);
+app.use("/api/progress", progressRouter);
 
 app.listen(port, () => {
   console.log(`iNoteBook backend listening on port ${port}`);

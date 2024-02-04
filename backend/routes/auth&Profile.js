@@ -278,9 +278,9 @@ router.post("/forgotPasswordgetOtp", async (req, res) => {
     }
     const otp = Math.floor(100000 + Math.random() * 900000);
     user.otp = otp;
-
     await user.save();
     sendEmail(user.otp, email);
+    res.status(200).json({ success: true, message: "OTP sent" });
   } catch (error) {
     console.log(error);
     return res
@@ -304,6 +304,7 @@ router.get("/otp/validate", async (req, res) => {
         .status(200)
         .json({ success: true, message: "OTP verified successfully" });
     } else {
+      console.log(user, otp);
       return res.status(400).json({ success: false, message: "Invalid OTP" });
     }
   } catch (error) {
@@ -315,9 +316,11 @@ router.get("/otp/validate", async (req, res) => {
 //change password after validating otp
 //& no login required
 router.get("/password/change", async (req, res) => {
-  const { email, password, conformPassword } = req.body;
+  let { email, password, conformPassword } = req.body;
   try {
     const user = await User.findOne({ email });
+    password = String(password);
+    conformPassword = String(conformPassword);
     if (!user) {
       return res
         .status(400)
@@ -328,15 +331,18 @@ router.get("/password/change", async (req, res) => {
         .status(400)
         .json("new password and conform password should be same");
     }
-    user.password = password;
+    const salt = await bcrypt.genSalt(10);
+    const secPass = await bcrypt.hash(password, salt);
+    user.password = secPass;
     await user.save();
     return res
       .status(200)
       .json({ success: true, message: "Password changed successfully" });
   } catch (error) {
     res
-      .status(error.statusCode)
+      .status(error.status || 500)
       .json({ success: false, message: error.message });
   }
 });
+
 export default router;
