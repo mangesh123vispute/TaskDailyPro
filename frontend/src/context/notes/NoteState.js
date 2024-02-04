@@ -9,6 +9,8 @@ const NoteState = (props) => {
   const [selectedValue, setSelectedValue] = useState("");
   const [time, setTime] = useState("");
   const [userdetails, setUserdetails] = useState("");
+  const [taskStatus, setTaskStatus] = useState("");
+  const [changedStatus, setChangedStatus] = useState(false); // set it when task status update function is created
 
   //*fetch user details.
   const getUser = async () => {
@@ -106,6 +108,21 @@ const NoteState = (props) => {
     setTags(json.tags);
   };
 
+  //* fetch task status
+  const getTaskStatus = async () => {
+    const response = await fetch(
+      `http://localhost:5000/api/progress/getprogress`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const json = await response.json();
+    setTaskStatus(json.progress);
+  };
   //*add daily task
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
     const response = await fetch(`http://localhost:5000/api/tasks/addnote/`, {
@@ -492,6 +509,8 @@ const NoteState = (props) => {
         editGoals,
         userdetails,
         getUser,
+        getTaskStatus,
+        taskStatus,
       }}
     >
       {props.children}

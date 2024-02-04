@@ -18,11 +18,14 @@ import {
 
 export default function ProfilePage() {
   const context = useContext(noteContext);
-  const { userdetails, getUser } = context;
-  console.log("this is the user details", userdetails);
+  const { userdetails, getUser, getTaskStatus, taskStatus } = context;
   useEffect(() => {
     getUser();
+    getTaskStatus();
   }, []);
+
+  console.log(userdetails);
+  console.log(taskStatus);
   return (
     <section>
       <MDBContainer className="py-5">
@@ -31,14 +34,14 @@ export default function ProfilePage() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src={userdetails.image}
+                  src={userdetails?.image}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}
                   fluid
                 />
 
-                <p className="text-muted mb-1 my-2">{userdetails.name}</p>
+                <p className="text-muted mb-1 my-2">{userdetails?.name}</p>
 
                 <div className="d-flex justify-content-center mb-2 my-2">
                   <button
@@ -110,7 +113,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userdetails.name}
+                      {userdetails?.name}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -121,7 +124,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userdetails.email}
+                      {userdetails?.email}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -132,7 +135,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userdetails.phone || "Not Available"}
+                      {userdetails?.phone || "Not Available"}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -143,7 +146,7 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">
-                      {userdetails.whatsappNumber || "Not Available"}
+                      {userdetails?.whatsappNumber || "Not Available"}
                     </MDBCardText>
                   </MDBCol>
                 </MDBRow>
@@ -159,41 +162,67 @@ export default function ProfilePage() {
                       className="mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Todays Tasks (2/3)
+                      Todays Tasks : ({taskStatus?.dailyTasks?.completedTask}/
+                      {taskStatus?.dailyTasks?.totalTask}) :{"  "}
+                      <strong> {taskStatus?.dailyTasks?.inpercentage}%</strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
-                      <MDBProgressBar width={10} valuemin={0} valuemax={100} />
-                      <MDBProgressBar width={10} valuemin={0} valuemax={100} />
+                      <MDBProgressBar
+                        width={taskStatus?.dailyTasks?.inpercentage}
+                        valuemin={0}
+                        valuemax={100}
+                      />
                     </MDBProgress>
 
                     <MDBCardText
                       className="mt-4 mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Monthly Tasks (2/3)
+                      Monthly Tasks :({taskStatus?.monthlyTasks?.completedTask}/
+                      {taskStatus?.monthlyTasks?.totalTask}) :{"   "}
+                      <strong>
+                        {" "}
+                        {taskStatus?.monthlyTasks?.inpercentage}%
+                      </strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
+                      <MDBProgressBar
+                        width={taskStatus?.monthlyTasks?.inpercentage}
+                        valuemin={0}
+                        valuemax={100}
+                      />
                     </MDBProgress>
 
                     <MDBCardText
                       className="mt-4 mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Yearly Tasks (2/3)
+                      Yearly Tasks: ({taskStatus?.yearlyTasks?.completedTask}/
+                      {taskStatus?.yearlyTasks?.totalTask}):{"   "}
+                      <strong> {taskStatus?.yearlyTasks?.inpercentage}%</strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
+                      <MDBProgressBar
+                        width={taskStatus?.yearlyTasks?.inpercentage}
+                        valuemin={0}
+                        valuemax={100}
+                      />
                     </MDBProgress>
 
                     <MDBCardText
                       className="mt-4 mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Goals (2/3)
+                      Goals assigned: ({taskStatus?.goals?.completedTask}/
+                      {taskStatus?.goals?.totalTask}):{"   "}
+                      <strong>{taskStatus?.goals?.inpercentage}%</strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
+                      <MDBProgressBar
+                        width={taskStatus?.goals?.inpercentage}
+                        valuemin={0}
+                        valuemax={100}
+                      />
                     </MDBProgress>
                   </MDBCardBody>
                 </MDBCard>
