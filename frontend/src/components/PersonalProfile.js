@@ -38,11 +38,19 @@ export default function ProfilePage() {
                   src={userdetails?.image}
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: "150px" }}
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    border: "3px solid darkgray",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
                   fluid
                 />
-
-                <p className="text-muted mb-1 my-2">{userdetails?.name}</p>
+                <p className="text-muted mb-1 my-2">
+                  {" "}
+                  <strong>Hi {userdetails?.name}</strong>{" "}
+                </p>
 
                 <div className="d-flex justify-content-center mb-2 my-2">
                   <button

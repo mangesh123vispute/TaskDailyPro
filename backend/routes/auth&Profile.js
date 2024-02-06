@@ -8,6 +8,8 @@ const JWT_SECRET = "Mangeshisgood$boy";
 import fetchuser from "../middelware/fetchuser.js";
 import validator from "validator";
 import sendEmail from "../utils/email.js";
+import { upload } from "../middelware/multer.js";
+import { uploadOnCloudinary } from "../utils/cloudenary.js";
 let success = false;
 function countDigits(number) {
   let numString = Math.abs(number).toString();
@@ -345,4 +347,64 @@ router.post("/password/change", async (req, res) => {
   }
 });
 
+//* Upload profile picture
+//algo:
+//1.Get image file from front end and save it to the pubilc folder in the backend
+//2.get this file from the public folder and send it to the cloudinary
+//3. get the url from cloudinary and save it in the database
+// if url not found then thorw the error .
+//&  login required
+
+router.post(
+  "/uploadProfilePic",
+  fetchuser,
+  upload.single("profilePic"),
+  async (req, res) => {
+    try {
+      if (!req.user.id) {
+        return res
+          .status(400)
+          .json({ success: false, message: "User not logged in" });
+      }
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ success: false, message: "User does not exist" });
+      }
+      const { path } = req.file;
+      if (!path) {
+        return res.status(400).json({
+          success: false,
+          message: "file is not uploded to the server",
+        });
+      }
+      const url = await uploadOnCloudinary(path);
+      if (!url) {
+        return res.status(400).json({
+          success: false,
+          message: "Error while uploading image to cloudinary",
+        });
+      }
+      await User.findByIdAndUpdate(req.user.id, {
+        image: url.url,
+      }).catch((err) => {
+        return res.status(400).json({
+          success: false,
+          message: "Error While uploading image to database",
+        });
+      });
+      res.status(200).json({
+        success: true,
+        url: url.url,
+        message: "image is saved to the database",
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: "Error While uploading image to database",
+      });
+    }
+  }
+);
 export default router;

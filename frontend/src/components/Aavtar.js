@@ -24,7 +24,11 @@ export default function SizeAvatars() {
   return (
     <Stack direction="row" spacing={1} alignItems="center">
       <Tooltip title={"Hi " + name} arrow>
-        <StyledAvatar alt="Natacha" src={image} />
+        <StyledAvatar
+          alt="Profile Image"
+          src={image}
+          style={{ objectFit: "cover" }}
+        />
       </Tooltip>
     </Stack>
   );
