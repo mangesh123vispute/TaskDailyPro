@@ -24,6 +24,7 @@ function Note(props) {
     fetchAllGoals,
     editGoals,
     getUser,
+    getTaskStatus,
   } = context;
   const ref = useRef(null);
   const refClose = useRef(null);
@@ -145,6 +146,8 @@ function Note(props) {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
+      getUser();
+      getTaskStatus();
       if (props.path === "Monthly") {
         getMonthly();
       } else if (props.path === "Yearly") {

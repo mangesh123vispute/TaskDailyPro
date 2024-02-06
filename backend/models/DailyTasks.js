@@ -37,4 +37,5 @@ const NotesSchema = new Schema(
   }
 );
 
-export default mongoose.model("DailyTask", NotesSchema);
+const Daily = mongoose.model("DailyTask", NotesSchema);
+export default Daily;

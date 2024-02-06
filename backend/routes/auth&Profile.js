@@ -315,7 +315,7 @@ router.get("/otp/validate", async (req, res) => {
 
 //change password after validating otp
 //& no login required
-router.get("/password/change", async (req, res) => {
+router.post("/password/change", async (req, res) => {
   let { email, password, conformPassword } = req.body;
   try {
     const user = await User.findOne({ email });

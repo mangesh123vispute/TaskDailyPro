@@ -37,9 +37,14 @@ function Monthly(props) {
       notes.tag,
       notes.deadline,
       deadlinetime
-    );
-    setNotes({ title: "", description: "", tag: "", deadline: "" });
-    props.showAlert("Added successfully", "success");
+    ).then((response) => {
+      if (response === false) {
+        navigate("/profile");
+      } else {
+        setNotes({ title: "", description: "", tag: "", deadline: "" });
+        props.showAlert("Added successfully", "success");
+      }
+    });
   };
   const navigate = useNavigate();
   return (

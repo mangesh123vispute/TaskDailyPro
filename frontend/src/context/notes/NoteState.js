@@ -1,5 +1,5 @@
 import NoteContext from "./noteContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const NoteState = (props) => {
   const initialNotes = [];
@@ -10,7 +10,11 @@ const NoteState = (props) => {
   const [time, setTime] = useState("");
   const [userdetails, setUserdetails] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
-  const [changedStatus, setChangedStatus] = useState(false); // set it when task status update function is created
+
+  useEffect(() => {
+    console.log("updated task status ", taskStatus);
+    updateTaskProgress(taskStatus);
+  }, [taskStatus]);
 
   //*fetch user details.
   const getUser = async () => {
@@ -122,22 +126,47 @@ const NoteState = (props) => {
     );
     const json = await response.json();
     setTaskStatus(json.progress);
+    console.log("task status", taskStatus);
   };
   //*add daily task
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
-    const response = await fetch(`http://localhost:5000/api/tasks/addnote/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
+    try {
+      if (Number(taskStatus.dailyTasks.inpercentage) === 100) {
+        console.log(
+          "daily task inprogress",
+          taskStatus.dailyTasks.inpercentage
+        );
+        alert("Reset the Daily Task progress first in the profile page");
+        return false;
+      }
+      const response = await fetch(`http://localhost:5000/api/tasks/addnote/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
 
-      body: JSON.stringify({ title, description, tag, deadline, deadlinetime }),
-    });
+        body: JSON.stringify({
+          title,
+          description,
+          tag,
+          deadline,
+          deadlinetime,
+        }),
+      });
 
-    const note = await response.json();
-
-    setNotes(notes.concat(note));
+      const note = await response.json();
+      setNotes(notes.concat(note));
+      setTaskStatus((prevTaskStatus) => ({
+        ...prevTaskStatus,
+        dailyTasks: {
+          ...prevTaskStatus.dailyTasks,
+          totalTask: prevTaskStatus.dailyTasks.totalTask + 1,
+        },
+      }));
+    } catch (error) {
+      console.log("Error while adding the note " + error);
+    }
   };
 
   // *addmonthlytasks
@@ -148,56 +177,87 @@ const NoteState = (props) => {
     deadline,
     deadlinetime
   ) => {
-    const response = await fetch(
-      `http://localhost:5000/api/tasks/addMonthlytask/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-
-        body: JSON.stringify({
-          title,
-          description,
-          tag,
-          deadline,
-          deadlinetime,
-        }),
+    try {
+      if (Number(taskStatus.monthlyTasks.inpercentage) === 100) {
+        alert("Reset the Monthly Task progress first in the profile page");
+        return false;
       }
-    );
+      const response = await fetch(
+        `http://localhost:5000/api/tasks/addMonthlytask/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
 
-    const note = await response.json();
+          body: JSON.stringify({
+            title,
+            description,
+            tag,
+            deadline,
+            deadlinetime,
+          }),
+        }
+      );
 
-    console.log("adding the notes ", note);
-    setNotes(notes.concat(note));
+      const note = await response.json();
+
+      console.log("adding the notes ", note);
+      setNotes(notes.concat(note));
+      setTaskStatus((prevTaskStatus) => ({
+        ...prevTaskStatus,
+        monthlyTasks: {
+          ...prevTaskStatus.monthlyTasks,
+          totalTask: prevTaskStatus.monthlyTasks.totalTask + 1,
+        },
+      }));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // *add yearly
   const addYearly = async (title, description, tag, deadline, deadlinetime) => {
-    const response = await fetch(
-      `http://localhost:5000/api/tasks/addyearlytask/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-
-        body: JSON.stringify({
-          title,
-          description,
-          tag,
-          deadline,
-          deadlinetime,
-        }),
+    try {
+      if (Number(taskStatus.yearlyTasks.inpercentage) === 100) {
+        alert("Reset the yearly Task progress first in the profile page");
+        return false;
       }
-    );
+      const response = await fetch(
+        `http://localhost:5000/api/tasks/addyearlytask/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
 
-    const note = await response.json();
+          body: JSON.stringify({
+            title,
+            description,
+            tag,
+            deadline,
+            deadlinetime,
+          }),
+        }
+      );
 
-    console.log("adding the notes ", note);
-    setNotes(notes.concat(note));
+      const note = await response.json();
+
+      console.log("adding the notes ", note);
+      setNotes(notes.concat(note));
+      setTaskStatus((prevTaskStatus) => ({
+        ...prevTaskStatus,
+        yearlyTasks: {
+          ...prevTaskStatus.yearlyTasks,
+          totalTask: prevTaskStatus.yearlyTasks.totalTask + 1,
+        },
+      }));
+      return note;
+    } catch (err) {
+      console.log(err);
+    }
   };
   // *Delete daily tasks
   const deleteNote = async (id) => {
@@ -211,12 +271,19 @@ const NoteState = (props) => {
         },
       }
     );
-    const json = await response.json();
 
     const newNotes = notes.filter((note) => {
       return note._id !== id;
     });
     setNotes(newNotes);
+
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      dailyTasks: {
+        ...prevTaskStatus.dailyTasks,
+        totalTask: prevTaskStatus.dailyTasks.totalTask - 1,
+      },
+    }));
   };
 
   // *delete monthly tasks
@@ -238,6 +305,13 @@ const NoteState = (props) => {
       return note._id !== id;
     });
     setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      monthlyTasks: {
+        ...prevTaskStatus.monthlyTasks,
+        totalTask: prevTaskStatus.monthlyTasks.totalTask - 1,
+      },
+    }));
   };
 
   // *delete yearly tasks
@@ -259,8 +333,15 @@ const NoteState = (props) => {
       return note._id !== id;
     });
     setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      yearlyTasks: {
+        ...prevTaskStatus.yearlyTasks,
+        totalTask: prevTaskStatus.yearlyTasks.totalTask - 1,
+      },
+    }));
   };
-
+  //* delete goal
   const deleteGoal = async (id) => {
     const response = await fetch(
       `http://localhost:5000/api/goals/deletegoal/${id}`,
@@ -279,8 +360,125 @@ const NoteState = (props) => {
       return note._id !== id;
     });
     setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      goals: {
+        ...prevTaskStatus.goals,
+        totalTask: prevTaskStatus.goals.totalTask - 1,
+      },
+    }));
   };
 
+  // *dailyTaskCompleted
+  const dailyTaskCompleted = async (id) => {
+    const response = await fetch(
+      `http://localhost:5000/api/tasks/deletenote/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      dailyTasks: {
+        ...prevTaskStatus.dailyTasks,
+
+        completedTask: prevTaskStatus.dailyTasks.completedTask + 1,
+      },
+    }));
+  };
+
+  //*monthly task completed
+  const monthlyTaskCompleted = async (id) => {
+    const response = await fetch(
+      `http://localhost:5000/api/tasks/deleteMonthly/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("deleting the note with id" + id);
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      monthlyTasks: {
+        ...prevTaskStatus.monthlyTasks,
+        completedTask: prevTaskStatus.monthlyTasks.completedTask + 1,
+      },
+    }));
+  };
+
+  //* yearly task completed
+  const yearlyTaskCompleted = async (id) => {
+    const response = await fetch(
+      `http://localhost:5000/api/tasks/deleteYearly/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("deleting the note with id" + id);
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      yearlyTasks: {
+        ...prevTaskStatus.yearlyTasks,
+        completedTask: prevTaskStatus.yearlyTasks.completedTask + 1,
+      },
+    }));
+  };
+
+  //*goals completed
+  const goalCompleted = async (id) => {
+    const response = await fetch(
+      `http://localhost:5000/api/goals/deletegoal/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+    console.log("deleting the note with id" + id);
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+    setTaskStatus((prevTaskStatus) => ({
+      ...prevTaskStatus,
+      goals: {
+        ...prevTaskStatus.goals,
+        completedTask: prevTaskStatus.goals.completedTask + 1,
+      },
+    }));
+  };
   // *edit daily tasks
   const editNote = async (
     id,
@@ -416,6 +614,10 @@ const NoteState = (props) => {
   //*addGoals
   const addGoals = async (goal, description, deadline, tag) => {
     try {
+      if (Number(taskStatus.goals.inpercentage) === 100) {
+        alert("Reset Goals progress first in the profile page");
+        return false;
+      }
       const authToken = localStorage.getItem("token");
       const response = await fetch(
         "http://localhost:5000/api/goals/create_goal",
@@ -436,6 +638,15 @@ const NoteState = (props) => {
       const addedGoal = await response.json();
       console.log("adding the goal ", addedGoal);
       setNotes(notes.concat(addedGoal));
+      setTaskStatus((prevTaskStatus) => ({
+        ...prevTaskStatus,
+        goals: {
+          ...prevTaskStatus.goals,
+          totalTask: prevTaskStatus.goals.totalTask + 1,
+        },
+      }));
+
+      return addedGoal;
     } catch (error) {
       console.log(error);
     }
@@ -480,6 +691,119 @@ const NoteState = (props) => {
     setNotes(newNotes);
   };
 
+  //* update Taskprogress:
+  //algo:
+  //get the statevariable ,
+  //put this state variable as req.body , by seperating the goals,dailyTask,monthlyTask,yearlyTask
+  //send the req to backend
+  //get the response
+  const updateTaskProgress = async (stateVariable) => {
+    try {
+      // Get the state variable
+      let { goals, dailyTasks, monthlyTasks, yearlyTasks } = stateVariable;
+
+      // Separate the goals, dailyTask, monthlyTask, yearlyTask
+      const data = {
+        goals,
+        dailyTasks,
+        monthlyTasks,
+        yearlyTasks,
+      };
+
+      // Send the request to the backend
+      const response = await fetch(
+        "http://localhost:5000/api/progress/updateprogress",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      // Get the response
+      const result = await response.json();
+      if (!result) {
+        console.log("Error updating task progress");
+      }
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //*forgot password ..
+  //algo: three different api calls
+  //1.get email and send otp to the email.
+  //2.varify otp by giving email and otp
+  //3.change password by giving email, password and conform password
+
+  const sendOtp = async (email) => {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/forgotPasswordgetOtp",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+  };
+  const verifyOtp = async (email, otp) => {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/otp/validate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp }),
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+  };
+
+  const changePassword = async (email, password, conformPassword) => {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/password/change",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, conformPassword }),
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+  };
+
+  //* reset progress
+  //algo:
+  //1.send which task you want to update in the req.body
+  //2.send the req to backend
+  //3.get the response
+  const resetProgress = async (Task) => {
+    const response = await fetch(
+      "http://localhost:5000/api/progress/resetprogress",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ Task }),
+      }
+    );
+    const json = await response.json();
+    console.log(json);
+  };
   return (
     <NoteContext.Provider
       value={{
@@ -511,6 +835,14 @@ const NoteState = (props) => {
         getUser,
         getTaskStatus,
         taskStatus,
+        monthlyTaskCompleted,
+        dailyTaskCompleted,
+        goalCompleted,
+        yearlyTaskCompleted,
+        sendOtp,
+        verifyOtp,
+        changePassword,
+        resetProgress,
       }}
     >
       {props.children}

@@ -18,7 +18,8 @@ import {
 
 export default function ProfilePage() {
   const context = useContext(noteContext);
-  const { userdetails, getUser, getTaskStatus, taskStatus } = context;
+  const { userdetails, getUser, getTaskStatus, taskStatus, resetProgress } =
+    context;
   useEffect(() => {
     getUser();
     getTaskStatus();
@@ -162,9 +163,28 @@ export default function ProfilePage() {
                       className="mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Todays Tasks : ({taskStatus?.dailyTasks?.completedTask}/
-                      {taskStatus?.dailyTasks?.totalTask}) :{"  "}
-                      <strong> {taskStatus?.dailyTasks?.inpercentage}%</strong>
+                      Todays Tasks :{" "}
+                      <strong>
+                        {" "}
+                        ({taskStatus?.dailyTasks?.completedTask}/
+                        {taskStatus?.dailyTasks?.totalTask}) {"  "}
+                        &#8658; {"   "} {taskStatus?.dailyTasks?.inpercentage}%{" "}
+                        {taskStatus?.dailyTasks?.inpercentage === 100 ? (
+                          <span
+                            className="text-success mx-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              const reset = async () => {
+                                await resetProgress("daily");
+                                window.location.reload();
+                              };
+                              reset();
+                            }}
+                          >
+                            Reset
+                          </span>
+                        ) : null}
+                      </strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
                       <MDBProgressBar
@@ -178,11 +198,27 @@ export default function ProfilePage() {
                       className="mt-4 mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Monthly Tasks :({taskStatus?.monthlyTasks?.completedTask}/
-                      {taskStatus?.monthlyTasks?.totalTask}) :{"   "}
+                      Monthly Tasks :{" "}
                       <strong>
-                        {" "}
-                        {taskStatus?.monthlyTasks?.inpercentage}%
+                        ({taskStatus?.monthlyTasks?.completedTask}/
+                        {taskStatus?.monthlyTasks?.totalTask}) {"   "}
+                        &#8658; {"   "}
+                        {taskStatus?.monthlyTasks?.inpercentage}%{" "}
+                        {taskStatus?.monthlyTasks?.inpercentage === 100 ? (
+                          <span
+                            className="text-success mx-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              const reset = async () => {
+                                await resetProgress("monthly");
+                                window.location.reload();
+                              };
+                              reset();
+                            }}
+                          >
+                            Reset
+                          </span>
+                        ) : null}
                       </strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
@@ -197,9 +233,29 @@ export default function ProfilePage() {
                       className="mt-4 mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Yearly Tasks: ({taskStatus?.yearlyTasks?.completedTask}/
-                      {taskStatus?.yearlyTasks?.totalTask}):{"   "}
-                      <strong> {taskStatus?.yearlyTasks?.inpercentage}%</strong>
+                      Yearly Tasks:{" "}
+                      <strong>
+                        {" "}
+                        ({taskStatus?.yearlyTasks?.completedTask}/
+                        {taskStatus?.yearlyTasks?.totalTask}){"   "}
+                        &#8658; {"   "}
+                        {taskStatus?.yearlyTasks?.inpercentage}%
+                        {taskStatus?.yearlyTasks?.inpercentage === 100 ? (
+                          <span
+                            className="text-success mx-2"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              const reset = async () => {
+                                await resetProgress("yearly");
+                                window.location.reload();
+                              };
+                              reset();
+                            }}
+                          >
+                            Reset
+                          </span>
+                        ) : null}
+                      </strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
                       <MDBProgressBar
@@ -213,9 +269,28 @@ export default function ProfilePage() {
                       className="mt-4 mb-1"
                       style={{ fontSize: ".77rem" }}
                     >
-                      Goals assigned: ({taskStatus?.goals?.completedTask}/
-                      {taskStatus?.goals?.totalTask}):{"   "}
-                      <strong>{taskStatus?.goals?.inpercentage}%</strong>
+                      Goals assigned:{" "}
+                      <strong>
+                        {" "}
+                        ({taskStatus?.goals?.completedTask}/
+                        {taskStatus?.goals?.totalTask}){"   "}
+                        &#8658; {"   "} {taskStatus?.goals?.inpercentage}%
+                        {taskStatus?.goals?.inpercentage === 100 ? (
+                          <span
+                            style={{ cursor: "pointer" }}
+                            className="text-success mx-2"
+                            onClick={() => {
+                              const reset = async () => {
+                                await resetProgress("goals");
+                                window.location.reload();
+                              };
+                              reset();
+                            }}
+                          >
+                            Reset
+                          </span>
+                        ) : null}
+                      </strong>
                     </MDBCardText>
                     <MDBProgress className="rounded">
                       <MDBProgressBar

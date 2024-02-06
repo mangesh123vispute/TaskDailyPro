@@ -36,9 +36,16 @@ function AddGoal(props) {
       goal.tag = document.getElementById("tag").value;
       goal.deadline = document.getElementById("deadline").value;
       e.preventDefault();
-      addGoals(goal.title, goal.description, goal.deadline, goal.tag);
-      console.log("adding the goal see the goal ", goal);
-      setGoal({ title: "", description: "", tag: "", deadline: "" });
+      addGoals(goal.title, goal.description, goal.deadline, goal.tag).then(
+        (response) => {
+          if (response === false) {
+            navigate("/profile");
+          } else {
+            setGoal({ title: "", description: "", tag: "", deadline: "" });
+            props.showAlert("Goal Added successfully", "success");
+          }
+        }
+      );
     } catch (error) {
       props.showAlert("Failure while adding goal", "Failed");
       console.log(error.message);

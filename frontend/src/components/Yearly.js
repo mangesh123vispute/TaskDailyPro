@@ -7,7 +7,7 @@ function Yearly(props) {
   const deadlinetime = `${time}`;
   const context = useContext(noteContext);
   const { addYearly, tagchange, setTagchange } = context;
-
+  const navigate = useNavigate();
   const [notes, setNotes] = useState({
     title: "",
     description: "",
@@ -37,11 +37,20 @@ function Yearly(props) {
       notes.tag,
       notes.deadline,
       deadlinetime
-    );
-    setNotes({ title: "", description: "", tag: "", deadline: "" });
-    props.showAlert("Added successfully", "success");
+    )
+      .then((response) => {
+        if (response === false) {
+          navigate("/profile");
+        } else {
+          setNotes({ title: "", description: "", tag: "", deadline: "" });
+          props.showAlert("Added successfully", "success");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const navigate = useNavigate();
+
   return (
     <div className="container " style={{ marginTop: "10px" }}>
       <h1>Add Yearly task:</h1>

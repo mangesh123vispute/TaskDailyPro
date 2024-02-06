@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function AddDailyTask(props) {
   const audioRef = useRef(null);
-
+  const navigate = useNavigate();
   const [time, setTime] = useState("");
 
   const deadlinetime = `${time}`;
@@ -43,11 +43,20 @@ function AddDailyTask(props) {
       notes.tag,
       notes.deadline,
       deadlinetime
-    );
-    setNotes({ title: "", description: "", tag: "", deadline: "" });
-    props.showAlert("Added successfully", "success");
+    )
+      .then((response) => {
+        if (response === false) {
+          navigate("/profile");
+        } else {
+          setNotes({ title: "", description: "", tag: "", deadline: "" });
+          props.showAlert("Added successfully", "success");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const navigate = useNavigate();
+
   return (
     <div className="container my-3">
       <audio ref={audioRef} src={pop} />

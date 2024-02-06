@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const Yearly = new Schema(
+const yearly = new Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,4 +33,5 @@ const Yearly = new Schema(
   }
 );
 
-export default mongoose.model("YearlyTasks", Yearly);
+const Yearly = mongoose.model("YearlyTasks", yearly);
+export default Yearly;

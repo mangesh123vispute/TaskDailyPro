@@ -6,7 +6,16 @@ import { Link } from "react-router-dom";
 function Noteitem(props) {
   const { note, updateNote } = props;
   const context = useContext(noteContext);
-  const { deleteNote, deleteMonthly, deleteYearly, deleteGoal } = context;
+  const {
+    deleteNote,
+    deleteMonthly,
+    deleteYearly,
+    deleteGoal,
+    monthlyTaskCompleted,
+    dailyTaskCompleted,
+    goalCompleted,
+    yearlyTaskCompleted,
+  } = context;
 
   const formatDateWithTime = (dateString) => {
     // Check if the provided dateString is invalid
@@ -111,13 +120,13 @@ function Noteitem(props) {
               );
               if (confirmation === "Yes") {
                 if (props.path === "Monthly") {
-                  deleteMonthly(note._id);
+                  monthlyTaskCompleted(note._id);
                 } else if (props.path === "Yearly") {
-                  deleteYearly(note._id);
+                  yearlyTaskCompleted(note._id);
                 } else if (props.path === "Goal") {
-                  deleteGoal(note._id);
+                  goalCompleted(note._id);
                 } else {
-                  deleteNote(note._id);
+                  dailyTaskCompleted(note._id);
                 }
               }
             }}
