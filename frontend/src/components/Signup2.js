@@ -11,7 +11,11 @@ const Signup2 = (props) => {
   });
   const handelSubmit = async (e) => {
     e.preventDefault();
-
+    setCredentials({
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+    });
     const response = await fetch(`http://localhost:5000/api/auth/createuser`, {
       method: "POST",
       headers: {
@@ -25,10 +29,8 @@ const Signup2 = (props) => {
     });
 
     const result = await response.json();
-
     if (result.success) {
-      localStorage.setItem("token", result.authToken);
-      navigate("/");
+      navigate("/login2");
       alert("Account created successfully");
     } else {
       alert("Invalid credentials");

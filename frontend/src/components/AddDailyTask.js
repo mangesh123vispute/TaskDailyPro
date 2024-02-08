@@ -62,7 +62,6 @@ function AddDailyTask(props) {
       <audio ref={audioRef} src={pop} />
 
       <h1>Add todays task:</h1>
-
       <form style={{ marginTop: "20px" }}>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">

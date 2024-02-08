@@ -25,6 +25,8 @@ function Note(props) {
     editGoals,
     getUser,
     getTaskStatus,
+    updateTaskProgress,
+    taskStatus,
   } = context;
   const ref = useRef(null);
   const refClose = useRef(null);
@@ -148,6 +150,7 @@ function Note(props) {
     if (localStorage.getItem("token")) {
       getUser();
       getTaskStatus();
+      updateTaskProgress(taskStatus);
       if (props.path === "Monthly") {
         getMonthly();
       } else if (props.path === "Yearly") {
@@ -393,96 +396,88 @@ function Note(props) {
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", marginLeft: "10px" }}>
-        <i
-          className="fa-regular fa-square-plus fa-fw"
-          style={{
-            cursor: "pointer",
-            color: "green",
-            marginTop: "4px",
-          }}
-          onClick={handleClickOpen}
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          title={`Add ${props.path === "Goal" ? "Goal" : "Task"}`}
-        ></i>
-        <h5
-          className="text-muted"
-          style={{ marginLeft: "5px", cursor: "pointer" }}
-          onClick={handleClickOpen}
-        >
-          Add{" "}
-          {props.path === "Goal"
-            ? "Goals"
-            : props.path === "Yearly"
-            ? "YearlyTasks"
-            : props.path === "Monthly"
-            ? "MonthlyTasks"
-            : "DailyTasks"}
-        </h5>
-        <Select notes={notes} onChange={onChange} monthText={monthText} />
-      </div>
+      <div></div>
 
-      <div className="row">
-        <div
-          className="row my-3 container"
-          style={{
-            backgroundColor: "#f5f5f5",
-            borderRadius: "10px",
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            paddingBottom: "30px",
-            paddingTop: "30px",
-          }}
-        >
-          <div
+      <div>
+        {props.path === "Goal" ? (
+          <button
+            type="button"
+            class="btn btn-primary"
             style={{
-              marginTop: "10px",
-              display: "flex",
+              marginLeft: "10px",
+              borderRadius: "50px",
+            }}
+            onClick={() => navigate("/AddGoal")}
+          >
+            Add Goals
+          </button>
+        ) : (
+          <p></p>
+        )}
+
+        <div className="row">
+          <div
+            className="row my-3 container"
+            style={{
+              backgroundColor: "#f5f5f5",
+              borderRadius: "10px",
+              boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              paddingBottom: "30px",
+              paddingTop: "30px",
             }}
           >
-            <h1 className="mb-3 col-md-4">
-              <strong>
-                {" "}
-                {notes?.length === 0 || notes === undefined
-                  ? "No"
-                  : props.path === "home"
-                  ? "Todays"
-                  : props.path === "Goal"
-                  ? "Goals"
-                  : props.path}{" "}
-                {props.path === "Goal:" ? "Goals added" : "Tasks:"}{" "}
-              </strong>
-            </h1>
-          </div>
-          <div className="container mx-2">
-            {(notes?.length === 0 || notes === undefined) && (
-              <img
-                src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif
+            <div
+              style={{
+                marginTop: "10px",
+                display: "flex",
+              }}
+            >
+              <h1 className="mb-3 col-md-4">
+                <strong>
+                  {" "}
+                  {notes?.length === 0 || notes === undefined
+                    ? "No"
+                    : props.path === "home"
+                    ? "Todays"
+                    : props.path === "Goal"
+                    ? "Goals"
+                    : props.path}{" "}
+                  {props.path === "Goal" ? "Least:" : "Tasks:"}{" "}
+                </strong>
+              </h1>
+
+              <Select notes={notes} onChange={onChange} monthText={monthText} />
+            </div>
+            <div className="container mx-2">
+              {(notes?.length === 0 || notes === undefined) && (
+                <img
+                  src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif
                 "
-                alt="No Task"
-                style={{
-                  borderRadius: "10px",
-                  display: "inline-block",
-                  width: "100%",
-                  height: "auto",
-                }}
-                className="img-fluid"
-              ></img>
-            )}
+                  alt="No Task"
+                  style={{
+                    borderRadius: "10px",
+                    display: "inline-block",
+                    width: "100%",
+                    height: "auto",
+                  }}
+                  className="img-fluid"
+                ></img>
+              )}
+            </div>
+            {filteredNotes?.map((note, index) => {
+              return (
+                <Noteitem
+                  note={note}
+                  key={note._id}
+                  notes={notes[index]}
+                  updateNote={updateNote}
+                  showAlert={props.showAlert}
+                  path={props.path}
+                />
+              );
+            })}
           </div>
-          {filteredNotes?.map((note, index) => {
-            return (
-              <Noteitem
-                note={note}
-                key={note._id}
-                notes={notes[index]}
-                updateNote={updateNote}
-                showAlert={props.showAlert}
-                path={props.path}
-              />
-            );
-          })}
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { React, useContext, useEffect } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import Accordion from "./Accordion";
 import noteContext from "../context/notes/noteContext.js";
 
@@ -20,6 +20,16 @@ export default function ProfilePage() {
   const context = useContext(noteContext);
   const { userdetails, getUser, getTaskStatus, taskStatus, resetProgress } =
     context;
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    image: "",
+    phone: "",
+    whatsappNumber: "",
+  });
+  // const onChange = (e) => {
+  //   setProfile({ ...profile, [e.target.name]: e.target.value });
+  // };
   useEffect(() => {
     getUser();
     getTaskStatus();
@@ -51,23 +61,157 @@ export default function ProfilePage() {
                   {" "}
                   <strong>Hi {userdetails?.name}</strong>{" "}
                 </p>
-
-                <div className="d-flex justify-content-center mb-2 my-2">
+                <hr />
+                <div
+                  className="d-flex justify-content-center mb-2 "
+                  style={{ marginTop: "20px" }}
+                >
                   <button
                     type="button"
                     className="btn btn-danger"
                     onClick={() => {
                       localStorage.removeItem("token");
                       window.location.reload();
-                      window.location.href = "/login";
+                      window.location.href = "/login2";
                     }}
                   >
                     Logout
                   </button>
 
-                  <button type="button" className="btn btn-primary ms-3">
+                  <button
+                    type="button"
+                    className="btn btn-primary ms-3"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
                     Edit Profile
                   </button>
+                  <div
+                    className="modal fade"
+                    id="exampleModal"
+                    tabIndex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5 className="modal-title" id="exampleModalLabel">
+                            Edit Profile
+                          </h5>
+                          <button
+                            type="button"
+                            className="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div className="modal-body">
+                          <form enctype="multipart/form-data">
+                            <div className="mb-3">
+                              <label htmlFor="fullName" className="form-label">
+                                <u>
+                                  <strong>Edit Name</strong>
+                                </u>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="fullName"
+                                name="name"
+                                placeholder="Enter Full Name"
+                                value={userdetails?.name || " "}
+                              />
+                            </div>
+                            <div className="mb-3">
+                              <label
+                                htmlFor="exampleInputEmail1"
+                                className="form-label"
+                              >
+                                <u>
+                                  <strong>Edit Email</strong>
+                                </u>
+                              </label>
+                              <input
+                                type="email"
+                                className="form-control"
+                                id="exampleInputEmail1"
+                                aria-describedby="emailHelp"
+                                placeholder="Enter email"
+                                name="email"
+                                value={userdetails?.email || " "}
+                              />
+                            </div>
+                            <div className="mb-3">
+                              <label
+                                htmlFor="exampleInputPassword1"
+                                className="form-label"
+                              >
+                                <u>
+                                  <strong>Edit Phone number</strong>
+                                </u>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="exampleInputPassword1"
+                                placeholder="Enter phone"
+                                name="phone"
+                                value={userdetails?.phone || " "}
+                              />
+                            </div>
+                            <div className="mb-3">
+                              <label
+                                htmlFor="exampleInputPassword2"
+                                className="form-label"
+                              >
+                                <u>
+                                  <strong>Edit WhatsApp number</strong>
+                                </u>
+                              </label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="exampleInputPassword2"
+                                placeholder="Enter WhatsApp number"
+                                value={userdetails?.whatsappNumber || " "}
+                              />
+                            </div>
+                            <div className="mb-3">
+                              <label
+                                htmlFor="exampleInputPassword3"
+                                className="form-label"
+                              >
+                                {" "}
+                                <u>
+                                  {" "}
+                                  <strong>Upload image</strong>
+                                </u>
+                              </label>
+                              <div className="input-group">
+                                <input
+                                  type="file"
+                                  className="form-control"
+                                  id="exampleInputPassword3"
+                                  placeholder="Choose a file"
+                                  style={{ borderRadius: "20px" }}
+                                  accept="image/*"
+                                />
+                              </div>
+                            </div>
+                            <hr />
+                            <button
+                              type="submit"
+                              className="btn btn-primary"
+                              // onClick={onChange()}
+                            >
+                              Save Changes
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </MDBCardBody>
             </MDBCard>

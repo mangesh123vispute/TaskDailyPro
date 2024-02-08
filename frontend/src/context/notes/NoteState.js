@@ -11,11 +11,6 @@ const NoteState = (props) => {
   const [userdetails, setUserdetails] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
 
-  useEffect(() => {
-    console.log("updated task status ", taskStatus);
-    updateTaskProgress(taskStatus);
-  }, [taskStatus]);
-
   //*fetch user details.
   const getUser = async () => {
     try {
@@ -728,6 +723,7 @@ const NoteState = (props) => {
       if (!result) {
         console.log("Error updating task progress");
       }
+
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -804,6 +800,35 @@ const NoteState = (props) => {
     const json = await response.json();
     console.log(json);
   };
+
+  //*edit Profile and upload image
+  //algo:
+  //get the crediantials from the user and call two backend functions
+  //1.editProfile
+  //2.uploadImage
+  const editProfile = async (name, email, phone, image, whatsappNumber) => {
+    try {
+      await fetch("http://localhost:5000/api/auth/editprofile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ name, email, phone, whatsappNumber }),
+      });
+      await fetch("http://localhost:5000/api/auth/uploadProfilePic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ image }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -843,6 +868,8 @@ const NoteState = (props) => {
         verifyOtp,
         changePassword,
         resetProgress,
+        editProfile,
+        updateTaskProgress,
       }}
     >
       {props.children}
