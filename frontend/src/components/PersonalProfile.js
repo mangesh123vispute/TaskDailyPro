@@ -18,25 +18,42 @@ import {
 
 export default function ProfilePage() {
   const context = useContext(noteContext);
-  const { userdetails, getUser, getTaskStatus, taskStatus, resetProgress } =
-    context;
+  const {
+    userdetails,
+    getUser,
+    getTaskStatus,
+    taskStatus,
+    resetProgress,
+    editProfile,
+  } = context;
   const [profile, setProfile] = useState({
     name: "",
     email: "",
-    image: "",
     phone: "",
     whatsappNumber: "",
   });
-  // const onChange = (e) => {
-  //   setProfile({ ...profile, [e.target.name]: e.target.value });
-  // };
+  const onChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
   useEffect(() => {
     getUser();
     getTaskStatus();
   }, []);
 
-  console.log(userdetails);
-  console.log(taskStatus);
+  const UpdateProfile = async () => {
+    try {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const whatsappNumber = document.getElementById("whatsappNumber").value;
+
+      console.log(name, email, whatsappNumber, phone);
+      await editProfile(name, email, phone, whatsappNumber);
+    } catch (err) {
+      console.log("Error while updating profile", err);
+    }
+  };
+
   return (
     <section>
       <MDBContainer className="py-5">
@@ -97,7 +114,7 @@ export default function ProfilePage() {
                       <div className="modal-content">
                         <div className="modal-header">
                           <h5 className="modal-title" id="exampleModalLabel">
-                            Edit Profile
+                            <strong>Edit Profile</strong>
                           </h5>
                           <button
                             type="button"
@@ -106,8 +123,11 @@ export default function ProfilePage() {
                             aria-label="Close"
                           ></button>
                         </div>
-                        <div className="modal-body">
-                          <form enctype="multipart/form-data">
+                        <div
+                          className="modal-body"
+                          style={{ textAlign: "left" }}
+                        >
+                          <form>
                             <div className="mb-3">
                               <label htmlFor="fullName" className="form-label">
                                 <u>
@@ -117,16 +137,18 @@ export default function ProfilePage() {
                               <input
                                 type="text"
                                 className="form-control"
-                                id="fullName"
+                                id="name"
                                 name="name"
                                 placeholder="Enter Full Name"
-                                value={userdetails?.name || " "}
+                                onChange={onChange}
+                                value={profile.name}
                               />
                             </div>
                             <div className="mb-3">
                               <label
                                 htmlFor="exampleInputEmail1"
                                 className="form-label"
+                                style={{ marginTop: "10px" }}
                               >
                                 <u>
                                   <strong>Edit Email</strong>
@@ -135,75 +157,63 @@ export default function ProfilePage() {
                               <input
                                 type="email"
                                 className="form-control"
-                                id="exampleInputEmail1"
+                                id="email"
                                 aria-describedby="emailHelp"
                                 placeholder="Enter email"
                                 name="email"
-                                value={userdetails?.email || " "}
+                                onChange={onChange}
+                                value={profile.email}
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                               />
                             </div>
                             <div className="mb-3">
                               <label
                                 htmlFor="exampleInputPassword1"
                                 className="form-label"
+                                style={{ marginTop: "10px" }}
                               >
                                 <u>
                                   <strong>Edit Phone number</strong>
                                 </u>
                               </label>
                               <input
-                                type="text"
+                                type="tel"
                                 className="form-control"
-                                id="exampleInputPassword1"
+                                id="phone"
                                 placeholder="Enter phone"
                                 name="phone"
-                                value={userdetails?.phone || " "}
+                                onChange={onChange}
+                                value={profile.phone}
+                                pattern="[0-9]{10}"
                               />
                             </div>
                             <div className="mb-3">
                               <label
                                 htmlFor="exampleInputPassword2"
                                 className="form-label"
+                                style={{ marginTop: "10px" }}
                               >
                                 <u>
                                   <strong>Edit WhatsApp number</strong>
                                 </u>
                               </label>
                               <input
-                                type="text"
+                                type="tel"
                                 className="form-control"
-                                id="exampleInputPassword2"
+                                id="whatsappNumber"
+                                name="whatsappNumber"
                                 placeholder="Enter WhatsApp number"
-                                value={userdetails?.whatsappNumber || " "}
+                                onChange={onChange}
+                                value={profile.whatsappNumber}
+                                pattern="[0-9]{10}"
                               />
                             </div>
-                            <div className="mb-3">
-                              <label
-                                htmlFor="exampleInputPassword3"
-                                className="form-label"
-                              >
-                                {" "}
-                                <u>
-                                  {" "}
-                                  <strong>Upload image</strong>
-                                </u>
-                              </label>
-                              <div className="input-group">
-                                <input
-                                  type="file"
-                                  className="form-control"
-                                  id="exampleInputPassword3"
-                                  placeholder="Choose a file"
-                                  style={{ borderRadius: "20px" }}
-                                  accept="image/*"
-                                />
-                              </div>
-                            </div>
+
                             <hr />
                             <button
                               type="submit"
                               className="btn btn-primary"
-                              // onClick={onChange()}
+                              onClick={UpdateProfile}
                             >
                               Save Changes
                             </button>

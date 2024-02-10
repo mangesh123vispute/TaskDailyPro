@@ -189,7 +189,7 @@ router.post("/getuser", fetchuser, async (req, res) => {
 //return the data,
 
 // &Validation is remaining
-router.put("/editprofile", fetchuser, async (req, res) => {
+router.post("/editprofile", fetchuser, async (req, res) => {
   try {
     if (!req.user.id) {
       return res.status(401).json("Login is required");
@@ -200,18 +200,28 @@ router.put("/editprofile", fetchuser, async (req, res) => {
         .status(401)
         .json(401, "user does not exist !! create user first");
     }
-    const { name, email, phone, whatsappNumber } = req.body;
+    const {
+      name = null,
+      email = null,
+      phone = null,
+      whatsappNumber = null,
+    } = req.body;
+    console.log("this is the name ", name, email, phone, whatsappNumber);
     const newUser = {};
 
-    if (!validator.isMobilePhone(phone, "en-IN", { strictMode: false })) {
+    if (
+      phone &&
+      !validator.isMobilePhone(phone, "en-IN", { strictMode: false })
+    ) {
       return res.status(400).json("Phone number should be of 10 digits");
     }
     if (
+      whatsappNumber &&
       !validator.isMobilePhone(whatsappNumber, "en-IN", { strictMode: false })
     ) {
       return res.status(400).json("Whatsapp number should be of 10 digits");
     }
-    if (!validator.isEmail(email)) {
+    if (email && !validator.isEmail(email)) {
       return res.status(400).json("Invalid Email");
     }
     if (name) {

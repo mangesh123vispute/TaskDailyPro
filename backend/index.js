@@ -13,8 +13,8 @@ const app = express();
 const port = 5000;
 
 // Middlewares
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 await connectToMongo(); // Use await here if connectToMongo is an async function
 app.use(cookieParser());
 

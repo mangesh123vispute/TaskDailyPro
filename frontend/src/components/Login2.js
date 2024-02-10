@@ -142,7 +142,7 @@ const Login2 = (props) => {
                           }}
                           style={{ cursor: "pointer" }}
                         >
-                          Forgot password?
+                          Forgot password / Change Password
                         </small>
 
                         <button

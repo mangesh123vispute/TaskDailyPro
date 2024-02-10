@@ -805,27 +805,34 @@ const NoteState = (props) => {
   //algo:
   //get the crediantials from the user and call two backend functions
   //1.editProfile
-  //2.uploadImage
-  const editProfile = async (name, email, phone, image, whatsappNumber) => {
+
+  const editProfile = async (
+    name = null,
+    email = null,
+    phone = null,
+    whatsappNumber = null
+  ) => {
     try {
-      await fetch("http://localhost:5000/api/auth/editprofile", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({ name, email, phone, whatsappNumber }),
-      });
-      await fetch("http://localhost:5000/api/auth/uploadProfilePic", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({ image }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/auth/editprofile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({ name, email, phone, whatsappNumber }),
+        }
+      );
+
+      // Log the response for debugging
+      console.log(response);
+
+      if (!response.ok) {
+        console.error(`Error: ${response}`);
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
