@@ -1,32 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../CustomCss/Login2.css";
+import noteContext from "../context/notes/noteContext.js";
+import CountdownTimer from "./CountDown.js";
 
 const Login2 = (props) => {
+  const context = useContext(noteContext);
+  const [expired, setExpired] = useState(false);
+  const [seconds, setSeconds] = useState(60 * 2);
+  const [otpverified, setOtpverified] = useState(false);
+  const { sendOtpTOEmail, verifyOtpTOEmail } = context;
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
+    otp: "",
   });
+  const [email, setEmail] = useState("");
+  const ResetOtp = async () => {
+    await sendOtpTOEmail(email);
+    setSeconds(60 * 2);
+    setExpired(false);
+    setOtpverified(false);
+  };
+
   const handelSubmit = async (e) => {
     e.preventDefault();
-
+    const _Email = document.getElementById("email").value;
+    const _Password = document.getElementById("password").value;
     const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: credentials.name,
-        email: credentials.email,
-        password: credentials.password,
+        email: _Email,
+        password: _Password,
       }),
     });
     const result = await response.json();
     if (result.success) {
       localStorage.setItem("token", result.authToken);
       props.showAlert("Logged in successfully", "success");
-      navigate("/");
+      navigate("/profile");
     } else {
       alert("Please enter valid credentials");
     }
@@ -100,9 +116,177 @@ const Login2 = (props) => {
                           Log in
                         </button>
                         <br />
-                        <a className="text-muted" href="#!">
+                        <small
+                          onClick={() => {
+                            setSeconds(60 * 2);
+                            setExpired(false);
+                            credentials.otp = null;
+                            setOtpverified(false);
+
+                            const _email = prompt("Please enter Your Email");
+                            sendOtpTOEmail(_email)
+                              .then((res) => {
+                                if (res === false) {
+                                  alert("Please enter valid email");
+                                } else {
+                                  setEmail(_email);
+                                  alert("Otp sent to your email");
+                                  const button =
+                                    document.getElementById("myButton");
+                                  button.click();
+                                }
+                              })
+                              .catch((err) => {
+                                console.log(err);
+                              });
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
                           Forgot password?
-                        </a>
+                        </small>
+
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          data-bs-toggle="modal"
+                          id="myButton"
+                          data-bs-target="#exampleModal"
+                          style={{ display: "none" }}
+                        >
+                          Launch demo modal
+                        </button>
+
+                        <div
+                          className="modal fade"
+                          id="exampleModal"
+                          tabIndex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div className="modal-dialog">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h1
+                                  className="modal-title fs-5"
+                                  id="exampleModalLabel"
+                                >
+                                  Enter Valid Otp
+                                </h1>
+
+                                <button
+                                  type="button"
+                                  className="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div className="modal-body">
+                                <div className="modal-body text-center">
+                                  <div className="mb-3">
+                                    <CountdownTimer
+                                      expired={expired}
+                                      setExpired={setExpired}
+                                      seconds={seconds}
+                                      setSeconds={setSeconds}
+                                      email={email}
+                                    />
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="otp"
+                                      placeholder="Enter OTP"
+                                      value={credentials.otp}
+                                      onChange={onChange}
+                                      name="otp"
+                                    />
+                                  </div>
+
+                                  <div id="timer" className="mb-3"></div>
+                                </div>
+                              </div>
+                              <div className="modal-footer">
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                  id="closeBtn"
+                                >
+                                  Close
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary"
+                                  onClick={() => {
+                                    if (expired) {
+                                      ResetOtp();
+                                    } else {
+                                      verifyOtpTOEmail(
+                                        email,
+                                        credentials.otp
+                                      ).then((res) => {
+                                        if (res === false) {
+                                          alert("Please enter valid otp");
+                                        } else {
+                                          alert("Otp verified successfully");
+                                          const newPass =
+                                            prompt("Enter new password");
+                                          const confirmPass = prompt(
+                                            "Confirm new password"
+                                          );
+
+                                          if (
+                                            newPass !== confirmPass ||
+                                            newPass === "" ||
+                                            confirmPass === "" ||
+                                            newPass === null ||
+                                            confirmPass === null
+                                          ) {
+                                            alert(
+                                              "Enter valid password ,Reclick on Varify otp"
+                                            );
+                                          } else {
+                                            console.log(newPass, confirmPass);
+                                            (async () => {
+                                              const response = await fetch(
+                                                "http://localhost:5000/api/auth/password/change",
+                                                {
+                                                  method: "POST",
+                                                  headers: {
+                                                    "Content-Type":
+                                                      "application/json",
+                                                  },
+                                                  body: JSON.stringify({
+                                                    email,
+                                                    password: newPass,
+                                                    conformPassword:
+                                                      confirmPass,
+                                                  }),
+                                                }
+                                              );
+                                              const json =
+                                                await response.json();
+                                              if (!json.success) {
+                                                alert(json.message);
+                                              }
+                                              const button =
+                                                document.getElementById(
+                                                  "closeBtn"
+                                                );
+                                              button.click();
+                                              alert(json.message);
+                                            })();
+                                          }
+                                        }
+                                      });
+                                    }
+                                  }}
+                                >
+                                  {expired ? "Resend Otp" : "Verify Otp"}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="d-flex align-items-center justify-content-center pb-4">

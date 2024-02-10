@@ -1,5 +1,5 @@
 import NoteContext from "./noteContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const NoteState = (props) => {
   const initialNotes = [];
@@ -829,6 +829,48 @@ const NoteState = (props) => {
     }
   };
 
+  // *1.send otp to the email
+  const sendOtpTOEmail = async (email) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/forgotPasswordgetOtp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+      const json = await response.json();
+
+      if (!json.success) {
+        return false;
+      }
+      return json;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  //*2. get otp and validate it
+  const verifyOtpTOEmail = async (email, otp) => {
+    const response = await fetch(
+      "http://localhost:5000/api/auth/otp/validate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp }),
+      }
+    );
+    const json = await response.json();
+    if (!json.success) {
+      return false;
+    }
+    return json;
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -870,6 +912,8 @@ const NoteState = (props) => {
         resetProgress,
         editProfile,
         updateTaskProgress,
+        sendOtpTOEmail,
+        verifyOtpTOEmail,
       }}
     >
       {props.children}

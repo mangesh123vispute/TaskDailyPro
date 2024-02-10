@@ -9,7 +9,6 @@ export default async function sendEmail({
   toEmail = undefined,
   content = undefined,
   subject = undefined,
-  otp = undefined,
 }) {
   const ToEmail = String(toEmail);
   const client = new SMTPClient({

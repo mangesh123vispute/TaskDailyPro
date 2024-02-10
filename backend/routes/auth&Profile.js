@@ -118,6 +118,7 @@ router.post(
 );
 
 // Route 2:Authenticating user using POST:"/api/auth/login"  no login required
+
 router.post(
   "/login",
   [
@@ -313,12 +314,14 @@ router.put("/changepassword", fetchuser, async (req, res) => {
 // *forgot password (also used for reset password with otp)
 // algo
 //get user email. from the front end
-//check if the user exist accoring to the email,
-//if user is present accoring to the email , then send otp to that email, else return error
+//check if the user exist accoring to the email if not exist send the error !
+//if user is present accoring to the email , then send otp to that email, and store the otp in the databse
 //ask for the otp , and coampare it with the otp stored in the database
+//if time out the show TimeOut message and to send opt once again and do the rest of the process
 //if otp matched then ask to create new password and provide the mentod to create new password
 
 //& no login required
+//*1.send otp and store it in database ,remove after  5 minutes
 router.post("/forgotPasswordgetOtp", async (req, res) => {
   try {
     const { email } = req.body;
@@ -331,7 +334,24 @@ router.post("/forgotPasswordgetOtp", async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     user.otp = otp;
     await user.save();
-    sendEmail(user.otp, email);
+
+    sendEmail({
+      toEmail: email,
+      content: `                 Dear ${user.name},
+                You have requested to reset your password for your TaskDailyPro account.
+                To complete the process, please use the following One-Time Password (OTP):
+    
+                OTP: ${otp}
+    
+                This OTP is valid for 5 minutes. Please do not share it with anyone for security reasons.
+                If you did not initiate this request, please ignore this email.
+    
+                Thank you for choosing TaskDailyPro.
+    
+                Best regards,
+                TaskDailyPro Support`,
+      subject: "TaskDailyPro - Password Reset",
+    });
     res.status(200).json({ success: true, message: "OTP sent" });
   } catch (error) {
     console.log(error);
@@ -341,8 +361,8 @@ router.post("/forgotPasswordgetOtp", async (req, res) => {
   }
 });
 
-//validating otp.. on the email address
-router.get("/otp/validate", async (req, res) => {
+//*2.validating otp.. on the email address
+router.post("/otp/validate", async (req, res) => {
   const { email, otp } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -351,12 +371,11 @@ router.get("/otp/validate", async (req, res) => {
         .status(400)
         .json({ success: false, message: "User does not exist" });
     }
-    if (user.otp === otp) {
+    if (Number(user.otp) === Number(otp)) {
       return res
         .status(200)
         .json({ success: true, message: "OTP verified successfully" });
     } else {
-      console.log(user, otp);
       return res.status(400).json({ success: false, message: "Invalid OTP" });
     }
   } catch (error) {
@@ -365,7 +384,7 @@ router.get("/otp/validate", async (req, res) => {
   }
 });
 
-//change password after validating otp
+//*3.change password after validating otp
 //& no login required
 router.post("/password/change", async (req, res) => {
   let { email, password, conformPassword } = req.body;
@@ -379,9 +398,10 @@ router.post("/password/change", async (req, res) => {
         .json({ success: false, message: "User does not exist" });
     }
     if (password !== conformPassword) {
-      return res
-        .status(400)
-        .json("new password and conform password should be same");
+      return res.status(400).json({
+        success: false,
+        message: "new password and conform password should be same",
+      });
     }
     const salt = await bcrypt.genSalt(10);
     const secPass = await bcrypt.hash(password, salt);
@@ -397,6 +417,26 @@ router.post("/password/change", async (req, res) => {
   }
 });
 
+router.post("/SetOtpNull", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User does not exist" });
+    }
+    user.otp = null;
+    await user.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "OTP deleted successfully" });
+  } catch (error) {
+    res
+      .status(error.status || 500)
+      .json({ success: false, message: error.message });
+  }
+});
 //* Upload profile picture
 //algo:
 //1.Get image file from front end and save it to the pubilc folder in the backend
