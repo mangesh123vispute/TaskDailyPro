@@ -5,6 +5,7 @@ import Daily from "../models/DailyTasks.js";
 import Monthly from "../models/Monthly.js";
 import Yearly from "../models/Yearly.js";
 import { body, validationResult } from "express-validator";
+import Progress from "../models/progress.js";
 
 // ROUTE 1: Get daily the tasks using: GET "/api/auth/fetchallnotes". Login required
 router.get("/fetchallnotes", fetchuser, async (req, res) => {

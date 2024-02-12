@@ -33,7 +33,7 @@ const Signup2 = (props) => {
       navigate("/login2");
       alert("Account created successfully");
     } else {
-      alert("Invalid credentials");
+      alert("Invalid credentials " + result.error);
     }
     console.log(result);
   };

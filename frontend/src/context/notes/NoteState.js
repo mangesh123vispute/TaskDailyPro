@@ -1,5 +1,5 @@
 import NoteContext from "./noteContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NoteState = (props) => {
   const initialNotes = [];
@@ -11,6 +11,9 @@ const NoteState = (props) => {
   const [userdetails, setUserdetails] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
 
+  useEffect(() => {
+    updateTaskProgress(taskStatus);
+  }, [taskStatus]);
   //*fetch user details.
   const getUser = async () => {
     try {
@@ -127,11 +130,7 @@ const NoteState = (props) => {
   const addNote = async (title, description, tag, deadline, deadlinetime) => {
     try {
       if (Number(taskStatus.dailyTasks.inpercentage) === 100) {
-        console.log(
-          "daily task inprogress",
-          taskStatus.dailyTasks.inpercentage
-        );
-        alert("Reset the Daily Task progress first in the profile page");
+        alert("Reset the Daily Task progress first within the profile page");
         return false;
       }
       const response = await fetch(`http://localhost:5000/api/tasks/addnote/`, {
@@ -207,6 +206,7 @@ const NoteState = (props) => {
           totalTask: prevTaskStatus.monthlyTasks.totalTask + 1,
         },
       }));
+      setTagchange(!tagchange);
     } catch (err) {
       console.log(err);
     }
@@ -249,6 +249,7 @@ const NoteState = (props) => {
           totalTask: prevTaskStatus.yearlyTasks.totalTask + 1,
         },
       }));
+      setTagchange(!tagchange);
       return note;
     } catch (err) {
       console.log(err);
@@ -256,16 +257,13 @@ const NoteState = (props) => {
   };
   // *Delete daily tasks
   const deleteNote = async (id) => {
-    const response = await fetch(
-      `http://localhost:5000/api/tasks/deletenote/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-      }
-    );
+    await fetch(`http://localhost:5000/api/tasks/deletenote/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
 
     const newNotes = notes.filter((note) => {
       return note._id !== id;
@@ -640,7 +638,7 @@ const NoteState = (props) => {
           totalTask: prevTaskStatus.goals.totalTask + 1,
         },
       }));
-
+      setTagchange(!tagchange);
       return addedGoal;
     } catch (error) {
       console.log(error);

@@ -25,9 +25,27 @@ function Note(props) {
     editGoals,
     getUser,
     getTaskStatus,
-    updateTaskProgress,
-    taskStatus,
   } = context;
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getUser();
+      getTaskStatus();
+
+      if (props.path === "Monthly") {
+        getMonthly();
+      } else if (props.path === "Yearly") {
+        getYearly();
+      } else if (props.path === "Goal") {
+        fetchAllGoals();
+      } else {
+        getNotes();
+      }
+      setSelectedValue("All");
+    } else {
+      props.showAlert("Please Login", "danger");
+      navigate("/login2");
+    }
+  }, [props.path, tagchange]);
   const ref = useRef(null);
   const refClose = useRef(null);
   const [note, setNote] = useState({
@@ -145,27 +163,6 @@ function Note(props) {
       ? navigate("/AddGoal")
       : navigate("/AdddailyTask");
   };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      getUser();
-      getTaskStatus();
-      updateTaskProgress(taskStatus);
-      if (props.path === "Monthly") {
-        getMonthly();
-      } else if (props.path === "Yearly") {
-        getYearly();
-      } else if (props.path === "Goal") {
-        fetchAllGoals();
-      } else {
-        getNotes();
-      }
-      setSelectedValue("All");
-    } else {
-      props.showAlert("Please Login", "danger");
-      navigate("/login2");
-    }
-  }, [props.path, tagchange]);
 
   return (
     <>

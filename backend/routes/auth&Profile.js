@@ -31,6 +31,7 @@ router.post(
   ],
   async (req, res) => {
     try {
+      console.log(req.body);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         success = false;
@@ -58,10 +59,10 @@ router.post(
       };
       const authToken = jwt.sign(data, JWT_SECRET);
       success = true;
-
+      console.log(authToken);
       //sending registration successful email to user
       sendEmail({
-        toEmail: "mangesh2003vispute@gmail.com",
+        toEmail: user.email,
         content: `
       Dear ${user.name},
       
@@ -105,14 +106,12 @@ router.post(
       Mangesh vispute,
       TaskDailyPro Support Team`,
         subject: "Welcome to TaskDailyPro - Your Registration is Successful!",
-        otp: 123456,
       });
 
       res.json({ success, authToken });
     } catch (error) {
-      success = false;
       console.error(error.message);
-      res.status(500).send(success, "Internal Server Error" + error.message);
+      res.status(404).json({ error: error.message });
     }
   }
 );

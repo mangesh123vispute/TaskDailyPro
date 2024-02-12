@@ -26,7 +26,7 @@ function AddDailyTask(props) {
   };
   const handleClick = (e) => {
     audioRef.current.play();
-    console.log("this is the tagchaking ", tagchange);
+
     if (tagchange) {
       setTagchange(false);
     } else {
