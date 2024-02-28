@@ -16,6 +16,7 @@ const Signup2 = (props) => {
       email: document.getElementById("email").value,
       password: document.getElementById("password").value,
     });
+
     const response = await fetch(`http://localhost:5000/api/auth/createuser`, {
       method: "POST",
       headers: {
@@ -33,7 +34,9 @@ const Signup2 = (props) => {
       navigate("/login2");
       alert("Account created successfully");
     } else {
-      alert("Invalid credentials " + result.error);
+      for (let i = 0; i < result.errors.length; i++) {
+        alert(result.errors[i].msg);
+      }
     }
     console.log(result);
   };

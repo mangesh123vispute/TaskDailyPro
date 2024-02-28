@@ -399,7 +399,7 @@ function Note(props) {
         {props.path === "Goal" ? (
           <button
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
             style={{
               marginLeft: "10px",
               borderRadius: "50px",

@@ -61,6 +61,7 @@ export default function ProfilePage() {
           <MDBCol lg="4">
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
+                {console.log("This is the user details ", userdetails)}
                 <MDBCardImage
                   src={userdetails?.image}
                   alt="avatar"

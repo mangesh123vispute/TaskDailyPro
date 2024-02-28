@@ -24,6 +24,10 @@ const About = () => {
           width={"400"}
         />
       </header>
+      <img
+        src="https://www.bing.com/images/search?view=detailV2&ccid=iAhcp6m%2f&id=D03C14D022524F9A4B82EB0511A801A22E82BF84&thid=OIP.iAhcp6m_91O-ClK79h8EQQHaFj&mediaurl=https%3a%2f%2fwonderfulengineering.com%2fwp-content%2fuploads%2f2014%2f10%2fimage-wallpaper-15.jpg&exph=1200&expw=1600&q=image&simid=608021233500824805&FORM=IRPRST&ck=7801324825C266999472762AEE3B00ED&selectedIndex=1&itb=0"
+        alt=""
+      />
 
       <section className="core-thought-process" style={{ marginTop: "30px" }}>
         <h2>

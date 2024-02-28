@@ -31,18 +31,22 @@ router.post(
   ],
   async (req, res) => {
     try {
-      console.log(req.body);
+      console.log("this is the request body", req.body);
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         success = false;
+        console.log(errors.array());
         return res.status(400).json({ success, errors: errors.array() });
       }
 
       let user = await User.findOne({ email: req.body.email });
       if (user) {
         success = false;
-        return res.status(400).json({ success, errors: "User already exists" });
+        return res
+          .status(400)
+          .json({ success, errors: [{ msg: "User already exists" }] });
       }
+      console.log("this is the user", user);
 
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, salt);
@@ -52,6 +56,7 @@ router.post(
         email: req.body.email,
         password: secPass,
       });
+      console.log("this is created user", user);
       const data = {
         user: {
           id: user.id,
@@ -111,7 +116,7 @@ router.post(
       res.json({ success, authToken });
     } catch (error) {
       console.error(error.message);
-      res.status(404).json({ error: error.message });
+      res.status(404).json({ error: { msg: error.message } });
     }
   }
 );
@@ -346,7 +351,7 @@ router.post("/forgotPasswordgetOtp", async (req, res) => {
 
     sendEmail({
       toEmail: email,
-      content: `                 Dear ${user.name},
+      content: `   Dear ${user.name},
                 You have requested to reset your password for your TaskDailyPro account.
                 To complete the process, please use the following One-Time Password (OTP):
     
