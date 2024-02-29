@@ -51,7 +51,7 @@ function App() {
 
           <Route
             exact
-            path="/login2"
+            path="https://dynamic-croquembouche-5c0625.netlify.app/login2"
             element={<Login2 showAlert={showAlert} />}
           />
 
