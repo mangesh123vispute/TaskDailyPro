@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d775f3f5.css",
+    "main.js": "/static/js/main.570fcd9c.js",
+    "static/media/notificationsound.mp3": "/static/media/notificationsound.24c178569679bee59118.mp3",
+    "static/media/pop.mp3": "/static/media/pop.c342449634d5fc6c5d45.mp3",
+    "index.html": "/index.html",
+    "main.d775f3f5.css.map": "/static/css/main.d775f3f5.css.map",
+    "main.570fcd9c.js.map": "/static/js/main.570fcd9c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d775f3f5.css",
+    "static/js/main.570fcd9c.js"
+  ]
+}

@@ -17,13 +17,16 @@ const NoteState = (props) => {
   //*fetch user details.
   const getUser = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/getUser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
+      const response = await fetch(
+        `https://taskdailypro.onrender.com/api/auth/getUser`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       const json = await response.json();
 
       setUserdetails(json);
@@ -37,7 +40,7 @@ const NoteState = (props) => {
   const getNotes = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tasks/fetchallnotes`,
+        `https://taskdailypro.onrender.com/api/tasks/fetchallnotes`,
         {
           method: "GET",
           headers: {
@@ -57,7 +60,7 @@ const NoteState = (props) => {
   // *fetch monthly tasks
   const getMonthly = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/fetchallmonthly`,
+      `https://taskdailypro.onrender.com/api/tasks/fetchallmonthly`,
       {
         method: "GET",
         headers: {
@@ -74,7 +77,7 @@ const NoteState = (props) => {
   // *fetch yearly tasks
   const getYearly = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/fetchallyearly`,
+      `https://taskdailypro.onrender.com/api/tasks/fetchallyearly`,
       {
         method: "GET",
         headers: {
@@ -92,7 +95,7 @@ const NoteState = (props) => {
   const fetchAllGoals = async () => {
     const authToken = localStorage.getItem("token");
     const response = await fetch(
-      "http://localhost:5000/api/goals/fetchallgoals",
+      "https://taskdailypro.onrender.com/api/goals/fetchallgoals",
       {
         method: "POST",
         headers: {
@@ -113,7 +116,7 @@ const NoteState = (props) => {
   //* fetch task status
   const getTaskStatus = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/progress/getprogress`,
+      `https://taskdailypro.onrender.com/api/progress/getprogress`,
       {
         method: "GET",
         headers: {
@@ -133,21 +136,24 @@ const NoteState = (props) => {
         alert("Reset the Daily Task progress first within the profile page");
         return false;
       }
-      const response = await fetch(`http://localhost:5000/api/tasks/addnote/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
+      const response = await fetch(
+        `https://taskdailypro.onrender.com/api/tasks/addnote/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
 
-        body: JSON.stringify({
-          title,
-          description,
-          tag,
-          deadline,
-          deadlinetime,
-        }),
-      });
+          body: JSON.stringify({
+            title,
+            description,
+            tag,
+            deadline,
+            deadlinetime,
+          }),
+        }
+      );
 
       const note = await response.json();
       setNotes(notes.concat(note));
@@ -177,7 +183,7 @@ const NoteState = (props) => {
         return false;
       }
       const response = await fetch(
-        `http://localhost:5000/api/tasks/addMonthlytask/`,
+        `https://taskdailypro.onrender.com/api/tasks/addMonthlytask/`,
         {
           method: "POST",
           headers: {
@@ -220,7 +226,7 @@ const NoteState = (props) => {
         return false;
       }
       const response = await fetch(
-        `http://localhost:5000/api/tasks/addyearlytask/`,
+        `https://taskdailypro.onrender.com/api/tasks/addyearlytask/`,
         {
           method: "POST",
           headers: {
@@ -257,13 +263,16 @@ const NoteState = (props) => {
   };
   // *Delete daily tasks
   const deleteNote = async (id) => {
-    await fetch(`http://localhost:5000/api/tasks/deletenote/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    await fetch(
+      `https://taskdailypro.onrender.com/api/tasks/deletenote/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
 
     const newNotes = notes.filter((note) => {
       return note._id !== id;
@@ -282,7 +291,7 @@ const NoteState = (props) => {
   // *delete monthly tasks
   const deleteMonthly = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/deleteMonthly/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/deleteMonthly/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -310,7 +319,7 @@ const NoteState = (props) => {
   // *delete yearly tasks
   const deleteYearly = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/deleteYearly/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/deleteYearly/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -337,7 +346,7 @@ const NoteState = (props) => {
   //* delete goal
   const deleteGoal = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/goals/deletegoal/${id}`,
+      `https://taskdailypro.onrender.com/api/goals/deletegoal/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -365,7 +374,7 @@ const NoteState = (props) => {
   // *dailyTaskCompleted
   const dailyTaskCompleted = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/deletenote/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/deletenote/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -392,7 +401,7 @@ const NoteState = (props) => {
   //*monthly task completed
   const monthlyTaskCompleted = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/deleteMonthly/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/deleteMonthly/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -420,7 +429,7 @@ const NoteState = (props) => {
   //* yearly task completed
   const yearlyTaskCompleted = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/tasks/deleteYearly/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/deleteYearly/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -448,7 +457,7 @@ const NoteState = (props) => {
   //*goals completed
   const goalCompleted = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/goals/deletegoal/${id}`,
+      `https://taskdailypro.onrender.com/api/goals/deletegoal/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -505,7 +514,7 @@ const NoteState = (props) => {
       deadlinetime: deadlinetime,
     };
     const response = await fetch(
-      `http://localhost:5000/api/tasks/updatenote/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/updatenote/${id}`,
       {
         method: "PUT",
         headers: {
@@ -541,7 +550,7 @@ const NoteState = (props) => {
       deadline: deadline,
     };
     const response = await fetch(
-      `http://localhost:5000/api/tasks/updateMonthly/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/updateMonthly/${id}`,
       {
         method: "PUT",
         headers: {
@@ -577,7 +586,7 @@ const NoteState = (props) => {
       deadline: deadline,
     };
     const response = await fetch(
-      `http://localhost:5000/api/tasks/updateYearly/${id}`,
+      `https://taskdailypro.onrender.com/api/tasks/updateYearly/${id}`,
       {
         method: "PUT",
         headers: {
@@ -613,7 +622,7 @@ const NoteState = (props) => {
       }
       const authToken = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:5000/api/goals/create_goal",
+        "https://taskdailypro.onrender.com/api/goals/create_goal",
         {
           method: "POST",
           headers: {
@@ -656,7 +665,7 @@ const NoteState = (props) => {
       deadline: deadline,
     };
     const response = await fetch(
-      `http://localhost:5000/api/goals/updategoal/${id}`,
+      `https://taskdailypro.onrender.com/api/goals/updategoal/${id}`,
       {
         method: "PUT",
         headers: {
@@ -705,7 +714,7 @@ const NoteState = (props) => {
 
       // Send the request to the backend
       const response = await fetch(
-        "http://localhost:5000/api/progress/updateprogress",
+        "https://taskdailypro.onrender.com/api/progress/updateprogress",
         {
           method: "POST",
           headers: {
@@ -736,7 +745,7 @@ const NoteState = (props) => {
 
   const sendOtp = async (email) => {
     const response = await fetch(
-      "http://localhost:5000/api/auth/forgotPasswordgetOtp",
+      "https://taskdailypro.onrender.com/api/auth/forgotPasswordgetOtp",
       {
         method: "POST",
         headers: {
@@ -750,7 +759,7 @@ const NoteState = (props) => {
   };
   const verifyOtp = async (email, otp) => {
     const response = await fetch(
-      "http://localhost:5000/api/auth/otp/validate",
+      "https://taskdailypro.onrender.com/api/auth/otp/validate",
       {
         method: "POST",
         headers: {
@@ -765,7 +774,7 @@ const NoteState = (props) => {
 
   const changePassword = async (email, password, conformPassword) => {
     const response = await fetch(
-      "http://localhost:5000/api/auth/password/change",
+      "https://taskdailypro.onrender.com/api/auth/password/change",
       {
         method: "POST",
         headers: {
@@ -785,7 +794,7 @@ const NoteState = (props) => {
   //3.get the response
   const resetProgress = async (Task) => {
     const response = await fetch(
-      "http://localhost:5000/api/progress/resetprogress",
+      "https://taskdailypro.onrender.com/api/progress/resetprogress",
       {
         method: "POST",
         headers: {
@@ -812,7 +821,7 @@ const NoteState = (props) => {
   ) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/editprofile",
+        "https://taskdailypro.onrender.com/api/auth/editprofile",
         {
           method: "POST",
           headers: {
@@ -838,7 +847,7 @@ const NoteState = (props) => {
   const sendOtpTOEmail = async (email) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/forgotPasswordgetOtp",
+        "https://taskdailypro.onrender.com/api/auth/forgotPasswordgetOtp",
         {
           method: "POST",
           headers: {
@@ -860,7 +869,7 @@ const NoteState = (props) => {
   //*2. get otp and validate it
   const verifyOtpTOEmail = async (email, otp) => {
     const response = await fetch(
-      "http://localhost:5000/api/auth/otp/validate",
+      "https://taskdailypro.onrender.com/api/auth/otp/validate",
       {
         method: "POST",
         headers: {

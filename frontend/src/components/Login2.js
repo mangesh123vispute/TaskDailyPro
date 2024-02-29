@@ -28,16 +28,19 @@ const Login2 = (props) => {
     e.preventDefault();
     const _Email = document.getElementById("email").value;
     const _Password = document.getElementById("password").value;
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: _Email,
-        password: _Password,
-      }),
-    });
+    const response = await fetch(
+      "https://taskdailypro.onrender.com/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: _Email,
+          password: _Password,
+        }),
+      }
+    );
     const result = await response.json();
     if (result.success) {
       localStorage.setItem("token", result.authToken);
@@ -248,7 +251,7 @@ const Login2 = (props) => {
                                             console.log(newPass, confirmPass);
                                             (async () => {
                                               const response = await fetch(
-                                                "http://localhost:5000/api/auth/password/change",
+                                                "https://taskdailypro.onrender.com/api/auth/password/change",
                                                 {
                                                   method: "POST",
                                                   headers: {

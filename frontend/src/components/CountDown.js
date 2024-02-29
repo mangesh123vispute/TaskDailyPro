@@ -17,7 +17,7 @@ const CountdownTimer = ({
         setExpired(true);
         clearInterval(countdown);
         (async () => {
-          await fetch("http://localhost:5000/api/auth/SetOtpNull", {
+          await fetch("https://taskdailypro.onrender.com/api/auth/SetOtpNull", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
