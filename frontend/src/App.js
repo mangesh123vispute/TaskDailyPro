@@ -51,7 +51,7 @@ function App() {
 
           <Route
             exact
-            path="https://dynamic-croquembouche-5c0625.netlify.app/login2"
+            path="/login2"
             element={<Login2 showAlert={showAlert} />}
           />
 
@@ -83,11 +83,7 @@ function App() {
 
           <Route exact path="/mentor" element={<MentorTable />} />
 
-          <Route
-            exact
-            path="https://dynamic-croquembouche-5c0625.netlify.app/profile"
-            element={<PersonalProfile />}
-          />
+          <Route exact path="/profile" element={<PersonalProfile />} />
           <Route
             exact
             path="/AddDailyTask"
