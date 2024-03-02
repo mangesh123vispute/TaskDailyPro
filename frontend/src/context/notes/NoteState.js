@@ -1,6 +1,6 @@
 import NoteContext from "./noteContext";
 import { useEffect, useState } from "react";
-
+console.log("hello this is frontend");
 const NoteState = (props) => {
   const initialNotes = [];
   const [notes, setNotes] = useState(initialNotes);
